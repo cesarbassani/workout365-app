@@ -30,6 +30,7 @@ scripts:
 dependencies:
   flutter_dotenv: ^2.1.0
   flutter_screenutil: ^2.1.0
+  smooth_star_rating: 1.1.1
   get: ^2.14.1
   dio: ^3.0.9
   flutter_mobx: ^1.1.0+1
@@ -64,6 +65,9 @@ flutter:
   assets:
     - lib/assets/images/
     - lib/assets/images/2.0x/logo_branco2x.png
+    - lib/assets/images/Costas2.jpg
+    - lib/assets/images/apoio.jpg
+    - lib/assets/images/triceps.jpg
     - .env
     - .env_dev
 #    - lib/assets/images/logo.png
