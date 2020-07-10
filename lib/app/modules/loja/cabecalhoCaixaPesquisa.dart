@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class CabecalhoComCaixaPesquisa extends StatelessWidget {
   const CabecalhoComCaixaPesquisa({
     Key key,
@@ -17,26 +16,28 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Container(
-          padding: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 56
-          ),  
-          height: size.height * 0.2 - 27,
-          decoration: BoxDecoration(
-            color: Color(0xFF414550),
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(36),
-            )
-          ),
-          child: Row(children: <Widget>[
-            Text("Olá Rafael",
+            padding: EdgeInsets.only(left: 20, right: 20, bottom: 56),
+            height: size.height * 0.2 - 27,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF414550),
+                      Color(0xFF18191E),
+                    ]),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(36),
+                )),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "Olá Rafael",
                   style: TextStyle(
-                    fontFamily: 'Timesroman',
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 30.0
-                    ),
+                      fontFamily: 'Timesroman',
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 30.0),
                 ),
                 Spacer(),
                 Container(
@@ -52,19 +53,16 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
                   ),
                 )
                 //Image.asset('lib/assets/images/logo_branco.png')
-          ],),
-
+              ],
+            ),
           ),
           Container(
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 20.0, bottom: 10),
-            child:
-            Text("Bem vindo à loja de treinos",
+            child: Text(
+              "Bem vindo à loja de treinos",
               style: TextStyle(
-                  fontFamily: 'Quicksand',
-                  color: Colors.white,
-                  fontSize: 14.0
-              ),
+                  fontFamily: 'Quicksand', color: Colors.white, fontSize: 14.0),
             ),
           ),
           Positioned(
@@ -81,35 +79,31 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    offset: Offset(0,10),
-                    blurRadius: 50,
-                    color: Color(0xFF414550).withOpacity(0.23)
-                  )
+                      offset: Offset(0, 10),
+                      blurRadius: 50,
+                      color: Color(0xFF414550).withOpacity(0.23))
                 ],
               ),
               child: Row(
                 children: <Widget>[
                   Expanded(
                     child: TextField(
-                      onChanged: (value){},
+                      onChanged: (value) {},
                       decoration: InputDecoration(
-                        hintText: "Pesquisar",
-                        hintStyle: TextStyle(
-                          color: Color(0xFF414550).withOpacity(0.5)
-                        ),
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        suffixIcon: Icon(Icons.search, color: Colors.black)
-                        ),
-                      ), 
-                    )    
-                  ],                 
-                ),
-              ), 
-            )
+                          hintText: "Pesquisar",
+                          hintStyle: TextStyle(
+                              color: Color(0xFF414550).withOpacity(0.5)),
+                          enabledBorder: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          suffixIcon: Icon(Icons.search, color: Colors.black)),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          )
         ],
       ),
     );
   }
 }
-

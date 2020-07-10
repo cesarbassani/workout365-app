@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
+import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 
 import 'cabecalho.dart';
+import 'cabecalhoVisitante.dart';
 import 'cartao_assinatura.dart';
 
 class Inicio_Page extends StatefulWidget {
@@ -24,12 +26,12 @@ class _Inicio_PageState extends State<Inicio_Page> {
                 children: <Widget>[
                   Cabecalho(
                     size: size,
-                    mensagemAssinatura: "Você ainda não possui um plano ativo",
+                    mensagemAssinatura: "Preparado para treinar?",
                   ),
                   CartaoAssinatura(
                     imagemFundo: "lib/assets/images/halteres.jpg",
                     nome: "Rafael Leite",
-                    moduloAssinatura: "Visitante",
+                    moduloAssinatura: "Nível Iniciante - Módulo 01",
                   ),
                   Padding(
                     padding: EdgeInsets.only(bottom: 15.0),

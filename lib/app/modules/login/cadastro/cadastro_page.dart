@@ -40,14 +40,14 @@ class _CadastroPageState extends State<CadastroPage> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         Container(
-                          height: 120,
+                          height: 100,
                           width: 200,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                'lib/assets/images/2.0x/logo_branco2x.png',
+                                'lib/assets/images/logoNova.png',
                               ),
                             ),
                           ),

@@ -68,6 +68,7 @@ flutter:
     - lib/assets/images/logoNova.png
     - lib/assets/images/halteres.jpg
     - lib/assets/images/Costas2.jpg
+    - lib/assets/images/barra.jpg
     - lib/assets/images/apoio.jpg
     - lib/assets/images/triceps.jpg
     - .env

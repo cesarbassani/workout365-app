@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 
-class Cabecalho extends StatelessWidget {
-  const Cabecalho({
+class CabecalhoVisitante extends StatelessWidget {
+  const CabecalhoVisitante({
     Key key,
     @required this.size,
     this.mensagemAssinatura,
@@ -13,11 +12,6 @@ class Cabecalho extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _iniciarTreino() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => InicioTreino()));
-    }
-
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       height: size.height * 0.2,
@@ -91,12 +85,10 @@ class Cabecalho extends StatelessWidget {
                         color: Color(0xFF04959A),
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {
-                            _iniciarTreino();
-                          },
+                          onTap: () {},
                           child: Center(
                             child: Text(
-                              'Vamos Treinar!',
+                              'Obter plano PRO',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
