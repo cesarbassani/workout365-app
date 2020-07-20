@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CadastroPage extends StatefulWidget {
   @override
@@ -14,9 +13,9 @@ class _CadastroPageState extends State<CadastroPage> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF414550),
-        leading: Icon(
-          Icons.arrow_back,
-        ),
+//        leading: Icon(
+//          Icons.arrow_back,
+//        ),
       ),
       body: SingleChildScrollView(
         child: Column(
