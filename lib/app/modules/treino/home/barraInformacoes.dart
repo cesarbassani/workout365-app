@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 
 class BarraInformacoes extends StatelessWidget {
   const BarraInformacoes({
@@ -7,6 +8,11 @@ class BarraInformacoes extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _executarTreino() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => ExecucaoTreino()));
+    }
+
     return Padding(
       padding: EdgeInsets.all(20),
       child: Row(
@@ -32,7 +38,9 @@ class BarraInformacoes extends StatelessWidget {
             height: 64,
             width: 64,
             child: FlatButton(
-              onPressed: () {},
+              onPressed: () {
+                _executarTreino();
+              },
               color: Color(0xFF04959A),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20)),

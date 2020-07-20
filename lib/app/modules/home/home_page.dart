@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
+import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 import 'home_controller.dart';
 import 'inicio/inicio_page.dart';
 
@@ -15,25 +16,22 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
-   int _indiceAtual = 0;
+  int _indiceAtual = 0;
   String _resultado = "";
-
 
   @override
   Widget build(BuildContext context) {
     List<Widget> telas = [
       Inicio_Page(),
       Loja_Page(),
-      //Biblioteca(),
+      ExecucaoTreino(),
     ];
-
 
     return Scaffold(
       appBar: AppBar(
         title: Text("Workout 365"),
         elevation: 0.0,
         centerTitle: true,
-
         backgroundColor: Color(0xFF414550),
       ),
       drawer: Drawer(
@@ -70,8 +68,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               title: Text("Perfil"),
               subtitle: Text("Minhas Informações"),
               isThreeLine: true,
-              onTap: (){
-               // _iniciarTreino();
+              onTap: () {
+                // _iniciarTreino();
               },
             ),
             ListTile(
@@ -79,19 +77,19 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               title: Text("Treino"),
               subtitle: Text("Meu Treino"),
               isThreeLine: true,
-              onTap: (){
+              onTap: () {
                 //_meuTreino();
               },
             ),
           ],
         ),
       ),
-            body: Container(
+      body: Container(
         child: telas[_indiceAtual],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _indiceAtual,
-        onTap: (indice){
+        onTap: (indice) {
           setState(() {
             _indiceAtual = indice;
           });
@@ -102,22 +100,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         items: [
           BottomNavigationBarItem(
               title: Text("Inicio"),
-              icon: Icon(Icons.home, color: Colors.black)
-          ),
+              icon: Icon(Icons.home, color: Colors.black)),
           BottomNavigationBarItem(
               title: Text("Treinos"),
-              icon: Icon(Icons.directions_run, color: Colors.black)
-          ),
+              icon: Icon(Icons.directions_run, color: Colors.black)),
           BottomNavigationBarItem(
               title: Text("Execucao"),
-              icon: Icon(Icons.person, color: Colors.black)
-          ),
-
-
+              icon: Icon(Icons.person, color: Colors.black)),
         ],
       ),
-
     );
   }
-
 }
