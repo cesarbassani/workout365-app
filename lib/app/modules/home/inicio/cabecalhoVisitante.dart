@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 
-class CabecalhoComCaixaPesquisa extends StatelessWidget {
-  const CabecalhoComCaixaPesquisa({
+class CabecalhoVisitante extends StatelessWidget {
+  const CabecalhoVisitante({
     Key key,
     @required this.size,
+    this.mensagemAssinatura,
   }) : super(key: key);
 
   final Size size;
+  final String mensagemAssinatura;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        'lib/assets/images/2.0x/logo_branco2x.png',
+                        'lib/assets/images/logoNova.png',
                       ),
                     ),
                   ),
@@ -60,7 +62,7 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 20.0, bottom: 10),
             child: Text(
-              "Bem vindo à loja de treinos",
+              mensagemAssinatura,
               style: TextStyle(
                   fontFamily: 'Quicksand', color: Colors.white, fontSize: 14.0),
             ),
@@ -70,37 +72,35 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-              alignment: Alignment.center,
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              height: 54,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                      offset: Offset(0, 10),
-                      blurRadius: 50,
-                      color: Color(0xFF414550).withOpacity(0.23))
-                ],
-              ),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextField(
-                      onChanged: (value) {},
-                      decoration: InputDecoration(
-                          hintText: "Pesquisar",
-                          hintStyle: TextStyle(
-                              color: Color(0xFF414550).withOpacity(0.5)),
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
-                          suffixIcon: Icon(Icons.search, color: Colors.black)),
+                padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 20.0),
+                    Container(
+                      height: 40.0,
+                      width: 300,
+                      child: Material(
+                        borderRadius: BorderRadius.circular(20.0),
+                        shadowColor: Color(0xFF04959A),
+                        color: Color(0xFF04959A),
+                        elevation: 7.0,
+                        child: GestureDetector(
+                          onTap: () {},
+                          child: Center(
+                            child: Text(
+                              'Obter plano PRO',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Montserrat'),
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
-                  )
-                ],
-              ),
-            ),
+                    SizedBox(height: 10.0),
+                  ],
+                )),
           )
         ],
       ),
