@@ -1,15 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/app_widget.dart';
 import 'package:workout365app/app/modules/home/home_module.dart';
 import 'package:workout365app/app/modules/login/cadastro/cadastro_controller.dart';
 import 'package:workout365app/app/modules/login/cadastro/cadastro_module.dart';
 import 'package:workout365app/app/modules/login/login_controller.dart';
 import 'package:workout365app/app/modules/login/login_module.dart';
 import 'package:workout365app/app/modules/main/main_page.dart';
+import 'package:workout365app/app/repository/usuario_repository.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 
 import 'app_controller.dart';
-import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter/material.dart';
-import 'package:workout365app/app/app_widget.dart';
 
 class AppModule extends MainModule {
   @override
@@ -17,6 +18,7 @@ class AppModule extends MainModule {
         Bind((i) => AppController()),
         Bind((i) => LoginController()),
         Bind((i) => CadastroController()),
+        Bind((i) => UsuarioRepository()),
         Bind((i) => AuthStore()),
       ];
 

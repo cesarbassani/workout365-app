@@ -1,0 +1,75 @@
+import 'package:dio/dio.dart';
+import 'package:workout365app/app/core/dio/custom_dio.dart';
+import 'package:workout365app/app/models/access_token_model.dart';
+import 'package:workout365app/app/models/confirm_login_model.dart';
+import 'package:workout365app/app/models/usuario_model.dart';
+import 'package:workout365app/app/repository/shared_prefs_repository.dart';
+
+class UsuarioRepository {
+  Future<AccessTokenModel> login({String email, String password}) {
+    // Enviar dados pelo formData
+    FormData formData =
+        FormData.fromMap({"email": email, "password": password});
+    return CustomDio.instance
+        .post('/usuarios/login',
+            data: {"email": email, "password": password},
+            options: Options(
+                followRedirects: false,
+                validateStatus: (status) {
+                  return status < 500;
+                },
+                headers: {
+                  "Content-Type": "application/json",
+                  "Accept": "application/json",
+                }))
+        .then((res) => AccessTokenModel.fromJson(res.data));
+  }
+
+  Future<ConfirmLoginModel> confirmLogin() async {
+    final prefs = await SharedPrefsRepository.instance;
+
+    return CustomDio.authInstance
+        .post('/usuarios/refresh',
+            data: {},
+            options: Options(headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            }))
+        .then((res) => ConfirmLoginModel.fromJson(res.data));
+  }
+
+  Future<UsuarioModel> recuperaDadosUsuarioLogado() {
+    return CustomDio.authInstance
+        .post('/api/auth/me',
+            data: {},
+            options: Options(headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            }))
+        .then((res) => UsuarioModel.fromJson(res.data['user']));
+  }
+
+  Future<void> cadastrarUsuario(
+      String nome,
+      String cpf,
+      String email,
+      String sexo,
+      String telefone,
+      String password,
+      String passwordConfirmation) async {
+    await CustomDio.authInstance.post('/usuarios',
+        data: {
+          'nome': nome,
+          'cpf': cpf,
+          'email': email,
+          'sexo': sexo,
+          'telefone': telefone,
+          'password': password,
+          'password_confirmation': passwordConfirmation
+        },
+        options: Options(headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        }));
+  }
+}
