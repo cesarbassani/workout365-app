@@ -4,18 +4,15 @@ part 'confirm_login_model.g.dart';
 
 @JsonSerializable()
 class ConfirmLoginModel {
-
-  @JsonKey(name: 'access_token')
-  String accessToken;
+  @JsonKey(name: 'token')
+  String token;
 
   @JsonKey(name: 'refresh_token')
   String refreshToken;
 
-  ConfirmLoginModel({
-    this.accessToken,
-    this.refreshToken
-});
+  ConfirmLoginModel({this.token, this.refreshToken});
 
-  factory ConfirmLoginModel.fromJson(Map<String, dynamic> json) => _$ConfirmLoginModelFromJson(json);
+  factory ConfirmLoginModel.fromJson(Map<String, dynamic> json) =>
+      _$ConfirmLoginModelFromJson(json);
   Map<String, dynamic> toJson() => _$ConfirmLoginModelToJson(this);
 }

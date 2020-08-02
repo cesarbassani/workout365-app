@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
+import 'package:workout365app/app/shared/auth_store.dart';
 
 import 'cabecalho.dart';
 import 'cartao_assinatura.dart';
@@ -27,7 +29,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
                   ),
                   CartaoAssinatura(
                     imagemFundo: "lib/assets/images/halteres.jpg",
-                    nome: "Rafael Leite",
+                    nome: Modular.get<AuthStore>().usuarioLogado.nome,
                     moduloAssinatura: "Nível Iniciante - Módulo 01",
                   ),
                   Padding(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/shared/auth_store.dart';
 
 class CabecalhoComCaixaPesquisa extends StatelessWidget {
   const CabecalhoComCaixaPesquisa({
@@ -32,7 +34,7 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  "Olá Rafael",
+                  Modular.get<AuthStore>().usuarioLogado.nome,
                   style: TextStyle(
                       fontFamily: 'Timesroman',
                       fontWeight: FontWeight.bold,

@@ -4,23 +4,31 @@ part 'usuario_model.g.dart';
 
 @JsonSerializable()
 class UsuarioModel {
-  String id;
+  int id;
   String nome;
-  String cpf;
+  String dataNascimento;
   String email;
-  String sexo;
+  String cpf;
+  String cep;
+  double peso;
+  double altura;
   String telefone;
-  String password;
-  String passwordConfirmation;
+  int gestor;
+  int tempoTreino;
 
-  UsuarioModel(
-      {this.nome,
-      this.cpf,
-      this.email,
-      this.sexo,
-      this.telefone,
-      this.password,
-      this.passwordConfirmation});
+  UsuarioModel({
+    this.id,
+    this.nome,
+    this.dataNascimento,
+    this.email,
+    this.cpf,
+    this.cep,
+    this.peso,
+    this.altura,
+    this.telefone,
+    this.gestor,
+    this.tempoTreino,
+  });
 
   factory UsuarioModel.fromJson(Map<String, dynamic> json) =>
       _$UsuarioModelFromJson(json);

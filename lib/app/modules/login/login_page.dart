@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
 import 'login_controller.dart';
 
 class LoginPage extends StatefulWidget {
@@ -160,7 +161,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                             ),
                             child: GestureDetector(
                               onTap: () {
-                                // _abrirHome();
+                                controller.login();
                               },
                               child: Center(
                                 child: Text(

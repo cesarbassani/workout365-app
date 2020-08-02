@@ -11,7 +11,7 @@ class AuthInterceptorWrapper extends InterceptorsWrapper {
   @override
   Future onRequest(RequestOptions options) async {
     final prefs = await SharedPrefsRepository.instance;
-    options.headers['Authorization'] = 'Bearer ${prefs.accessToken}';
+    options.headers['Authorization'] = 'bearer ${prefs.token}';
     if (DotEnv().env['profile'] == (isProduction ? 'prod' : 'dev')) {
       print('########## Request Log ##########');
       print('url: ${options.uri}');
@@ -57,7 +57,7 @@ class AuthInterceptorWrapper extends InterceptorsWrapper {
 
     try {
 //      final refreshToken = await security.refreshToken;
-      final accessToken = prefs.accessToken;
+      final accessToken = prefs.token;
       var refreshResult = await CustomDio.instance.post('/usuarios/refresh',
 //          data: {'token': accessToken, 'refreshToken': refreshToken},
           options: Options(headers: {
@@ -65,7 +65,7 @@ class AuthInterceptorWrapper extends InterceptorsWrapper {
             "Accept": "application/json",
           }));
 
-      await prefs.registerAccessToken(refreshResult.data['access_token']);
+      await prefs.registerAccessToken(refreshResult.data['token']);
 //      await security.registerRefreshToken(refreshResult.data['refresh_token']);
     } catch (e) {
       print(e);

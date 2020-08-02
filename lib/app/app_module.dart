@@ -8,6 +8,7 @@ import 'package:workout365app/app/modules/login/login_controller.dart';
 import 'package:workout365app/app/modules/login/login_module.dart';
 import 'package:workout365app/app/modules/main/main_page.dart';
 import 'package:workout365app/app/repository/usuario_repository.dart';
+import 'package:workout365app/app/services/usuario_services.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 
 import 'app_controller.dart';
@@ -16,9 +17,10 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
-        Bind((i) => LoginController()),
+        Bind((i) => LoginController(i.get())),
         Bind((i) => CadastroController()),
         Bind((i) => UsuarioRepository()),
+        Bind((i) => UsuarioService(i.get())),
         Bind((i) => AuthStore()),
       ];
 

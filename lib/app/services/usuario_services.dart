@@ -12,11 +12,11 @@ class UsuarioService {
       final accesTokenModel =
           await _repository.login(email: email, password: password);
       final prefs = await SharedPrefsRepository.instance;
-      prefs.registerAccessToken(accesTokenModel.accessToken);
+      prefs.registerAccessToken(accesTokenModel.token);
 
       final confirmModel = await _repository.confirmLogin();
 
-      prefs.registerAccessToken(confirmModel.accessToken);
+      prefs.registerAccessToken(confirmModel.token);
 
 //      SecurityStorageRepository()
 //          .registerRefreshToken(confirmModel.refreshToken);

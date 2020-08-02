@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:workout365app/app/models/usuario_model.dart';
 
 class SharedPrefsRepository {
-  static const _ACCESS_TOKEN = '/ACCESS_TOKEN/';
+  static const _TOKEN = '/TOKEN/';
   static const _DADOS_USUARIO = '/DADOS_USUARIO/';
 
   static SharedPreferences prefs;
@@ -21,10 +21,10 @@ class SharedPrefsRepository {
   }
 
   Future<void> registerAccessToken(String token) async {
-    await prefs.setString(_ACCESS_TOKEN, token);
+    await prefs.setString(_TOKEN, token);
   }
 
-  String get accessToken => prefs.get(_ACCESS_TOKEN);
+  String get token => prefs.get(_TOKEN);
 
   Future<void> registerDadosusuario(UsuarioModel usuario) async {
     await prefs.setString(_DADOS_USUARIO, jsonEncode(usuario));

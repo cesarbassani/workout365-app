@@ -19,7 +19,7 @@ abstract class _AuthStoreBase with Store {
   @action
   Future<bool> isLogged() async {
     final prefs = await SharedPrefsRepository.instance;
-    final access_token = prefs.accessToken;
-    return access_token != null;
+    final token = prefs.token;
+    return token != null;
   }
 }

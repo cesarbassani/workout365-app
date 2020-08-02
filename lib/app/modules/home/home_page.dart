@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:get/get.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
+import 'package:workout365app/app/repository/shared_prefs_repository.dart';
+
 import 'home_controller.dart';
 import 'inicio/inicio_page.dart';
 
@@ -79,6 +80,15 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               isThreeLine: true,
               onTap: () {
                 //_meuTreino();
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app, color: Colors.black),
+              title: Text("Sair"),
+              subtitle: Text("Sair do App"),
+              isThreeLine: true,
+              onTap: () async {
+                await (await SharedPrefsRepository.instance).logout();
               },
             ),
           ],

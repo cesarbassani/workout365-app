@@ -13,16 +13,11 @@ class UsuarioRepository {
     return CustomDio.instance
         .post('/usuarios/login',
             data: {"email": email, "password": password},
-            options: Options(
-                followRedirects: false,
-                validateStatus: (status) {
-                  return status < 500;
-                },
-                headers: {
-                  "Content-Type": "application/json",
-                  "Accept": "application/json",
-                }))
-        .then((res) => AccessTokenModel.fromJson(res.data));
+            options: Options(headers: {
+              "Content-Type": "application/json",
+              "Accept": "application/json",
+            }))
+        .then((res) => AccessTokenModel.fromJson(res.data['data']));
   }
 
   Future<ConfirmLoginModel> confirmLogin() async {
@@ -35,18 +30,17 @@ class UsuarioRepository {
               "Content-Type": "application/json",
               "Accept": "application/json",
             }))
-        .then((res) => ConfirmLoginModel.fromJson(res.data));
+        .then((res) => ConfirmLoginModel.fromJson(res.data['data']));
   }
 
   Future<UsuarioModel> recuperaDadosUsuarioLogado() {
     return CustomDio.authInstance
-        .post('/api/auth/me',
-            data: {},
+        .get('/usuarios/logado',
             options: Options(headers: {
               "Content-Type": "application/json",
               "Accept": "application/json",
             }))
-        .then((res) => UsuarioModel.fromJson(res.data['user']));
+        .then((res) => UsuarioModel.fromJson(res.data['data']));
   }
 
   Future<void> cadastrarUsuario(
