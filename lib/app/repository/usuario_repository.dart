@@ -47,8 +47,8 @@ class UsuarioRepository {
       String nome,
       String cpf,
       String email,
-      String sexo,
       String telefone,
+      String sexo,
       String password,
       String passwordConfirmation) async {
     await CustomDio.authInstance.post('/usuarios',
@@ -56,8 +56,9 @@ class UsuarioRepository {
           'nome': nome,
           'cpf': cpf,
           'email': email,
-          'sexo': sexo,
           'telefone': telefone,
+          'sexo': sexo,
+          'gestor': true,
           'password': password,
           'password_confirmation': passwordConfirmation
         },

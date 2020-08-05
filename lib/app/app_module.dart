@@ -18,7 +18,7 @@ class AppModule extends MainModule {
   List<Bind> get binds => [
         Bind((i) => AppController()),
         Bind((i) => LoginController(i.get())),
-        Bind((i) => CadastroController()),
+        Bind((i) => CadastroController(i.get())),
         Bind((i) => UsuarioRepository()),
         Bind((i) => UsuarioService(i.get())),
         Bind((i) => AuthStore()),
