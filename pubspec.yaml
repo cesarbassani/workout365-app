@@ -79,6 +79,12 @@ flutter:
     - lib/assets/images/barra.jpg
     - lib/assets/images/apoio.jpg
     - lib/assets/images/triceps.jpg
+    - lib/assets/images/Perna.jpg
+    - lib/assets/images/Abdominal.jpg
+    - lib/assets/images/Alongamento.jpg
+    - lib/assets/images/Musculacao.png
+    - lib/assets/images/Funcional.png
+    - lib/assets/images/Cardio.png
     - .env
     - .env_dev
 #    - lib/assets/images/logo.png

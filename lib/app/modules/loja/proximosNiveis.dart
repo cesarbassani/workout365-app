@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout365app/app/modules/loja/detalhes/detalheModulo.dart';
+import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 
 import 'card_modulosRecomendados.dart';
 
@@ -65,34 +66,30 @@ class CarregarRecomendados extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _iniciarTreino() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => InicioTreino()));
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: <Widget>[
           CardsModulosRecomendados(
             size: size,
-            image: 'lib/assets/images/apoio.jpg',
-            titulo: 'Módulo 01',
-            modulo: '2 Meses',
-            preco: 0,
+            image: 'lib/assets/images/Abdominal.jpg',
+            titulo: 'Abdominal',
+            modulo: '8 Exercícios',
+            preco: 15,
             press: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetalheModulo(
-                    titulo: 'Módulo 01',
-                    descricao: '2 Meses',
-                    preco: 0,
-                  ),
-                ),
-              );
+              _iniciarTreino();
             },
           ),
           CardsModulosRecomendados(
             size: size,
-            image: 'lib/assets/images/apoio.jpg',
-            titulo: 'Módulo 02',
-            modulo: '2 Meses',
+            image: 'lib/assets/images/Perna.jpg',
+            titulo: 'Pernas',
+            modulo: '6 Exercícios',
             preco: 25,
             press: () {
               Navigator.push(
@@ -109,18 +106,18 @@ class CarregarRecomendados extends StatelessWidget {
           ),
           CardsModulosRecomendados(
             size: size,
-            image: 'lib/assets/images/apoio.jpg',
-            titulo: 'Módulo 03',
-            modulo: '2 Meses',
-            preco: 25,
+            image: 'lib/assets/images/Alongamento.jpg',
+            titulo: 'Alongamento',
+            modulo: '10 Exercícios',
+            preco: 5,
             press: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
                   builder: (context) => DetalheModulo(
-                    titulo: 'Módulo 03',
-                    descricao: '2 Meses',
-                    preco: 25,
+                    titulo: 'Alongamento',
+                    descricao: '10 Exercícios',
+                    preco: 5,
                   ),
                 ),
               );
