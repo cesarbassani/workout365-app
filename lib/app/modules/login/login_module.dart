@@ -9,7 +9,7 @@ class LoginModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => LoginController(i.get())),
-        Bind((i) => CadastroController()),
+        Bind((i) => CadastroController(i.get())),
       ];
 
   @override

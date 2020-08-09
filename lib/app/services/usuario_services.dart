@@ -40,11 +40,11 @@ class UsuarioService {
       String nome,
       String cpf,
       String email,
-      String sexo,
       String telefone,
+      String sexo,
       String password,
       String passwordConfirmation) async {
     await _repository.cadastrarUsuario(
-        nome, cpf, email, sexo, telefone, password, passwordConfirmation);
+        nome, cpf, email, telefone, sexo, password, passwordConfirmation);
   }
 }

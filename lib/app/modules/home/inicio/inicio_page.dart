@@ -65,7 +65,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
                   ),
                   Container(
                     padding: EdgeInsets.only(top: 15.0, left: 15.0),
-                    height: 125.0,
+                    height: 100.0,
                     child: ListView(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
