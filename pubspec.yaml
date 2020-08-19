@@ -52,7 +52,7 @@ dev_dependencies:
   json_serializable: ^3.3.0
   mockito: ^4.1.1
   mobx_codegen: ^1.1.0+1
-  build_runner: ^1.10.0
+  build_runner: ^1.10.1
   flutter_test:
     sdk: flutter
 
@@ -79,6 +79,12 @@ flutter:
     - lib/assets/images/barra.jpg
     - lib/assets/images/apoio.jpg
     - lib/assets/images/triceps.jpg
+    - lib/assets/images/Perna.jpg
+    - lib/assets/images/Abdominal.jpg
+    - lib/assets/images/Alongamento.jpg
+    - lib/assets/images/Musculacao.png
+    - lib/assets/images/Funcional.png
+    - lib/assets/images/Cardio.png
     - .env
     - .env_dev
 #    - lib/assets/images/logo.png

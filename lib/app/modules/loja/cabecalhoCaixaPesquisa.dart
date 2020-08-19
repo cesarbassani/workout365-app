@@ -49,7 +49,7 @@ class CabecalhoComCaixaPesquisa extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        'lib/assets/images/2.0x/logo_branco2x.png',
+                        'lib/assets/images/logoNova.png',
                       ),
                     ),
                   ),
