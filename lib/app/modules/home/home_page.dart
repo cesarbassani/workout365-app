@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/modules/assinatura/sobre/sobre.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 import 'package:workout365app/app/repository/shared_prefs_repository.dart';
@@ -25,7 +26,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
     List<Widget> telas = [
       Inicio_Page(),
       Loja_Page(),
-      ExecucaoTreino(),
+      Sobre(),
     ];
 
     return Scaffold(
@@ -113,10 +114,10 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               icon: Icon(Icons.home, color: Colors.black)),
           BottomNavigationBarItem(
               title: Text("Treinos"),
-              icon: Icon(Icons.directions_run, color: Colors.black)),
+              icon: Icon(Icons.store, color: Colors.black)),
           BottomNavigationBarItem(
-              title: Text("Execucao"),
-              icon: Icon(Icons.person, color: Colors.black)),
+              title: Text("Pro"),
+              icon: Icon(Icons.credit_card, color: Colors.black)),
         ],
       ),
     );
