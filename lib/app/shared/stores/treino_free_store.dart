@@ -7,7 +7,9 @@ part 'treino_free_store.g.dart';
 class TreinoFreeStore = _TreinoFreeStore with _$TreinoFreeStore;
 
 abstract class _TreinoFreeStore with Store {
-  TreinoFreeServices _services;
+  final TreinoFreeServices _services = TreinoFreeServices();
+
+  _TreinoFreeStore();
 
   @observable
   ObservableFuture<List<TreinoFreeModel>> servicoFuture;

@@ -98,7 +98,7 @@ class Cabecalho extends StatelessWidget {
                           },
                           child: Center(
                             child: Text(
-                              'Vamos Treinar!',
+                              'Adquirir plano PRÓ!',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

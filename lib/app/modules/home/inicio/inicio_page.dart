@@ -75,8 +75,13 @@ class _Inicio_PageState extends State<Inicio_Page> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0),
+                    padding: EdgeInsets.only(
+                      left: 15,
+                      top: 15.0,
+                      right: 15,
+                    ),
                     height: 100.0,
+                    width: double.infinity,
                     child: _bodyServicos(),
 //                    ListView(
 //                      shrinkWrap: true,
@@ -105,8 +110,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
   }
 
   Widget _bodyServicos() {
-    return Expanded(
-      flex: 8,
+    return Container(
       child: Observer(
         builder: (_) {
           return FutureBuilder<List<TreinoFreeModel>>(
@@ -125,14 +129,21 @@ class _Inicio_PageState extends State<Inicio_Page> {
                 case ConnectionState.done:
                   if (snapshot.hasData) {
                     var data = snapshot.data;
-                    return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: data.length,
-                      itemBuilder: (context, index) =>
-                          _buildItemTreino(data[index], index),
-                      // ignore: missing_return
+                    return Container(
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        shrinkWrap: true,
+                        itemCount: data.length,
+                        itemBuilder: (context, index) {
+                          return Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildItemTreino(data[index], index),
+                            ],
+                          );
+                        },
+                        // ignore: missing_return
+                      ),
                     );
                   } else {
                     return Center(
@@ -152,7 +163,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
     );
   }
 
-  Widget _card() {
+  Widget _card(TreinoFreeModel treinoFree, int index) {
     return Container(
       height: 125.0,
       width: 250.0,
@@ -172,57 +183,61 @@ class _Inicio_PageState extends State<Inicio_Page> {
             height: 125.0,
             width: 100.0,
           ),
-          SizedBox(width: 20.0),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                'Aquecimento',
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                ),
-              ),
-              Text(
-                '15 min',
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Container(
-                height: 2.0,
-                width: 75.0,
-                color: Color(0xFF04959A),
-              ),
-              SizedBox(height: 10.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 25.0,
-                    width: 100.0,
-                    child: SmoothStarRating(
-                        allowHalfRating: false,
-                        starCount: 5,
-                        rating: 3.0,
-                        size: 15.0,
-                        color: Color(0XFF04959A),
-                        borderColor: Color(0XFF04959A),
-                        spacing: 0.0),
+          SizedBox(width: 15.0),
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    treinoFree.nome,
+                    style: TextStyle(
+                      fontFamily: 'Quicksand',
+                    ),
                   ),
-                ],
-              )
-            ],
+                ),
+                Text(
+                  '15 min',
+                  style: TextStyle(
+                    fontFamily: 'Quicksand',
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                Container(
+                  height: 2.0,
+                  width: 75.0,
+                  color: Color(0xFF04959A),
+                ),
+                SizedBox(height: 10.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      height: 25.0,
+                      width: 100.0,
+                      child: SmoothStarRating(
+                          allowHalfRating: false,
+                          starCount: 5,
+                          rating: 3.0,
+                          size: 15.0,
+                          color: Color(0XFF04959A),
+                          borderColor: Color(0XFF04959A),
+                          spacing: 0.0),
+                    ),
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),
     );
   }
 
-  _buildItemTreino(TreinoFreeModel data, int index) {
+  _buildItemTreino(TreinoFreeModel treinoFree, int index) {
     return Observer(builder: (_) {
-      return _card();
+      return _card(treinoFree, index);
     });
   }
 }

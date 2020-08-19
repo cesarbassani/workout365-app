@@ -10,8 +10,8 @@ class TreinoFreeRepository {
             "Content-Type": "application/json",
             "Accept": "application/json"
           }));
-      print(response.data);
-      return (response.data as List)
+      print(response.data['data']);
+      return (response.data['data'] as List)
           .map((item) => TreinoFreeModel.fromJson(item))
           .toList();
     } on DioError catch (e) {

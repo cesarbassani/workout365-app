@@ -38,8 +38,8 @@ dependencies:
   smooth_star_rating: 1.1.1
   get: ^2.14.1
   dio: ^3.0.9
-  flutter_mobx: ^1.1.0+1
-  mobx: ^1.2.1+1
+  flutter_mobx: ^1.1.0+2
+  mobx: ^1.2.1+2
   flutter_modular: ^1.2.5+1
   flutter:
     sdk: flutter
