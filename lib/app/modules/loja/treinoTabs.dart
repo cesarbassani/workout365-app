@@ -11,94 +11,114 @@ class TreinoTab extends StatefulWidget {
 class _TreinoTabState extends State<TreinoTab> {
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       body: ListView(
         children: <Widget>[
           _buildListItem(
-              'Trieno de Costas', 4.0, '6', 'lib/assets/images/Costas2.jpg'),
+              'Trieno de Costas', 4.0, '6', 'lib/assets/images/k365.png', size),
           _buildListItem('Trieno de Abdominais', 4.0, '6',
-              'lib/assets/images/Abdominal.jpg'),
+              'lib/assets/images/k365.png', size),
           _buildListItem(
-              'Trieno de Costas', 4.0, '6', 'lib/assets/images/Costas2.jpg'),
+              'Trieno de Costas', 4.0, '6', 'lib/assets/images/k365.png', size),
           _buildListItem(
-              'Trieno de Costas', 4.0, '6', 'lib/assets/images/Costas2.jpg'),
+              'Trieno de Costas', 4.0, '6', 'lib/assets/images/k365.png', size),
           _buildListItem(
-              'Trieno de Costas', 4.0, '6', 'lib/assets/images/Costas2.jpg'),
+              'Trieno de Costas', 4.0, '6', 'lib/assets/images/k365.png', size),
+          SizedBox(height: 20.0),
         ],
       ),
     );
   }
 
-  _buildListItem(String treinoNome, rating, String preco, String imgPath) {
+  _buildListItem(
+      String treinoNome, rating, String preco, String imgPath, Size size) {
     return Padding(
-      padding: EdgeInsets.all(15.0),
+      padding: EdgeInsets.only(left: 15.0, top: 15, right: 15),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Container(
-            width: 300.0,
-            child: Row(
-              children: <Widget>[
-                Container(
-                  height: 75.0,
-                  width: 75.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(7.0),
-                    color: Color(0xFF04959A),
-                  ),
-                  child: Center(
-                    child: Image.asset(imgPath, height: 50.0, width: 50.0),
-                  ),
-                ),
-                SizedBox(width: 20.0),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+            width: size.width - 30,
+            height: 100,
+            child: Material(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(20.0),
+              shadowColor: Colors.black,
+              elevation: 2.0,
+              child: GestureDetector(
+                onTap: () {
+                  // _iniciarTreino();
+                },
+                child: Row(
                   children: <Widget>[
-                    Text(
-                      treinoNome,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
+                    Container(
+                      height: 75.0,
+                      width: 75.0,
+                      child: Center(
+                        child: Image.asset(imgPath, height: 50.0, width: 50.0),
                       ),
                     ),
-                    SmoothStarRating(
-                      allowHalfRating: false,
-                      // onRatingChanged: (v) {},
-                      starCount: rating.toInt(),
-                      rating: rating,
-                      color: Color(0xFFFFD143),
-                      borderColor: Color(0xFFFFD143),
-                      size: 15.0,
-                      spacing: 0.0,
+                    SizedBox(width: 20.0),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Flexible(
+                            child: Text(
+                              treinoNome,
+                              style: Theme.of(context).textTheme.button,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          Container(
+                            height: 2.0,
+                            width: 75.0,
+                            color: Color(0xFF04959A),
+                          ),
+                          SizedBox(height: 5.0),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: "8 Exercícios\n",
+                                  style: TextStyle(
+                                    color: Color(0xFF04959A).withOpacity(0.5),
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "R\$ $preco",
+                                  style: TextStyle(
+                                    color: Color(0xFF04959A),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Text(
-                          'R\$' + preco,
-                          style: TextStyle(
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.w600,
-                              color: Color(0xFFF68D7F)),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: FloatingActionButton(
+                        heroTag: treinoNome,
+                        mini: true,
+                        onPressed: () {},
+                        child: Center(
+                          child: Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          ),
                         ),
-                      ],
-                    )
+                        backgroundColor: Color(0xFF04959A),
+                      ),
+                    ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          FloatingActionButton(
-            heroTag: treinoNome,
-            mini: true,
-            onPressed: () {},
-            child: Center(
-              child: Icon(
-                Icons.shopping_cart,
-                color: Colors.white,
               ),
             ),
-            backgroundColor: Color(0xFF04959A),
-          )
+          ),
         ],
       ),
     );

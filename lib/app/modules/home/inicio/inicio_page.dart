@@ -79,23 +79,11 @@ class _Inicio_PageState extends State<Inicio_Page> {
                       left: 15,
                       top: 15.0,
                       right: 15,
+                      bottom: 15,
                     ),
-                    height: 100.0,
+                    height: 150.0,
                     width: double.infinity,
                     child: _bodyServicos(),
-//                    ListView(
-//                      shrinkWrap: true,
-//                      scrollDirection: Axis.horizontal,
-//                      children: <Widget>[
-//                        _card(),
-//                        SizedBox(width: 10.0),
-//                        _card2(),
-//                        SizedBox(width: 10.0),
-//                        _card(),
-//                        SizedBox(width: 10.0),
-//                        _card2(),
-//                      ],
-//                    ),
                   ),
                 ],
               )
@@ -139,6 +127,9 @@ class _Inicio_PageState extends State<Inicio_Page> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               _buildItemTreino(data[index], index),
+                              SizedBox(
+                                width: 15.0,
+                              ),
                             ],
                           );
                         },
@@ -165,72 +156,62 @@ class _Inicio_PageState extends State<Inicio_Page> {
 
   Widget _card(TreinoFreeModel treinoFree, int index) {
     return Container(
-      height: 125.0,
+      padding: EdgeInsets.only(left: 5.0),
+      height: 100.0,
       width: 250.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
+      child: Material(
         color: Colors.white,
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              image: DecorationImage(
-                  image: AssetImage("lib/assets/images/triceps.jpg"),
-                  fit: BoxFit.cover),
-            ),
-            height: 125.0,
-            width: 100.0,
-          ),
-          SizedBox(width: 15.0),
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Flexible(
-                  child: Text(
-                    treinoFree.nome,
-                    style: TextStyle(
-                      fontFamily: 'Quicksand',
-                    ),
-                  ),
+        borderRadius: BorderRadius.circular(20.0),
+        shadowColor: Colors.black,
+        elevation: 2.0,
+        child: GestureDetector(
+          onTap: () {
+            // _iniciarTreino();
+          },
+          child: Row(
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                height: 100.0,
+                width: 100.0,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  image: DecorationImage(
+                      image: AssetImage("lib/assets/images/k365.png"),
+                      fit: BoxFit.contain),
                 ),
-                Text(
-                  '15 min',
-                  style: TextStyle(
-                    fontFamily: 'Quicksand',
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                Container(
-                  height: 2.0,
-                  width: 75.0,
-                  color: Color(0xFF04959A),
-                ),
-                SizedBox(height: 10.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+              ),
+              SizedBox(width: 15.0),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Flexible(
+                      child: Text(
+                        treinoFree.nome,
+                        style: Theme.of(context).textTheme.button,
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
                     Container(
-                      height: 25.0,
-                      width: 100.0,
-                      child: SmoothStarRating(
-                          allowHalfRating: false,
-                          starCount: 5,
-                          rating: 3.0,
-                          size: 15.0,
-                          color: Color(0XFF04959A),
-                          borderColor: Color(0XFF04959A),
-                          spacing: 0.0),
+                      height: 2.0,
+                      width: 75.0,
+                      color: Color(0xFF04959A),
+                    ),
+                    SizedBox(height: 10.0),
+                    Text(
+                      '15 min',
+                      style: TextStyle(
+                        fontFamily: 'Quicksand',
+                      ),
                     ),
                   ],
-                )
-              ],
-            ),
-          )
-        ],
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }

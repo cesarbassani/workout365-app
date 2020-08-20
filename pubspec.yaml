@@ -85,6 +85,7 @@ flutter:
     - lib/assets/images/Musculacao.png
     - lib/assets/images/Funcional.png
     - lib/assets/images/Cardio.png
+    - lib/assets/images/k365.png
     - .env
     - .env_dev
 #    - lib/assets/images/logo.png

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:workout365app/app/modules/loja/listaTreinosPopulares.dart';
 import 'package:workout365app/app/modules/loja/proximosNiveis.dart';
 import 'package:workout365app/app/modules/loja/titulo.dart';
 import 'package:workout365app/app/modules/loja/titulo_botaoMais.dart';
@@ -34,39 +35,49 @@ class _Loja_PageState extends State<Loja_Page>
           children: <Widget>[
             CabecalhoComCaixaPesquisa(size: size),
             TituloComBotaoMais(
-              titulo: "Treinos Mais Populares",
+              titulo: "Treinos Populares",
               press: () {},
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            CarregarRecomendados(size: size),
-            Titulo(
-              titulo: "Categorias",
-              press: () {},
-            ),
-            SizedBox(
-              height: 15.0,
             ),
             Container(
-              height: 175,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  _buildListItem(
-                      'Musculação',
-                      'lib/assets/images/Musculacao.png',
-                      Color(0xFF04959A),
-                      Colors.white),
-                  _buildListItem('Funcional', 'lib/assets/images/Funcional.png',
-                      Color(0xFF04959A), Colors.white),
-                  _buildListItem('Cardio', 'lib/assets/images/Cardio.png',
-                      Color(0xFF04959A), Colors.white),
-                ],
+              padding: EdgeInsets.only(
+                left: 15,
+                top: 15.0,
+                right: 15,
               ),
-            ),
-            SizedBox(
-              height: 10.0,
+              height: 150.0,
+              width: double.infinity,
+              child: Container(
+                height: 100,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    ListaTreinosPopulares(
+                      size: size,
+                      image: 'lib/assets/images/Abdominal.jpg',
+                      titulo: 'Abdominal',
+                      modulo: '8 Exercícios',
+                      preco: 15,
+                      press: () {},
+                    ),
+                    ListaTreinosPopulares(
+                      size: size,
+                      image: 'lib/assets/images/Abdominal.jpg',
+                      titulo: 'Abdominal',
+                      modulo: '8 Exercícios',
+                      preco: 15,
+                      press: () {},
+                    ),
+                    ListaTreinosPopulares(
+                      size: size,
+                      image: 'lib/assets/images/Abdominal.jpg',
+                      titulo: 'Abdominal',
+                      modulo: '8 Exercícios',
+                      preco: 15,
+                      press: () {},
+                    ),
+                  ],
+                ),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -85,10 +96,10 @@ class _Loja_PageState extends State<Loja_Page>
                   fontWeight: FontWeight.w500,
                 ),
                 tabs: [
-                  Tab(child: Text('Combos')),
-                  Tab(child: Text('Pernas')),
-                  Tab(child: Text('Bíceps')),
-                  Tab(child: Text('Tríceps')),
+                  Tab(child: Text('Musculação')),
+                  Tab(child: Text('Funcional')),
+                  Tab(child: Text('Cardio')),
+                  Tab(child: Text('Recreativo')),
                 ],
               ),
             ),
