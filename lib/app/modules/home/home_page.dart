@@ -41,27 +41,24 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           children: <Widget>[
             DrawerHeader(
               child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
-                    child: Text('Work',
-                        style: TextStyle(
-                            fontSize: 40.0, fontWeight: FontWeight.bold)),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 20),
+                        height: 100,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'lib/assets/images/logoGrande.png',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 60.0, 0.0, 0.0),
-                    child: Text('Out',
-                        style: TextStyle(
-                            fontSize: 40.0, fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(84.0, 75.0, 0.0, 0.0),
-                    child: Text('365',
-                        style: TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF04959A))),
-                  )
                 ],
               ),
             ),
@@ -116,7 +113,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               title: Text("Treinos"),
               icon: Icon(Icons.store, color: Colors.black)),
           BottomNavigationBarItem(
-              title: Text("Pro"),
+              title: Text("Sobre"),
               icon: Icon(Icons.credit_card, color: Colors.black)),
         ],
       ),

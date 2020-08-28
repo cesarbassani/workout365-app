@@ -43,6 +43,7 @@ dependencies:
   flutter_modular: ^1.2.5+1
   flutter:
     sdk: flutter
+  credit_card: ^0.1.6
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -73,6 +74,8 @@ flutter:
     - lib/assets/images/Remada.gif
     - lib/assets/images/2.0x/logo_branco2x.png
     - lib/assets/images/logoNova.png
+    - lib/assets/images/logoGrande.png
+    - lib/assets/images/logoGrandeBranca.png
     - lib/assets/images/logoNovaPreto.png
     - lib/assets/images/halteres.jpg
     - lib/assets/images/Costas2.jpg

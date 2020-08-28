@@ -19,9 +19,6 @@ class _CadastroPageState
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF414550),
-//        leading: Icon(
-//          Icons.arrow_back,
-//        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -52,11 +49,11 @@ class _CadastroPageState
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                'lib/assets/images/logoNova.png',
+                                'lib/assets/images/logoGrandeBranca.png',
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/modules/assinatura/creditCard/cardInformation.dart';
 
 class CabecalhoSobre extends StatelessWidget {
   const CabecalhoSobre({
@@ -12,10 +13,10 @@ class CabecalhoSobre extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // _iniciarTreino() {
-    //  Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => InicioTreino()));
-    // }
+    _iniciarTreino() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => CardInformation()));
+    }
 
     return Container(
       margin: EdgeInsets.only(bottom: 20),
@@ -77,7 +78,7 @@ class CabecalhoSobre extends StatelessWidget {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {
-                            // _iniciarTreino();
+                            _iniciarTreino();
                           },
                           child: Center(
                             child: Text(

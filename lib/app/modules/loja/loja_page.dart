@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:workout365app/app/modules/loja/listaTreinosPopulares.dart';
-import 'package:workout365app/app/modules/loja/proximosNiveis.dart';
-import 'package:workout365app/app/modules/loja/titulo.dart';
 import 'package:workout365app/app/modules/loja/titulo_botaoMais.dart';
 import 'package:workout365app/app/modules/loja/treinoTabs.dart';
-
 import 'cabecalhoCaixaPesquisa.dart';
-import 'card_modulosRecomendados.dart';
 
 class Loja_Page extends StatefulWidget {
   @override
@@ -22,7 +18,7 @@ class _Loja_PageState extends State<Loja_Page>
   void initState() {
     // TODO: implement initState
     super.initState();
-    tabController = TabController(vsync: this, length: 4);
+    tabController = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -98,8 +94,6 @@ class _Loja_PageState extends State<Loja_Page>
                 tabs: [
                   Tab(child: Text('Musculação')),
                   Tab(child: Text('Funcional')),
-                  Tab(child: Text('Cardio')),
-                  Tab(child: Text('Recreativo')),
                 ],
               ),
             ),
@@ -108,8 +102,6 @@ class _Loja_PageState extends State<Loja_Page>
               child: TabBarView(
                 controller: tabController,
                 children: [
-                  TreinoTab(),
-                  TreinoTab(),
                   TreinoTab(),
                   TreinoTab(),
                 ],
