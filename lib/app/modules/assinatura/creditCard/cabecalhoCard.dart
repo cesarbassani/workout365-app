@@ -35,7 +35,7 @@ class CabecalhoCard extends StatelessWidget {
                       Color(0xFF18191E),
                     ]),
                 borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(90))),
+                    BorderRadius.only(bottomLeft: Radius.circular(36))),
             child: Column(
               children: <Widget>[
                 Container(

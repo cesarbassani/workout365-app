@@ -107,6 +107,7 @@ class _CardInformationState extends State<CardInformation> {
                         ),
                       ),
                     ),
+                    SizedBox(height: 40),
                   ],
                 )
               ],

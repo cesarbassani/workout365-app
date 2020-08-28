@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workout365app/app/modules/assinatura/sobre/sobre.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
+import 'package:workout365app/app/modules/perfil/profile/profile.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 import 'package:workout365app/app/repository/shared_prefs_repository.dart';
 
@@ -27,6 +28,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
       Inicio_Page(),
       Loja_Page(),
       Sobre(),
+      Profile(),
     ];
 
     return Scaffold(
@@ -115,6 +117,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           BottomNavigationBarItem(
               title: Text("Sobre"),
               icon: Icon(Icons.credit_card, color: Colors.black)),
+          BottomNavigationBarItem(
+              title: Text("Perfil"),
+              icon: Icon(Icons.person, color: Colors.black)),
         ],
       ),
     );
