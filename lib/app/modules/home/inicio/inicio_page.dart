@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
+import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
+import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 import 'package:workout365app/app/shared/stores/treino_free_store.dart';
 
@@ -15,6 +17,11 @@ class Inicio_Page extends StatefulWidget {
 }
 
 class _Inicio_PageState extends State<Inicio_Page> {
+  _iniciarTreino() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => InicioTreino()));
+  }
+
   final TreinoFreeStore treinoFreeStore = TreinoFreeStore();
 
   @override
@@ -166,7 +173,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
         elevation: 2.0,
         child: GestureDetector(
           onTap: () {
-            // _iniciarTreino();
+            _iniciarTreino();
           },
           child: Row(
             children: <Widget>[

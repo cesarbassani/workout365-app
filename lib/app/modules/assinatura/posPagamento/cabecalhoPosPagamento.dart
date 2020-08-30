@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:workout365app/app/modules/assinatura/creditCard/cardInformation.dart';
-import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
+import 'package:workout365app/app/shared/auth_store.dart';
 
-class CabecalhoSobre extends StatelessWidget {
-  const CabecalhoSobre({
+class CabecalhoPosPagamento extends StatelessWidget {
+  const CabecalhoPosPagamento({
     Key key,
     @required this.size,
     this.mensagemAssinatura,
@@ -16,12 +17,7 @@ class CabecalhoSobre extends StatelessWidget {
   Widget build(BuildContext context) {
     _iniciarTreino() {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => CardInformation()));
-    }
-
-    _pricePage() {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => PriceInformation()));
+          context, MaterialPageRoute(builder: (context) => InicioTreino()));
     }
 
     return Container(
@@ -46,13 +42,27 @@ class CabecalhoSobre extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  "Workout 365",
+                  Modular.get<AuthStore>().usuarioLogado.nome,
                   style: TextStyle(
                       fontFamily: 'Timesroman',
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 30.0),
                 ),
+                Spacer(),
+                Container(
+                  margin: EdgeInsets.only(top: 20),
+                  height: 200,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(
+                        'lib/assets/images/logoGrandeBranca.png',
+                      ),
+                    ),
+                  ),
+                )
+                //Image.asset('lib/assets/images/logo_branco.png')
               ],
             ),
           ),
@@ -60,7 +70,7 @@ class CabecalhoSobre extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 20.0, bottom: 10),
             child: Text(
-              mensagemAssinatura,
+              "K365 PRO",
               style: TextStyle(
                   fontFamily: 'Quicksand', color: Colors.white, fontSize: 14.0),
             ),
@@ -84,12 +94,11 @@ class CabecalhoSobre extends StatelessWidget {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {
-                            // _iniciarTreino();
-                            _pricePage();
+                            _iniciarTreino();
                           },
                           child: Center(
                             child: Text(
-                              'Seja Pro',
+                              'Personalização de Módulo',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

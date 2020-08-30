@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
 import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 
@@ -15,9 +16,9 @@ class Cabecalho extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _iniciarTreino() {
+    _pricePage() {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => InicioTreino()));
+          context, MaterialPageRoute(builder: (context) => PriceInformation()));
     }
 
     return Container(
@@ -94,7 +95,7 @@ class Cabecalho extends StatelessWidget {
                         elevation: 7.0,
                         child: GestureDetector(
                           onTap: () {
-                            _iniciarTreino();
+                            _pricePage();
                           },
                           child: Center(
                             child: Text(

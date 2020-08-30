@@ -3,6 +3,7 @@ import 'package:credit_card/credit_card_form.dart';
 import 'package:credit_card/credit_card_model.dart';
 import 'package:credit_card/credit_card_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/modules/assinatura/posPagamento/confirmacaoAssinatura.dart';
 
 import 'cabecalhoCard.dart';
 
@@ -26,6 +27,11 @@ class _CardInformationState extends State<CardInformation> {
       cvvCode = model.cvvCode;
       isCvvFocused = model.isCvvFocused;
     });
+  }
+
+  _confirmarPagamento() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => ConfirmacaoAssinatura()));
   }
 
   @override
@@ -87,7 +93,9 @@ class _CardInformationState extends State<CardInformation> {
                         ),
                       ),
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          _confirmarPagamento();
+                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
