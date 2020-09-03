@@ -28,6 +28,7 @@ scripts:
 
 
 dependencies:
+  video_player: ^0.10.12+2
   flutter_secure_storage: ^3.3.3
   intl: ^0.16.1
   flutter_masked_text: ^0.8.0

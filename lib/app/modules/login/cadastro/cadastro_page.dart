@@ -31,7 +31,7 @@ class _CadastroPageState
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 6,
+                    height: MediaQuery.of(context).size.height / 5,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
@@ -76,10 +76,10 @@ class _CadastroPageState
       child: Column(
         children: <Widget>[
           SizedBox(
-            height: 20,
+            height: 10,
           ),
           Container(
-            height: MediaQuery.of(context).size.height / 1,
+            height: MediaQuery.of(context).size.height / 0.95,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(top: 30),
             child: Column(
@@ -421,7 +421,7 @@ class _CadastroPageState
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 25,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,

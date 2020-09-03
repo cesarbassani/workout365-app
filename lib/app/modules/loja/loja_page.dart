@@ -6,7 +6,6 @@ import 'package:workout365app/app/modules/loja/titulo_botaoMais.dart';
 import 'package:workout365app/app/modules/loja/treinoTabs.dart';
 
 import 'cabecalhoCaixaPesquisa.dart';
-import 'card_modulosRecomendados.dart';
 
 class Loja_Page extends StatefulWidget {
   @override
@@ -50,6 +49,7 @@ class _Loja_PageState extends State<Loja_Page>
             ),
             Container(
               height: 175,
+              padding: EdgeInsets.only(right: 8),
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[

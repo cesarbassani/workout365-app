@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:smooth_star_rating/smooth_star_rating.dart';
+
 import '../capaTreino.dart';
 import 'barraInformacoes.dart';
-import 'cabecalhoTreino.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class InicioTreino extends StatefulWidget {
   @override
