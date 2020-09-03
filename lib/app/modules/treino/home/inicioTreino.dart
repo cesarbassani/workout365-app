@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../capaTreino.dart';
 import 'barraInformacoes.dart';
-import 'cabecalhoTreino.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 
 class InicioTreino extends StatefulWidget {
@@ -17,74 +16,78 @@ class _InicioTreinoState extends State<InicioTreino> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        body: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        CapaTreino(size: size),
-        SizedBox(height: 10),
-        BarraInformacoes(),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-          child: Text(
-            "Informações",
-            style: Theme.of(context).textTheme.headline5,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(
-            "Equipamentos necessários: Halteres e Colchonete",
-            style: TextStyle(color: Colors.black38),
-          ),
-        ),
-        SizedBox(height: 30),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            padding: EdgeInsets.only(left: 10.0),
-            decoration: BoxDecoration(
-                border: Border(
-                    left: BorderSide(
-                        color: Color(0xFF04959A),
-                        style: BorderStyle.solid,
-                        width: 3.0))),
-            child: Row(
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      'Exercícios',
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontFamily: 'Timesroman',
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                )
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            CapaTreino(size: size),
+            SizedBox(height: 10),
+            BarraInformacoes(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                "Informações",
+                style: Theme.of(context).textTheme.headline5,
+              ),
             ),
-          ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Text(
+                "Equipamentos necessários: Halteres e Colchonete",
+                style: TextStyle(color: Colors.black38),
+              ),
+            ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Container(
+                padding: EdgeInsets.only(left: 10.0),
+                decoration: BoxDecoration(
+                    border: Border(
+                        left: BorderSide(
+                            color: Color(0xFF04959A),
+                            style: BorderStyle.solid,
+                            width: 3.0))),
+                child: Row(
+                  children: <Widget>[
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          'Exercícios',
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              fontFamily: 'Timesroman',
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 15.0, left: 15.0),
+              height: 125.0,
+              child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                children: <Widget>[
+                  _card(),
+                  SizedBox(width: 10.0),
+                  _card2(),
+                  SizedBox(width: 10.0),
+                  _card(),
+                  SizedBox(width: 10.0),
+                  _card2(),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+          ],
         ),
-        Container(
-          padding: EdgeInsets.only(top: 15.0, left: 15.0),
-          height: 125.0,
-          child: ListView(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: <Widget>[
-              _card(),
-              SizedBox(width: 10.0),
-              _card2(),
-              SizedBox(width: 10.0),
-              _card(),
-              SizedBox(width: 10.0),
-              _card2(),
-            ],
-          ),
-        ),
-      ],
-    ));
+      ),
+    );
   }
 }
 

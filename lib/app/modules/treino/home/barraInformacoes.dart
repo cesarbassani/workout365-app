@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
+import 'package:workout365app/app/modules/treino/execucao/execucaoTreino2.dart';
 
 class BarraInformacoes extends StatelessWidget {
   const BarraInformacoes({

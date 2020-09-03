@@ -34,72 +34,74 @@ class _Inicio_PageState extends State<Inicio_Page> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(height: 250.0, color: Colors.white70),
-              Column(
-                children: <Widget>[
-                  Cabecalho(
-                    size: size,
-                    mensagemAssinatura: "Preparado para treinar?",
-                  ),
-                  CartaoAssinatura(
-                    imagemFundo: "lib/assets/images/halteres.jpg",
-                    nome: Modular.get<AuthStore>().usuarioLogado.nome,
-                    moduloAssinatura: "Nível Iniciante - Módulo 01",
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(bottom: 15.0),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 15.0),
-                    child: Container(
-                      padding: EdgeInsets.only(left: 10.0),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              left: BorderSide(
-                                  color: Color(0xFF04959A),
-                                  style: BorderStyle.solid,
-                                  width: 3.0))),
-                      child: Row(
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                'Treinos Gratuítos',
-                                style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontFamily: 'Timesroman',
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          )
-                        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Stack(
+              children: <Widget>[
+                Container(height: 250.0, color: Colors.white70),
+                Column(
+                  children: <Widget>[
+                    Cabecalho(
+                      size: size,
+                      mensagemAssinatura: "Preparado para treinar?",
+                    ),
+                    CartaoAssinatura(
+                      imagemFundo: "lib/assets/images/halteres.jpg",
+                      nome: Modular.get<AuthStore>().usuarioLogado.nome,
+                      moduloAssinatura: "Nível Iniciante - Módulo 01",
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 15.0),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: 15.0),
+                      child: Container(
+                        padding: EdgeInsets.only(left: 10.0),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                left: BorderSide(
+                                    color: Color(0xFF04959A),
+                                    style: BorderStyle.solid,
+                                    width: 3.0))),
+                        child: Row(
+                          children: <Widget>[
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  'Treinos Gratuítos',
+                                  style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontFamily: 'Timesroman',
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 15,
-                      top: 15.0,
-                      right: 15,
-                      bottom: 15,
+                    Container(
+                      padding: EdgeInsets.only(
+                        left: 15,
+                        top: 15.0,
+                        right: 15,
+                        bottom: 15,
+                      ),
+                      height: 150.0,
+                      width: double.infinity,
+                      child: _bodyServicos(),
                     ),
-                    height: 150.0,
-                    width: double.infinity,
-                    child: _bodyServicos(),
-                  ),
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-        ],
+                  ],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 15.0,
+            ),
+          ],
+        ),
       ),
     );
   }
