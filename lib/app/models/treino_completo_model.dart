@@ -14,14 +14,12 @@ class TreinoCompletoModel {
   String sexo;
   double preco;
   int ativo;
-  int disponivelStore;
-  String createdAt;
-  String updatedAt;
-  List<String> gruposMuculares;
+  int disponivel_store;
+  List<String> grupos_muculares;
   List<String> equipamentos;
-  List<ExerciciosTreinoModel> exerciciosTreino;
-  int quantidadeExerciciosTreino;
-  int tempoTotalPorTreino;
+  List<ExerciciosTreinoModel> exercicios_treino;
+  int quantidade_exercicios_treino;
+  int tempo_total_por_treino;
 
   TreinoCompletoModel(
       {this.id,
@@ -32,14 +30,12 @@ class TreinoCompletoModel {
       this.sexo,
       this.preco,
       this.ativo,
-      this.disponivelStore,
-      this.createdAt,
-      this.updatedAt,
-      this.gruposMuculares,
+      this.disponivel_store,
+      this.grupos_muculares,
       this.equipamentos,
-      this.exerciciosTreino,
-      this.quantidadeExerciciosTreino,
-      this.tempoTotalPorTreino});
+      this.exercicios_treino,
+      this.quantidade_exercicios_treino,
+      this.tempo_total_por_treino});
 
   factory TreinoCompletoModel.fromJson(Map<String, dynamic> json) =>
       _$TreinoCompletoModelFromJson(json);

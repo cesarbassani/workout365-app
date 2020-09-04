@@ -115,7 +115,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
       child: Observer(
         builder: (_) {
           return FutureBuilder<List<TreinoFreeModel>>(
-            future: treinoFreeStore.servicoFuture,
+            future: treinoFreeStore.treinoFuture,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -168,11 +168,16 @@ class _Inicio_PageState extends State<Inicio_Page> {
     return InkWell(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => InicioTreino()));
+            context,
+            MaterialPageRoute(
+                builder: (context) => InicioTreino(
+                      treinoFree: treinoFree,
+                    )));
       },
       child: Container(
         height: 125.0,
         width: 250.0,
+        margin: EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12.0),
           color: Colors.white,

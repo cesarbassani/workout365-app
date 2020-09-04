@@ -5,14 +5,14 @@ part 'serie_model.g.dart';
 @JsonSerializable()
 class SerieModel {
   int id;
-  int exercicioTreinoId;
+  int exercicio_treino_id;
   int repeticoes;
   int carga;
   String tempoPausa;
 
   SerieModel({
     this.id,
-    this.exercicioTreinoId,
+    this.exercicio_treino_id,
     this.repeticoes,
     this.carga,
     this.tempoPausa,

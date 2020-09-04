@@ -12,7 +12,7 @@ class TreinoFreeModel {
   String sexo;
   double preco;
   int ativo;
-  int disponivelStore;
+  int disponivel_store;
   String createdAt;
   String updatedAt;
 
@@ -25,7 +25,7 @@ class TreinoFreeModel {
       this.sexo,
       this.preco,
       this.ativo,
-      this.disponivelStore,
+      this.disponivel_store,
       this.createdAt,
       this.updatedAt});
 

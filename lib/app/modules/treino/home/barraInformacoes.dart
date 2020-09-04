@@ -1,28 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 
-class BarraInformacoes extends StatelessWidget {
+class BarraInformacoes extends StatefulWidget {
+  final List<TreinoCompletoModel> treinoCompleto;
+
   const BarraInformacoes({
     Key key,
+    this.treinoCompleto,
   }) : super(key: key);
 
   @override
+  _BarraInformacoesState createState() => _BarraInformacoesState();
+}
+
+class _BarraInformacoesState extends State<BarraInformacoes> {
+  @override
   Widget build(BuildContext context) {
-    _executarTreino() {
+    var treinoCompleto = TreinoCompletoModel();
+    widget.treinoCompleto.forEach((treino) {
+      treinoCompleto = treino;
+    });
+    _executarTreino(TreinoCompletoModel treinoCompleto) {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => ExecucaoTreino()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => ExecucaoTreino(
+                    treinoCompleto: treinoCompleto,
+                  )));
     }
 
     return Padding(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.only(left: 20, top: 5, right: 20, bottom: 20),
       child: Row(
         children: <Widget>[
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text("Treino 04", style: Theme.of(context).textTheme.headline3),
-                SizedBox(height: 10),
+                Text(treinoCompleto.nome,
+                    style: Theme.of(context).textTheme.headline3),
+                SizedBox(height: 5),
                 Row(
                   children: <Widget>[
                     Text(
@@ -39,7 +57,7 @@ class BarraInformacoes extends StatelessWidget {
             width: 64,
             child: FlatButton(
               onPressed: () {
-                _executarTreino();
+                _executarTreino(treinoCompleto);
               },
               color: Color(0xFF04959A),
               shape: RoundedRectangleBorder(

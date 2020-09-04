@@ -7,29 +7,29 @@ part 'exercicios_treino_model.g.dart';
 @JsonSerializable()
 class ExerciciosTreinoModel {
   int id;
-  int exercicioId;
-  int treinoId;
-  int formaExecucaoId;
-  String metodoTreino;
-  String tempoExecucaoPorSerie;
-  String tempoDescandoEntreSeries;
-  String tempoDescandoProximoExercicio;
-  int tempoTotalPorExercicio;
-  int numeroSeries;
+  int exercicio_id;
+  int treino_id;
+  int forma_execucao_id;
+  String metodo_treino;
+  int tempo_execucao_por_serie;
+  int tempo_descando_entre_series;
+  int tempo_descando_proximo_exercicio;
+  int tempo_total_por_exercicio;
+  int numero_series;
   ExercicioModel exercicio;
   List<SerieModel> series;
 
   ExerciciosTreinoModel(
       {this.id,
-      this.exercicioId,
-      this.treinoId,
-      this.formaExecucaoId,
-      this.metodoTreino,
-      this.tempoExecucaoPorSerie,
-      this.tempoDescandoEntreSeries,
-      this.tempoDescandoProximoExercicio,
-      this.tempoTotalPorExercicio,
-      this.numeroSeries,
+      this.exercicio_id,
+      this.treino_id,
+      this.forma_execucao_id,
+      this.metodo_treino,
+      this.tempo_execucao_por_serie,
+      this.tempo_descando_entre_series,
+      this.tempo_descando_proximo_exercicio,
+      this.tempo_total_por_exercicio,
+      this.numero_series,
       this.exercicio,
       this.series});
 

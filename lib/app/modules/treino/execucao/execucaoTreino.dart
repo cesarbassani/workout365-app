@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:video_player/video_player.dart';
+import 'package:workout365app/app/models/exercicios_treino_model.dart';
+import 'package:workout365app/app/models/treino_completo_model.dart';
 
 class ExecucaoTreino extends StatefulWidget {
+  final TreinoCompletoModel treinoCompleto;
+
+  const ExecucaoTreino({Key key, this.treinoCompleto}) : super(key: key);
+
   @override
   _ExecucaoTreinoState createState() => _ExecucaoTreinoState();
 }
@@ -13,10 +19,15 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
 
   @override
   void initState() {
+    var exerciciosTreino = ExerciciosTreinoModel();
+    widget.treinoCompleto.exercicios_treino.forEach((treino) {
+      exerciciosTreino = treino;
+    });
     _controller = VideoPlayerController.network(
-        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/12");
+        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${exerciciosTreino.exercicio_id}");
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
+//    _controller.seekTo(Duration(seconds: 1));
     _controller.play();
     super.initState();
   }

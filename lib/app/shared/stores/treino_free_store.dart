@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
 import 'package:workout365app/app/services/treino_free_services.dart';
 
@@ -12,10 +13,22 @@ abstract class _TreinoFreeStore with Store {
   _TreinoFreeStore();
 
   @observable
-  ObservableFuture<List<TreinoFreeModel>> servicoFuture;
+  ObservableFuture<List<TreinoFreeModel>> treinoFuture;
+
+  @observable
+  ObservableFuture<List<TreinoCompletoModel>> treinoFutureSelecionado;
+
+  @action
+  Future<void> initPage(int treinoId) async {
+    treinoFutureSelecionado = buscarTreinoCompleto(treinoId).asObservable();
+  }
 
   @action
   void listarTreinosFree() {
-    servicoFuture = ObservableFuture(_services.listarTreinosFree());
+    treinoFuture = ObservableFuture(_services.listarTreinosFree());
+  }
+
+  Future<List<TreinoCompletoModel>> buscarTreinoCompleto(int treinoId) async {
+    return await _services.buscarTreinoCompleto(treinoId);
   }
 }
