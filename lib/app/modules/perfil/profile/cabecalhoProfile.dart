@@ -42,8 +42,8 @@ class CabecalhoProfile extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Container(
-                      height: 100,
-                      width: 100,
+                      height: 75,
+                      width: 75,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,

@@ -44,6 +44,8 @@ dependencies:
   flutter:
     sdk: flutter
   credit_card: ^0.1.6
+  font_awesome_flutter: ^8.8.1
+
 
 
   # The following adds the Cupertino Icons font to your application.

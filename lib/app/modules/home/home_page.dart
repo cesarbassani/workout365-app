@@ -4,6 +4,7 @@ import 'package:workout365app/app/modules/assinatura/sobre/sobre.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
 import 'package:workout365app/app/modules/perfil/profile/profile.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
+import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/repository/shared_prefs_repository.dart';
 
 import 'home_controller.dart';
@@ -21,6 +22,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
   int _indiceAtual = 0;
   String _resultado = "";
+
+  _procederParaPagamento() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => FeedbackPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +85,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               subtitle: Text("Meu Treino"),
               isThreeLine: true,
               onTap: () {
-                //_meuTreino();
+                _procederParaPagamento();
               },
             ),
             ListTile(
