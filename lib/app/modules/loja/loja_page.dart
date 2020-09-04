@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:workout365app/app/modules/loja/listaTreinosPopulares.dart';
 import 'package:workout365app/app/modules/loja/titulo_botaoMais.dart';
 import 'package:workout365app/app/modules/loja/treinoTabs.dart';
+
 import 'cabecalhoCaixaPesquisa.dart';
 
 class Loja_Page extends StatefulWidget {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
-import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
 import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 import 'package:workout365app/app/shared/stores/treino_free_store.dart';
@@ -111,7 +109,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
       child: Observer(
         builder: (_) {
           return FutureBuilder<List<TreinoFreeModel>>(
-            future: treinoFreeStore.servicoFuture,
+            future: treinoFreeStore.treinoFuture,
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.none:
@@ -175,7 +173,13 @@ class _Inicio_PageState extends State<Inicio_Page> {
         elevation: 2.0,
         child: GestureDetector(
           onTap: () {
-            _iniciarTreino();
+//            _iniciarTreino();
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => InicioTreino(
+                          treinoFree: treinoFree,
+                        )));
           },
           child: Row(
             children: <Widget>[
@@ -226,8 +230,6 @@ class _Inicio_PageState extends State<Inicio_Page> {
   }
 
   _buildItemTreino(TreinoFreeModel treinoFree, int index) {
-    return Observer(builder: (_) {
-      return _card(treinoFree, index);
-    });
+    return _card(treinoFree, index);
   }
 }
