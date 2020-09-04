@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/modules/assinatura/modulosTreino/modulosTreino.dart';
 
 import 'cabecalhoPosPagamento.dart';
 
@@ -9,6 +10,11 @@ class ConfirmacaoAssinatura extends StatefulWidget {
 
 class _ConfirmacaoAssinaturaState extends State<ConfirmacaoAssinatura> {
   TextEditingController _controllerTempoTreino = TextEditingController();
+
+  _procederParaPagamento() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => ModulosTreino()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +107,9 @@ class _ConfirmacaoAssinaturaState extends State<ConfirmacaoAssinatura> {
                               color: Colors.transparent,
                               borderRadius: BorderRadius.circular(20.0)),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              _procederParaPagamento();
+                            },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
