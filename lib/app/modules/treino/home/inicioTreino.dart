@@ -65,7 +65,10 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    CapaTreino(size: size),
+                    CapaTreino(
+                      size: size,
+                      treinoCompleto: treinoCompleto,
+                    ),
                     BarraInformacoes(treinoCompleto: treino),
                     Padding(
                       padding:

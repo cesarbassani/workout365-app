@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
-import 'package:workout365app/app/modules/treino/execucao/execucaoTreino2.dart';
 
 class BarraInformacoes extends StatefulWidget {
   final List<TreinoCompletoModel> treinoCompleto;
@@ -45,7 +44,9 @@ class _BarraInformacoesState extends State<BarraInformacoes> {
                 Row(
                   children: <Widget>[
                     Text(
-                      "Costas, Pernas e Bíceps",
+                      treinoCompleto.grupos_muculares
+                          .map((grupo) => grupo)
+                          .toString(),
                       style: TextStyle(color: Colors.black38),
                     ),
                   ],

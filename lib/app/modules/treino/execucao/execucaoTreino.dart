@@ -17,18 +17,15 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
+  int step = 0;
+
   @override
   void initState() {
     var exerciciosTreino = ExerciciosTreinoModel();
     widget.treinoCompleto.exercicios_treino.forEach((treino) {
       exerciciosTreino = treino;
     });
-    _controller = VideoPlayerController.network(
-        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${exerciciosTreino.exercicio_id}");
-    _initializeVideoPlayerFuture = _controller.initialize();
-    _controller.setLooping(true);
-//    _controller.seekTo(Duration(seconds: 1));
-    _controller.play();
+    _inicializaVideo();
     super.initState();
   }
 
@@ -59,7 +56,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
 //                fit: BoxFit.cover,
 //              ),
 //            ),
-            child: _carregaVideo(12),
+            child: _carregaVideo(),
           ),
           Positioned(
             top: screenHeight - screenHeight / 2 - 25.0,
@@ -73,11 +70,16 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   SizedBox(
                     height: 25.0,
                   ),
-                  Text("Remada Unilateral",
+                  Text(
+                      widget.treinoCompleto.exercicios_treino[step].exercicio
+                          .nome,
                       style: TextStyle(
                           fontSize: 25.0, fontWeight: FontWeight.w500)),
                   SizedBox(height: 7.0),
-                  Text("4x15 repetições",
+                  Text(
+                      widget
+                          .treinoCompleto.exercicios_treino[step].numero_series
+                          .toString(),
                       style: TextStyle(
                         fontSize: 15.0,
                         fontWeight: FontWeight.w400,
@@ -114,7 +116,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     height: 5.0,
                   ),
                   Text(
-                    "Grupo Muscular: Tríceps",
+                    "Grupo Muscular: ${widget.treinoCompleto.grupos_muculares.map((grupo) => grupo)}",
                     style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w400,
@@ -122,7 +124,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   ),
                   SizedBox(height: 5.0),
                   Text(
-                    "Descrição Completa",
+                    widget.treinoCompleto.exercicios_treino[step].exercicio
+                        .descricao,
                     style: TextStyle(
                         fontSize: 14.0,
                         fontWeight: FontWeight.w400,
@@ -145,24 +148,34 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
               height: 75.0,
               width: 100.0,
               child: Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "<",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "Anterior",
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    )
-                  ],
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      if (step >= 1) {
+                        step--;
+                        _inicializaVideo();
+                      }
+                    });
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "<",
+                        style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                      Text(
+                        "Anterior",
+                        style: TextStyle(
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      )
+                    ],
+                  ),
                 ),
               ),
               decoration: BoxDecoration(
@@ -178,7 +191,15 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
               width: 100.0,
               child: Center(
                   child: GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  setState(() {
+                    if (step <
+                        (widget.treinoCompleto.exercicios_treino.length - 1)) {
+                      step++;
+                      _inicializaVideo();
+                    }
+                  });
+                },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -269,7 +290,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     );
   }
 
-  Widget _carregaVideo(int idVideo) {
+  Widget _carregaVideo() {
     return FutureBuilder(
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
@@ -285,5 +306,14 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         }
       },
     );
+  }
+
+  _inicializaVideo() {
+    _controller = VideoPlayerController.network(
+        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+//    _controller.seekTo(Duration(seconds: 1));
+    _controller.play();
   }
 }

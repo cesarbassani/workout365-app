@@ -10,24 +10,21 @@ class TreinoFreeModel {
   String categoria;
   String tipo;
   String sexo;
-  double preco;
+  String preco;
   int ativo;
   int disponivel_store;
-  String createdAt;
-  String updatedAt;
 
-  TreinoFreeModel(
-      {this.id,
-      this.nome,
-      this.descricao,
-      this.categoria,
-      this.tipo,
-      this.sexo,
-      this.preco,
-      this.ativo,
-      this.disponivel_store,
-      this.createdAt,
-      this.updatedAt});
+  TreinoFreeModel({
+    this.id,
+    this.nome,
+    this.descricao,
+    this.categoria,
+    this.tipo,
+    this.sexo,
+    this.preco,
+    this.ativo,
+    this.disponivel_store,
+  });
 
   factory TreinoFreeModel.fromJson(Map<String, dynamic> json) =>
       _$TreinoFreeModelFromJson(json);

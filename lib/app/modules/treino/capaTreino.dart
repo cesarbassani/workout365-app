@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/models/treino_completo_model.dart';
 
 class CapaTreino extends StatelessWidget {
   const CapaTreino({
     Key key,
     @required this.size,
+    @required this.treinoCompleto,
   }) : super(key: key);
 
   final Size size;
+  final TreinoCompletoModel treinoCompleto;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +111,7 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: "Musculação",
+                                  text: treinoCompleto.categoria,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),
@@ -132,7 +135,7 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: "Repetição",
+                                  text: treinoCompleto.tipo,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),
@@ -144,7 +147,7 @@ class CapaTreino extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(
-                        Icons.filter_8,
+                        Icons.filter_4,
                         size: 28,
                         color: Colors.black38,
                       ),
