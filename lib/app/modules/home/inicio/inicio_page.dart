@@ -89,7 +89,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
                       ),
                       height: 150.0,
                       width: double.infinity,
-                      child: _bodyServicos(),
+                      child: _bodyTreinos(),
                     ),
                   ],
                 )
@@ -104,7 +104,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
     );
   }
 
-  Widget _bodyServicos() {
+  Widget _bodyTreinos() {
     return Container(
       child: Observer(
         builder: (_) {

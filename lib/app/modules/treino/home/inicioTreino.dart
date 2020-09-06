@@ -117,21 +117,22 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
                     Container(
                       padding: EdgeInsets.only(top: 15.0, left: 15.0),
                       height: 125.0,
-                      child: ListView(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children: <Widget>[
-                          _card(),
-                          SizedBox(width: 10.0),
-                          _card2(),
-                          SizedBox(width: 10.0),
-                          _card(),
-                          SizedBox(width: 10.0),
-                          _card2(),
-                        ],
-                      ),
+                      width: double.infinity,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: treinoCompleto.exercicios_treino.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _card(treinoCompleto, index),
+                                SizedBox(width: 10.0),
+                              ],
+                            );
+                          }),
                     ),
-                    SizedBox(height: 20),
+                    SizedBox(height: 15),
                   ],
                 );
               } else {
@@ -163,8 +164,13 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
   );
 }
 
-Widget _card() {
+Widget _card(TreinoCompletoModel treinoCompleto, int index) {
   return Container(
+    padding: EdgeInsets.only(
+      left: 5.0,
+      top: 5,
+      right: 5,
+    ),
     height: 125.0,
     width: 250.0,
     decoration: BoxDecoration(
@@ -183,48 +189,53 @@ Widget _card() {
           height: 125.0,
           width: 100.0,
         ),
-        SizedBox(width: 20.0),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Aquecimento',
-              style: TextStyle(
-                fontFamily: 'Quicksand',
-              ),
-            ),
-            Text(
-              '15 min',
-              style: TextStyle(
-                fontFamily: 'Quicksand',
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Container(
-              height: 2.0,
-              width: 75.0,
-              color: Color(0xFF04959A),
-            ),
-            SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  height: 25.0,
-                  width: 100.0,
-                  child: SmoothStarRating(
-                      allowHalfRating: false,
-                      starCount: 5,
-                      rating: 3.0,
-                      size: 15.0,
-                      color: Color(0XFF04959A),
-                      borderColor: Color(0XFF04959A),
-                      spacing: 0.0),
+        SizedBox(width: 10.0),
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                treinoCompleto.exercicios_treino[index].exercicio.nome,
+                style: TextStyle(
+                  fontFamily: 'Quicksand',
                 ),
-              ],
-            )
-          ],
+              ),
+              SizedBox(height: 10.0),
+              Text(
+                treinoCompleto
+                    .exercicios_treino[index].tempo_total_por_exercicio
+                    .toString(),
+                style: TextStyle(
+                  fontFamily: 'Quicksand',
+                ),
+              ),
+              SizedBox(height: 10.0),
+              Container(
+                height: 2.0,
+                width: 75.0,
+                color: Color(0xFF04959A),
+              ),
+              SizedBox(height: 10.0),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    height: 25.0,
+                    width: 100.0,
+                    child: SmoothStarRating(
+                        allowHalfRating: false,
+                        starCount: 5,
+                        rating: 3.0,
+                        size: 15.0,
+                        color: Color(0XFF04959A),
+                        borderColor: Color(0XFF04959A),
+                        spacing: 0.0),
+                  ),
+                ],
+              )
+            ],
+          ),
         )
       ],
     ),
