@@ -5,17 +5,11 @@ part 'categoria_exercicio_model.g.dart';
 @JsonSerializable()
 class CategoriaExercicioModel {
   int id;
-  int exercicioTreinoId;
-  int repeticoes;
-  int carga;
-  String tempoPausa;
+  String descricao;
 
   CategoriaExercicioModel({
     this.id,
-    this.exercicioTreinoId,
-    this.repeticoes,
-    this.carga,
-    this.tempoPausa,
+    this.descricao,
   });
 
   factory CategoriaExercicioModel.fromJson(Map<String, dynamic> json) =>

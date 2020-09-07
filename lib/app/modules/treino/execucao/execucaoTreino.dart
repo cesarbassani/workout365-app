@@ -27,6 +27,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     });
     _inicializaVideo();
     super.initState();
+    print(widget
+        .treinoCompleto.exercicios_treino[0].exercicio.categoria_exercicio);
   }
 
   @override

@@ -6,20 +6,18 @@ part 'exercicio_model.g.dart';
 @JsonSerializable()
 class ExercicioModel {
   int id;
-  int categoriaExercicioId;
-  CategoriaExercicioModel categoriaExercicio;
+  int categoria_exercicio_id;
+  CategoriaExercicioModel categoria_exercicio;
   String nome;
   String descricao;
-  String animacaoBase64;
   String video;
 
   ExercicioModel(
       {this.id,
-      this.categoriaExercicioId,
-      this.categoriaExercicio,
+      this.categoria_exercicio_id,
+      this.categoria_exercicio,
       this.nome,
       this.descricao,
-      this.animacaoBase64,
       this.video});
 
   factory ExercicioModel.fromJson(Map<String, dynamic> json) =>
