@@ -40,15 +40,22 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(widget.treinoCompleto.nome),
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Color(0xFF414550),
+      ),
       body: Stack(
         children: <Widget>[
           Container(
             height: screenHeight,
             width: screenWidth,
-            color: Colors.white,
+            color: Colors.black,
           ),
           Container(
-            height: screenHeight - screenHeight / 2,
+            height: screenHeight - (screenHeight / 2) + 50,
             width: screenWidth,
 //            decoration: BoxDecoration(
 //              image: DecorationImage(
@@ -59,7 +66,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             child: _carregaVideo(),
           ),
           Positioned(
-            top: screenHeight - screenHeight / 2 - 25.0,
+            top: screenHeight / 2 + 30,
             child: Container(
               padding: EdgeInsets.only(left: 20.0),
               height: screenHeight / 2 + 25.0,
@@ -85,33 +92,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                         fontWeight: FontWeight.w400,
                         color: Color(0xFF5E5B54),
                       )),
-                  SizedBox(height: 7.0),
-                  Row(
-                    children: <Widget>[
-                      SmoothStarRating(
-                          allowHalfRating: false,
-                          starCount: 5,
-                          rating: 3.0,
-                          size: 15.0,
-                          color: Color(0XFF04959A),
-                          borderColor: Color(0XFF04959A),
-                          spacing: 0.0),
-                      SizedBox(width: 3.0),
-                      Text("3.0",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0XFF04959A),
-                          )),
-                      SizedBox(width: 3.0),
-                      Text("Média",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.w400,
-                            color: Color(0XFFC2C0B6),
-                          )),
-                    ],
-                  ),
                   SizedBox(
                     height: 5.0,
                   ),
@@ -226,50 +206,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   color: Color(0xFF414550)),
             ),
           ),
-          Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 50.0),
-              child: Container(
-                  height: 40.0,
-                  width: 40.0,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.pop(context);
-                    },
-                    child: Center(
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 20.0,
-                        color: Colors.white,
-                      ),
-                    ),
-                  )),
-            ),
-          ),
-          Align(
-            alignment: Alignment.topRight,
-            child: Padding(
-              padding: EdgeInsets.only(right: 15.0, top: 50.0),
-              child: Container(
-                height: 40.0,
-                width: 40.0,
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
-                child: Center(
-                  child: Icon(
-                    Icons.favorite_border,
-                    size: 20.0,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-          ),
           Positioned(
-            top: screenHeight / 2 - 25.0,
+            top: screenHeight / 2 - 50.0,
             right: 25.0,
             child: Hero(
               tag: "text",
@@ -284,7 +222,30 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                 ),
               ),
             ),
-          )
+          ),
+          Positioned(
+            top: screenHeight / 2,
+            right: 15.0,
+            child: Padding(
+              padding: EdgeInsets.only(left: 15.0, top: 50.0),
+              child: Container(
+                height: 40.0,
+                width: 40.0,
+                child: GestureDetector(
+                  onTap: () {
+                    _mostrarModal(context);
+                  },
+                  child: Center(
+                    child: Icon(
+                      Icons.info_outline,
+                      size: 30.0,
+                      color: Color(0XFF04959A),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -315,5 +276,33 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     _controller.setLooping(true);
 //    _controller.seekTo(Duration(seconds: 1));
     _controller.play();
+  }
+
+  void _mostrarModal(context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return Container(
+            height: MediaQuery.of(context).size.height * .60,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text("texto"),
+                  IconButton(
+                    icon: Icon(
+                      Icons.cancel,
+                      color: Colors.red,
+                      size: 25,
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  )
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

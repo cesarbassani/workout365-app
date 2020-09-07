@@ -30,22 +30,23 @@ class CapaTreino extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 50.0),
                 child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Center(
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 20.0,
-                          color: Colors.white,
-                        ),
+                  height: 40.0,
+                  width: 40.0,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Center(
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 20.0,
+                        color: Colors.white,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),

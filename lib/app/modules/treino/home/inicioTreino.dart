@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
+import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 import 'package:workout365app/app/shared/stores/treino_free_store.dart';
 
 import '../capaTreino.dart';
@@ -39,6 +40,15 @@ class _InicioTreinoState extends State<InicioTreino> {
 }
 
 Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
+  executarTreino(TreinoCompletoModel treinoCompleto) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => ExecucaoTreino(
+                  treinoCompleto: treinoCompleto,
+                )));
+  }
+
   return SingleChildScrollView(
     child: Observer(builder: (_) {
       return FutureBuilder<List<TreinoCompletoModel>>(
@@ -97,42 +107,66 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
                                     style: BorderStyle.solid,
                                     width: 3.0))),
                         child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Exercícios',
-                                  style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontFamily: 'Timesroman',
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
+                            Text(
+                              'Exercícios',
+                              style: TextStyle(
+                                  fontSize: 20.0,
+                                  fontFamily: 'Timesroman',
+                                  fontWeight: FontWeight.bold),
+                            ),
                           ],
                         ),
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(top: 15.0, left: 15.0),
-                      height: 125.0,
-                      width: double.infinity,
+                      padding: EdgeInsets.only(left: 15.0),
+                      height: 200.0,
+                      width: size.width,
                       child: ListView.builder(
                           shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
+                          scrollDirection: Axis.vertical,
                           itemCount: treinoCompleto.exercicios_treino.length,
                           itemBuilder: (context, index) {
-                            return Row(
+                            return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _card(treinoCompleto, index),
-                                SizedBox(width: 10.0),
+                                _card(treinoCompleto, index, size),
+                                SizedBox(
+                                  height: 5,
+                                ),
                               ],
                             );
                           }),
                     ),
                     SizedBox(height: 15),
+                    Container(
+                      padding: EdgeInsets.only(
+                          left: 18.0, bottom: 25.0, right: 18.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 50.0,
+                              child: RaisedButton(
+                                onPressed: () {
+                                  executarTreino(treinoCompleto);
+                                },
+                                color: Color(0xFF04959A),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Text(
+                                  "Iniciar Treino",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
                   ],
                 );
               } else {
@@ -164,148 +198,70 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
   );
 }
 
-Widget _card(TreinoCompletoModel treinoCompleto, int index) {
+Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size) {
   return Container(
-    padding: EdgeInsets.only(
-      left: 5.0,
-      top: 5,
-      right: 5,
-    ),
-    height: 125.0,
-    width: 250.0,
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(12.0),
+    padding: EdgeInsets.only(left: 5, top: 5, right: 5),
+    height: 90.0,
+    width: size.width - 30,
+    child: Material(
       color: Colors.white,
-    ),
-    child: Row(
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            image: DecorationImage(
-                image: AssetImage("lib/assets/images/triceps.jpg"),
-                fit: BoxFit.cover),
-          ),
-          height: 125.0,
-          width: 100.0,
-        ),
-        SizedBox(width: 10.0),
-        Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                treinoCompleto.exercicios_treino[index].exercicio.nome,
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Text(
-                treinoCompleto
-                    .exercicios_treino[index].tempo_total_por_exercicio
-                    .toString(),
-                style: TextStyle(
-                  fontFamily: 'Quicksand',
-                ),
-              ),
-              SizedBox(height: 10.0),
-              Container(
-                height: 2.0,
-                width: 75.0,
-                color: Color(0xFF04959A),
-              ),
-              SizedBox(height: 10.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 25.0,
-                    width: 100.0,
-                    child: SmoothStarRating(
-                        allowHalfRating: false,
-                        starCount: 5,
-                        rating: 3.0,
-                        size: 15.0,
-                        color: Color(0XFF04959A),
-                        borderColor: Color(0XFF04959A),
-                        spacing: 0.0),
-                  ),
-                ],
-              )
-            ],
-          ),
-        )
-      ],
-    ),
-  );
-}
-
-Widget _card2() {
-  return Container(
-    height: 125.0,
-    width: 250.0,
-    decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(12.0),
-      color: Colors.white,
-    ),
-    child: Row(
-      children: <Widget>[
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
-            image: DecorationImage(
-                image: AssetImage("lib/assets/images/apoio.jpg"),
-                fit: BoxFit.cover),
-          ),
-          height: 125.0,
-          width: 100.0,
-        ),
-        SizedBox(width: 20.0),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      shadowColor: Colors.black,
+      elevation: 2.0,
+      child: Container(
+        margin: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+        height: 100.0,
+        width: 100.0,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              'Apoio',
-              style: TextStyle(
-                fontFamily: 'Quicksand',
-              ),
-            ),
-            Text(
-              '20 min',
-              style: TextStyle(
-                fontFamily: 'Quicksand',
-              ),
+          children: [
+            Row(
+              children: [
+                Text(
+                  treinoCompleto.exercicios_treino[index].exercicio.nome,
+                  style: TextStyle(
+                      fontFamily: 'Quicksand', fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
             SizedBox(height: 10.0),
             Container(
               height: 2.0,
-              width: 75.0,
+              width: 100,
               color: Color(0xFF04959A),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 5),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  height: 25.0,
-                  width: 100.0,
-                  child: SmoothStarRating(
-                      allowHalfRating: false,
-                      starCount: 5,
-                      rating: 5.0,
-                      size: 15.0,
-                      color: Color(0XFF04959A),
-                      borderColor: Color(0XFF04959A),
-                      spacing: 0.0),
+              children: [
+                Icon(
+                  Icons.timer,
+                  size: 28,
+                  color: Colors.black38,
+                ),
+                Text(
+                  treinoCompleto
+                      .exercicios_treino[index].tempo_total_por_exercicio
+                      .toString(),
+                  style: TextStyle(
+                    fontFamily: 'Quicksand',
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Text(
+                  "Séries: " +
+                      treinoCompleto.exercicios_treino[index].numero_series
+                          .toString(),
+                  style: TextStyle(
+                    fontFamily: 'Quicksand',
+                  ),
                 ),
               ],
-            )
+            ),
           ],
-        )
-      ],
+        ),
+      ),
     ),
   );
 }
