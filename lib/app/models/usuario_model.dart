@@ -6,7 +6,7 @@ part 'usuario_model.g.dart';
 class UsuarioModel {
   int id;
   String nome;
-  String dataNascimento;
+  String data_nascimento;
   String email;
   String cpf;
   String cep;
@@ -14,12 +14,12 @@ class UsuarioModel {
   double altura;
   String telefone;
   int gestor;
-  int tempoTreino;
+  int tempo_treino;
 
   UsuarioModel({
     this.id,
     this.nome,
-    this.dataNascimento,
+    this.data_nascimento,
     this.email,
     this.cpf,
     this.cep,
@@ -27,7 +27,7 @@ class UsuarioModel {
     this.altura,
     this.telefone,
     this.gestor,
-    this.tempoTreino,
+    this.tempo_treino,
   });
 
   factory UsuarioModel.fromJson(Map<String, dynamic> json) =>
