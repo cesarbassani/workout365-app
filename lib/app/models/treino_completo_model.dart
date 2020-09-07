@@ -12,7 +12,7 @@ class TreinoCompletoModel {
   String categoria;
   String tipo;
   String sexo;
-  double preco;
+  String preco;
   int ativo;
   int disponivel_store;
   List<String> grupos_muculares;
