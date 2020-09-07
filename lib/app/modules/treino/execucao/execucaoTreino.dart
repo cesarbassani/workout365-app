@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
+import 'package:clay_containers/clay_containers.dart';
+
+import 'barItem.dart';
 
 class ExecucaoTreino extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
@@ -29,6 +31,13 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     super.initState();
     print(widget
         .treinoCompleto.exercicios_treino[0].exercicio.categoria_exercicio);
+  }
+
+  int selectedIndex = 0;
+  void onItemTapped(int tappedItemIndex) {
+    setState(() {
+      selectedIndex = tappedItemIndex;
+    });
   }
 
   @override
@@ -59,12 +68,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
           Container(
             height: screenHeight - (screenHeight / 2) + 50,
             width: screenWidth,
-//            decoration: BoxDecoration(
-//              image: DecorationImage(
-//                image: AssetImage('lib/assets/images/Remada.gif'),
-//                fit: BoxFit.cover,
-//              ),
-//            ),
             child: _carregaVideo(),
           ),
           Positioned(
@@ -80,40 +83,17 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     height: 25.0,
                   ),
                   Text(
-                      widget.treinoCompleto.exercicios_treino[step].exercicio
-                          .nome,
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.w500)),
-                  SizedBox(height: 7.0),
-                  Text(
-                      widget
-                          .treinoCompleto.exercicios_treino[step].numero_series
-                          .toString(),
-                      style: TextStyle(
-                        fontSize: 15.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF5E5B54),
-                      )),
-                  SizedBox(
-                    height: 5.0,
-                  ),
-                  Text(
-                    "Grupo Muscular: ${widget.treinoCompleto.grupos_muculares.map((grupo) => grupo)}",
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XDD201F1C)),
+                    widget
+                        .treinoCompleto.exercicios_treino[step].exercicio.nome,
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(height: 5.0),
-                  Text(
-                    widget.treinoCompleto.exercicios_treino[step].exercicio
-                        .descricao,
-                    style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XFF04959A)),
+                  Container(
+                    height: 3.0,
+                    width: 100.0,
+                    color: Color(0xFF04959A),
                   ),
-                  SizedBox(height: 10.0),
                 ],
               ),
               decoration: BoxDecoration(
@@ -125,87 +105,66 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             ),
           ),
           Align(
-            alignment: Alignment.bottomLeft,
-            child: Container(
-              height: 75.0,
-              width: 100.0,
-              child: Center(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (step >= 1) {
-                        step--;
-                        _inicializaVideo();
-                      }
-                    });
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ClayContainer(
+                height: 60,
+                borderRadius: 10,
+                color: Colors.white,
+                spread: 0,
+                depth: 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Text(
-                        "<",
-                        style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
+                      BarItem(
+                        icon: Icons.home,
+                        title: 'Treino',
+                        isSelected: selectedIndex == 0,
+                        onTap: () {
+                          onItemTapped(0);
+                        },
                       ),
-                      Text(
-                        "Anterior",
-                        style: TextStyle(
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                      )
+                      BarItem(
+                        icon: Icons.keyboard_arrow_left,
+                        isSelected: selectedIndex == 1,
+                        onTap: () {
+                          setState(() {
+                            if (step >= 1) {
+                              step--;
+                              _inicializaVideo();
+                            }
+                          });
+                        },
+                      ),
+                      BarItem(
+                        icon: Icons.info_outline,
+                        isSelected: selectedIndex == 2,
+                        onTap: () {
+                          _mostrarModal(context, widget.treinoCompleto);
+                        },
+                      ),
+                      BarItem(
+                        icon: Icons.keyboard_arrow_right,
+                        isSelected: selectedIndex == 3,
+                        onTap: () {
+                          setState(() {
+                            if (step <
+                                (widget.treinoCompleto.exercicios_treino
+                                        .length -
+                                    1)) {
+                              step++;
+                              _inicializaVideo();
+                            }
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
               ),
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(topRight: Radius.circular(30.0)),
-                  color: Color(0xFF414550)),
-            ),
-          ),
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              height: 75.0,
-              width: 100.0,
-              child: Center(
-                  child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    if (step <
-                        (widget.treinoCompleto.exercicios_treino.length - 1)) {
-                      step++;
-                      _inicializaVideo();
-                    }
-                  });
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      ">",
-                      style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    Text(
-                      "Próximo",
-                      style: TextStyle(
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    )
-                  ],
-                ),
-              )),
-              decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.only(topLeft: Radius.circular(30.0)),
-                  color: Color(0xFF414550)),
             ),
           ),
           Positioned(
@@ -221,29 +180,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     image: AssetImage('lib/assets/images/logoNovaPreto.png'),
                   ),
                   borderRadius: BorderRadius.circular(15.0),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: screenHeight / 2,
-            right: 15.0,
-            child: Padding(
-              padding: EdgeInsets.only(left: 15.0, top: 50.0),
-              child: Container(
-                height: 40.0,
-                width: 40.0,
-                child: GestureDetector(
-                  onTap: () {
-                    _mostrarModal(context);
-                  },
-                  child: Center(
-                    child: Icon(
-                      Icons.info_outline,
-                      size: 30.0,
-                      color: Color(0XFF04959A),
-                    ),
-                  ),
                 ),
               ),
             ),
@@ -280,30 +216,105 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     _controller.play();
   }
 
-  void _mostrarModal(context) {
+  void _mostrarModal(context, TreinoCompletoModel treinoCompleto) {
     showModalBottomSheet(
+        backgroundColor: Colors.transparent,
         context: context,
         builder: (BuildContext bc) {
-          return Container(
-            height: MediaQuery.of(context).size.height * .60,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Text("texto"),
-                  IconButton(
-                    icon: Icon(
-                      Icons.cancel,
-                      color: Colors.red,
-                      size: 25,
+          return Stack(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(left: 0, right: 0),
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.6,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25.0),
+                      color: Colors.white),
+                  child: Container(
+                    padding: EdgeInsets.only(top: 12.0, right: 12.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          padding: EdgeInsets.only(left: 12.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              SizedBox(
+                                height: 25.0,
+                              ),
+                              Text(
+                                treinoCompleto
+                                    .exercicios_treino[step].exercicio.nome,
+                                style: TextStyle(
+                                    fontSize: 25.0,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(height: 5.0),
+                              Container(
+                                height: 3.0,
+                                width: 100.0,
+                                color: Color(0xFF04959A),
+                              ),
+                              SizedBox(height: 5.0),
+                              Text(
+                                widget.treinoCompleto.exercicios_treino[step]
+                                    .exercicio.descricao,
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color(0XFF04959A),
+                                ),
+                              ),
+                              SizedBox(height: 15.0),
+                              Text(
+                                treinoCompleto.exercicios_treino[step].exercicio
+                                    .categoria_exercicio.descricao,
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black38,
+                                ),
+                              ),
+                              SizedBox(height: 15.0),
+                              Text(
+                                "Grupo Muscular: ${treinoCompleto.grupos_muculares.map((grupo) => grupo)}",
+                                style: TextStyle(
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black38,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          width: 399,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(top: 70),
+                                height: 50,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(
+                                      'lib/assets/images/logoGrande.png',
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
+                  ),
+                ),
               ),
-            ),
+            ],
           );
         });
   }
