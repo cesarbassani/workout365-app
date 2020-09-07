@@ -63,6 +63,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     ),
                   ),
                   Container(
+                    padding: EdgeInsets.only(bottom: 20),
                     child: Align(
                       child: Material(
                         color: Colors.white,

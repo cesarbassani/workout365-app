@@ -3,6 +3,7 @@ import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:clay_containers/clay_containers.dart';
+import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 
 import 'barItem.dart';
 
@@ -16,6 +17,11 @@ class ExecucaoTreino extends StatefulWidget {
 }
 
 class _ExecucaoTreinoState extends State<ExecucaoTreino> {
+  _feedbackPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => FeedbackPage()));
+  }
+
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
@@ -94,14 +100,47 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     width: 100.0,
                     color: Color(0xFF04959A),
                   ),
+                  SizedBox(height: 15),
+                  Text(
+                    "Método: " +
+                        widget.treinoCompleto.exercicios_treino[step]
+                            .metodo_treino +
+                        "\nSéries: " +
+                        widget.treinoCompleto.exercicios_treino[step]
+                            .numero_series
+                            .toString(),
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0XFF04959A),
+                    ),
+                  ),
+                  Container(
+                    height: 120.0,
+                    width: screenWidth,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.treinoCompleto.exercicios_treino[step]
+                            .numero_series,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _series(widget.treinoCompleto, index),
+                            ],
+                          );
+                        }),
+                  ),
                 ],
               ),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(25.0),
-                    topRight: Radius.circular(25.0),
-                  )),
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25.0),
+                  topRight: Radius.circular(25.0),
+                ),
+              ),
             ),
           ),
           Align(
@@ -120,11 +159,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       BarItem(
-                        icon: Icons.home,
-                        title: 'Treino',
+                        icon: Icons.fitness_center,
+                        title: 'Finalizar Treino',
                         isSelected: selectedIndex == 0,
                         onTap: () {
-                          onItemTapped(0);
+                          _finalizarTreino(context);
                         },
                       ),
                       BarItem(
@@ -171,7 +210,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             top: screenHeight / 2 - 50.0,
             right: 25.0,
             child: Hero(
-              tag: "text",
+              tag: "k365",
               child: Container(
                 height: 100.0,
                 width: 100.0,
@@ -317,5 +356,84 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             ],
           );
         });
+  }
+
+  Widget _finalizarTreino(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Finalizar Treino"),
+          content: Text("Deseja realmente finalizar a execução do treino?"),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Não"),
+            ),
+            FlatButton(
+              onPressed: () {
+                _feedbackPage();
+              },
+              child: Text("Sim"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget _series(TreinoCompletoModel treinoCompleto, int index) {
+    return Container(
+      padding: EdgeInsets.only(left: 5, top: 15, right: 5),
+      height: 100.0,
+      width: 150,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        shadowColor: Colors.black,
+        elevation: 2.0,
+        child: Container(
+          margin: EdgeInsets.only(left: 10, top: 10, right: 10),
+          height: 115.0,
+          width: 75.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "10 Rep.",
+                        style: TextStyle(
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 10.0),
+                      Container(
+                        height: 2.0,
+                        width: 75,
+                        color: Color(0xFF04959A),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "Carga: 100%",
+                        style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          color: Color(0xFF04959A),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
