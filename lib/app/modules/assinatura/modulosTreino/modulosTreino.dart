@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:workout365app/app/modules/assinatura/modulosTreino/cabecalhoModulosTreino.dart';
+import 'package:workout365app/app/modules/home/assinante/assinanteHome.dart';
 import 'package:workout365app/app/modules/home/home_page.dart';
 
 class ModulosTreino extends StatefulWidget {

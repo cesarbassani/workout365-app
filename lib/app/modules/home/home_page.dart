@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workout365app/app/modules/assinatura/sobre/sobre.dart';
+import 'package:workout365app/app/modules/home/assinante/assinanteHome.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
 import 'package:workout365app/app/modules/perfil/profile/profile.dart';
-import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
 import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/repository/shared_prefs_repository.dart';
 
@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
   int _indiceAtual = 0;
-  String _resultado = "";
 
   _procederParaPagamento() {
     Navigator.push(
@@ -32,6 +31,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   Widget build(BuildContext context) {
     List<Widget> telas = [
       Inicio_Page(),
+      AssinanteHome(),
       Loja_Page(),
       Sobre(),
       Profile(),
@@ -116,6 +116,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         items: [
           BottomNavigationBarItem(
               title: Text("Inicio"),
+              icon: Icon(Icons.home, color: Colors.black)),
+          BottomNavigationBarItem(
+              title: Text("Assinante"),
               icon: Icon(Icons.home, color: Colors.black)),
           BottomNavigationBarItem(
               title: Text("Treinos"),
