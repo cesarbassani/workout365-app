@@ -28,6 +28,13 @@ scripts:
 
 
 dependencies:
+  pedantic: ^1.8.0+1
+  flutter_cache_manager: ^1.4.2
+  chewie: ^0.9.10
+  cupertino_icons: ^1.0.0
+  equatable: ^1.2.5
+  flutter_bloc: ^6.0.5
+  bloc: ^6.0.3
   video_player: ^0.10.12+2
   clay_containers: ^0.2.2
   flutter_secure_storage: ^3.3.3

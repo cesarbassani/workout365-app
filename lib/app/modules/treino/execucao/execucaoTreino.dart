@@ -1,9 +1,16 @@
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
-import 'package:clay_containers/clay_containers.dart';
 import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
+import 'package:workout365app/app/modules/video/blocs/video_player/video_player_bloc.dart';
+import 'package:workout365app/app/modules/video/blocs/video_player/video_player_event.dart';
+import 'package:workout365app/app/modules/video/blocs/video_player/video_player_state.dart';
+import 'package:workout365app/app/modules/video/models/video.dart';
+import 'package:workout365app/app/modules/video/services/video_controller_service.dart';
+import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart';
 
 import 'barItem.dart';
 
@@ -233,16 +240,62 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return AspectRatio(
-            aspectRatio: _controller.value.aspectRatio,
-            child: VideoPlayer(_controller),
-          );
+          return _buildVideoPlayer(
+              "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
         } else {
           return Center(
             child: CircularProgressIndicator(),
           );
         }
       },
+    );
+  }
+
+  Widget _buildVideoPlayer(String urlVideo) {
+    Video video = Video(url: urlVideo);
+
+    return BlocProvider<VideoPlayerBloc>(
+      create: (context) => VideoPlayerBloc(
+          RepositoryProvider.of<VideoControllerService>(context))
+        ..add(VideoSelectedEvent(video)),
+      child: BlocBuilder<VideoPlayerBloc, VideoPlayerState>(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[_getPlayer(context, state)],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _getPlayer(BuildContext context, VideoPlayerState state) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final containerHeight = screenWidth / ASPECT_RATIO;
+
+    if (state is VideoPlayerStateLoaded) {
+      return VideoPlayerWidget(
+        key: Key(state.video.url),
+        controller: state.controller,
+      );
+    }
+
+    if (state is VideoPlayerStateError) {
+      return Container(
+        height: containerHeight,
+        color: Colors.black,
+        child: Center(
+          child: Text(state.message),
+        ),
+      );
+    }
+
+    return Container(
+      height: containerHeight,
+      color: Colors.black,
+      child: Center(
+        child: Text('Initialising video...'),
+      ),
     );
   }
 

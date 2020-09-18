@@ -58,14 +58,14 @@ class AuthInterceptorWrapper extends InterceptorsWrapper {
     try {
 //      final refreshToken = await security.refreshToken;
       final accessToken = prefs.token;
-      var refreshResult = await CustomDio.instance.post('/usuarios/refresh',
+      var refreshResult = await CustomDio.authInstance.post('/usuarios/refresh',
 //          data: {'token': accessToken, 'refreshToken': refreshToken},
           options: Options(headers: {
             "Content-Type": "application/json",
             "Accept": "application/json",
           }));
 
-      await prefs.registerAccessToken(refreshResult.data['token']);
+      await prefs.registerAccessToken(refreshResult.data['data']['token']);
 //      await security.registerRefreshToken(refreshResult.data['refresh_token']);
     } catch (e) {
       print(e);
