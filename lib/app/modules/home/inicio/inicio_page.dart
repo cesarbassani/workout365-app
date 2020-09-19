@@ -15,11 +15,6 @@ class Inicio_Page extends StatefulWidget {
 }
 
 class _Inicio_PageState extends State<Inicio_Page> {
-  _iniciarTreino() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => InicioTreino()));
-  }
-
   final TreinoFreeStore treinoFreeStore = TreinoFreeStore();
 
   @override
@@ -173,7 +168,6 @@ class _Inicio_PageState extends State<Inicio_Page> {
         elevation: 2.0,
         child: GestureDetector(
           onTap: () {
-//            _iniciarTreino();
             Navigator.push(
                 context,
                 MaterialPageRoute(
