@@ -29,7 +29,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       body: Center(
         child: Container(
-          child: Image.asset('lib/assets/images/logo.png'),
+          child: Image.asset('lib/assets/images/logoNovaPreto.png'),
         ),
       ),
     );
