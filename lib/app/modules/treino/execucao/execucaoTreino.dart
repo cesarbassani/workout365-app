@@ -116,7 +116,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         child: Stack(
           children: <Widget>[
             Container(
-              height: screenHeight,
+              height: screenHeight * 0.87,
               width: screenWidth,
               color: Colors.white,
             ),
@@ -148,7 +148,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
               top: (screenHeight * 0.33) - 8,
               child: Container(
                 padding: EdgeInsets.only(left: 20.0),
-                height: screenHeight / 2 - 20.0,
+                height: screenHeight / 2 + 60,
                 width: screenWidth,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +184,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                       ),
                     ),
                     Container(
-                      height: 120.0,
+                      height: 110.0,
                       width: screenWidth,
                       child: ListView.builder(
                           shrinkWrap: true,
@@ -201,7 +201,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                           }),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 5, top: 15, right: 5),
+                      padding: EdgeInsets.only(left: 5, top: 5, right: 5),
                       height: 150.0,
                       width: screenWidth * 0.92,
                       child: Material(
@@ -210,9 +210,10 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                         shadowColor: Colors.black,
                         elevation: 2.0,
                         child: Container(
-                          margin: EdgeInsets.only(left: 10, top: 10, right: 10),
+                          margin: EdgeInsets.only(
+                              left: 10, top: 10, right: 10, bottom: 20),
                           height: 150.0,
-                          width: 75.0,
+                          width: 100.0,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -223,7 +224,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Evolução do Treino",
+                                        "Evolução do Treino - " +
+                                            widget.treinoCompleto.nome,
                                         style: TextStyle(
                                             fontFamily: 'Quicksand',
                                             fontWeight: FontWeight.bold),
@@ -231,7 +233,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                                       SizedBox(height: 10.0),
                                       Container(
                                         height: 2.0,
-                                        width: 200,
+                                        width: screenWidth * 0.92 - 30,
                                         color: Color(0xFF04959A),
                                       ),
                                       SizedBox(height: 5),
@@ -258,15 +260,17 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                                                 ),
                                               ],
                                             ),
-                                            _IngredientProgress(
-                                              ingredient: "Progresso",
-                                              progress: 0.7,
-                                              progressColor: Color(0xFF04959A),
-                                              leftAmount: 70,
-                                              width: screenWidth * 0.28,
-                                            ),
                                           ],
                                         ),
+                                      ),
+                                      _IngredientProgress(
+                                        ingredient: "Progresso",
+                                        nomeTreino: widget.treinoCompleto.nome,
+                                        progress: 0.5,
+                                        progressColor: Color(0xFF04959A),
+                                        leftAmount: 50,
+                                        width: screenWidth * 0.28,
+                                        screenWidth: screenWidth,
                                       ),
                                     ],
                                   ),
@@ -296,12 +300,12 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.arrow_forward),
-            title: Text("´Próximo"),
+            title: Text("Próximo"),
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Color(0xFF04959A),
-        unselectedItemColor: Color(0xFF04959A),
+        selectedItemColor: Colors.black,
+        unselectedItemColor: Colors.black,
         onTap: _onItemTapped,
       ),
     );
@@ -565,17 +569,21 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
 
 class _IngredientProgress extends StatelessWidget {
   final String ingredient;
+  final String nomeTreino;
   final int leftAmount;
   final double progress, width;
   final Color progressColor;
+  final double screenWidth;
 
   const _IngredientProgress(
       {Key key,
       this.ingredient,
+      this.nomeTreino,
       this.leftAmount,
       this.progress,
       this.progressColor,
-      this.width})
+      this.width,
+      this.screenWidth})
       : super(key: key);
 
   @override
@@ -599,7 +607,7 @@ class _IngredientProgress extends StatelessWidget {
               children: <Widget>[
                 Container(
                   height: 10,
-                  width: width,
+                  width: screenWidth * 0.92 - 80,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     color: Colors.grey,
@@ -607,7 +615,7 @@ class _IngredientProgress extends StatelessWidget {
                 ),
                 Container(
                   height: 10,
-                  width: width * progress,
+                  width: (screenWidth * 0.92 - 80) * progress,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     color: progressColor,
