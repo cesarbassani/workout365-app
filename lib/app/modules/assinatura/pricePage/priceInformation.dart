@@ -83,10 +83,11 @@ class _PriceInformationState extends State<PriceInformation> {
                             vertical: 5.0,
                           ),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(
-                                color: Colors.black.withOpacity(0.5),
-                              )),
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                          ),
                           child: Text('Treinos Personalizados'),
                         ),
                         Container(

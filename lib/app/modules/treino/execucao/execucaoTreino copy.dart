@@ -12,7 +12,6 @@ import 'package:workout365app/app/modules/video/models/video.dart';
 import 'package:workout365app/app/modules/video/services/video_controller_service.dart';
 import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart';
 import 'package:swipedetector/swipedetector.dart';
-import 'package:vector_math/vector_math.dart' as math;
 
 import 'barItem.dart';
 
@@ -61,45 +60,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     super.dispose();
   }
 
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Anterior',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Informacoes',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Proximo',
-      style: optionStyle,
-    ),
-  ];
-  void _onItemTapped(int index) {
-    if (index == 0) {
-      setState(() {
-        if (step >= 1) {
-          step--;
-          _inicializaVideo();
-        }
-      });
-    }
-    if (index == 2) {
-      setState(() {
-        if (step < (widget.treinoCompleto.exercicios_treino.length - 1)) {
-          step++;
-          _inicializaVideo();
-        }
-      });
-    }
-    if (index == 1) {
-      _mostrarModal(context, widget.treinoCompleto);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
@@ -112,201 +72,236 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         centerTitle: true,
         backgroundColor: Color(0xFF414550),
       ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: screenHeight * 0.87,
+      body: Stack(
+        children: <Widget>[
+          Container(
+            height: screenHeight,
+            width: screenWidth,
+            color: Colors.white,
+          ),
+          SwipeDetector(
+            onSwipeLeft: () {
+              setState(() {
+                if (step <
+                    (widget.treinoCompleto.exercicios_treino.length - 1)) {
+                  step++;
+                  _inicializaVideo();
+                }
+              });
+            },
+            onSwipeRight: () {
+              setState(() {
+                if (step >= 1) {
+                  step--;
+                  _inicializaVideo();
+                }
+              });
+            },
+            child: Container(
+              height: (screenHeight / 2) - 30,
               width: screenWidth,
-              color: Colors.white,
+              child: _carregaVideo(),
             ),
-            SwipeDetector(
-              onSwipeLeft: () {
-                setState(() {
-                  if (step <
-                      (widget.treinoCompleto.exercicios_treino.length - 1)) {
-                    step++;
-                    _inicializaVideo();
-                  }
-                });
-              },
-              onSwipeRight: () {
-                setState(() {
-                  if (step >= 1) {
-                    step--;
-                    _inicializaVideo();
-                  }
-                });
-              },
-              child: Container(
-                height: (screenHeight / 2) - 30,
-                width: screenWidth,
-                child: _carregaVideo(),
-              ),
-            ),
-            Positioned(
-              top: (screenHeight * 0.33) - 8,
-              child: Container(
-                padding: EdgeInsets.only(left: 20.0),
-                height: screenHeight / 2 + 60,
-                width: screenWidth,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 25.0,
+          ),
+          Positioned(
+            top: (screenHeight * 0.33) - 8,
+            child: Container(
+              padding: EdgeInsets.only(left: 20.0),
+              height: screenHeight / 2 - 80.0,
+              width: screenWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(
+                    height: 25.0,
+                  ),
+                  Text(
+                    widget
+                        .treinoCompleto.exercicios_treino[step].exercicio.nome,
+                    style:
+                        TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
+                    height: 3.0,
+                    width: 100.0,
+                    color: Color(0xFF04959A),
+                  ),
+                  SizedBox(height: 15),
+                  Text(
+                    "Método: " +
+                        widget.treinoCompleto.exercicios_treino[step]
+                            .metodo_treino +
+                        "\nSéries: " +
+                        widget.treinoCompleto.exercicios_treino[step]
+                            .numero_series
+                            .toString(),
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.w400,
+                      color: Color(0XFF04959A),
                     ),
-                    Text(
-                      widget.treinoCompleto.exercicios_treino[step].exercicio
-                          .nome,
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 5.0),
-                    Container(
-                      height: 3.0,
-                      width: 100.0,
-                      color: Color(0xFF04959A),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      "Método: " +
-                          widget.treinoCompleto.exercicios_treino[step]
-                              .metodo_treino +
-                          "\nSéries: " +
-                          widget.treinoCompleto.exercicios_treino[step]
-                              .numero_series
-                              .toString(),
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XFF04959A),
-                      ),
-                    ),
-                    Container(
-                      height: 110.0,
-                      width: screenWidth,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: widget.treinoCompleto
-                              .exercicios_treino[step].numero_series,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _series(widget.treinoCompleto, index),
-                              ],
-                            );
-                          }),
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(left: 5, top: 5, right: 5),
-                      height: 150.0,
-                      width: screenWidth * 0.92,
-                      child: Material(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.0),
-                        shadowColor: Colors.black,
-                        elevation: 2.0,
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 10, top: 10, right: 10, bottom: 20),
-                          height: 150.0,
-                          width: 100.0,
-                          child: Column(
+                  ),
+                  Container(
+                    height: 120.0,
+                    width: screenWidth,
+                    child: ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: widget.treinoCompleto.exercicios_treino[step]
+                            .numero_series,
+                        itemBuilder: (context, index) {
+                          return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Evolução do Treino - " +
-                                            widget.treinoCompleto.nome,
-                                        style: TextStyle(
-                                            fontFamily: 'Quicksand',
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      SizedBox(height: 10.0),
-                                      Container(
-                                        height: 2.0,
-                                        width: screenWidth * 0.92 - 30,
-                                        color: Color(0xFF04959A),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 100),
-                                        child: Column(
-                                          children: [
-                                            SizedBox(
-                                              height: 12,
-                                            ),
-                                            Row(
-                                              children: [
-                                                Icon(Icons.timer,
-                                                    size: 20.0,
-                                                    color: Colors.black),
-                                                SizedBox(width: 10),
-                                                Text(
-                                                  "45:15",
-                                                  style: TextStyle(
-                                                      fontSize: 14,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      color: Colors.black),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      _IngredientProgress(
-                                        ingredient: "Progresso",
-                                        nomeTreino: widget.treinoCompleto.nome,
-                                        progress: 0.5,
-                                        progressColor: Color(0xFF04959A),
-                                        leftAmount: 50,
-                                        width: screenWidth * 0.28,
-                                        screenWidth: screenWidth,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
+                              _series(widget.treinoCompleto, index),
                             ],
+                          );
+                        }),
+                  ),
+                ],
+              ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+            ),
+          ),
+          Positioned(
+            top: (screenHeight * 0.7),
+            child: Container(
+              height: screenHeight * 0.2,
+              width: screenWidth,
+              child: Material(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(25.0),
+                shadowColor: Colors.black,
+                elevation: 10.0,
+                child: Padding(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (step >= 1) {
+                              step--;
+                              _inicializaVideo();
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 5.0,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8.0),
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.5),
+                            ),
+                          ),
+                          child: Icon(
+                            Icons.arrow_back,
+                            size: 30.0,
+                            color: Colors.black,
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(width: screenWidth / 2),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (step <
+                                (widget.treinoCompleto.exercicios_treino
+                                        .length -
+                                    1)) {
+                              step++;
+                              _inicializaVideo();
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 8.0,
+                            vertical: 5.0,
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.5),
+                              )),
+                          child: Icon(
+                            Icons.arrow_forward,
+                            size: 30.0,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_back),
-            title: Text("Anterior"),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info_outline),
-            title: Text("Informações"),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: ClayContainer(
+                height: 60,
+                borderRadius: 10,
+                color: Colors.white,
+                spread: 0,
+                depth: 0,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      BarItem(
+                        icon: Icons.fitness_center,
+                        title: 'Finalizar Treino',
+                        isSelected: selectedIndex == 0,
+                        onTap: () {
+                          _finalizarTreino(context);
+                        },
+                      ),
+                      BarItem(
+                        icon: Icons.info_outline,
+                        title: 'Informações',
+                        isSelected: selectedIndex == 0,
+                        onTap: () {
+                          _mostrarModal(context, widget.treinoCompleto);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            title: Text("Próximo"),
+          Positioned(
+            top: screenHeight / 2 - 230,
+            right: 20,
+            child: Hero(
+              tag: "k365",
+              child: Container(
+                height: 100.0,
+                width: 100.0,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('lib/assets/images/logoNovaPreto.png'),
+                  ),
+                  borderRadius: BorderRadius.circular(15.0),
+                ),
+              ),
+            ),
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
       ),
     );
   }
@@ -563,76 +558,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class _IngredientProgress extends StatelessWidget {
-  final String ingredient;
-  final String nomeTreino;
-  final int leftAmount;
-  final double progress, width;
-  final Color progressColor;
-  final double screenWidth;
-
-  const _IngredientProgress(
-      {Key key,
-      this.ingredient,
-      this.nomeTreino,
-      this.leftAmount,
-      this.progress,
-      this.progressColor,
-      this.width,
-      this.screenWidth})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          ingredient,
-          style: TextStyle(
-              fontSize: 12, fontWeight: FontWeight.w700, color: Colors.black),
-        ),
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Stack(
-              children: <Widget>[
-                Container(
-                  height: 10,
-                  width: screenWidth * 0.92 - 80,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    color: Colors.grey,
-                  ),
-                ),
-                Container(
-                  height: 10,
-                  width: (screenWidth * 0.92 - 80) * progress,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(5)),
-                    color: progressColor,
-                  ),
-                )
-              ],
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Text(
-              "${leftAmount}% ",
-              style: TextStyle(color: Colors.black),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }
