@@ -1,6 +1,6 @@
-import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:swipedetector/swipedetector.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
@@ -11,10 +11,6 @@ import 'package:workout365app/app/modules/video/blocs/video_player/video_player_
 import 'package:workout365app/app/modules/video/models/video.dart';
 import 'package:workout365app/app/modules/video/services/video_controller_service.dart';
 import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart';
-import 'package:swipedetector/swipedetector.dart';
-import 'package:vector_math/vector_math.dart' as math;
-
-import 'barItem.dart';
 
 class ExecucaoTreino extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
