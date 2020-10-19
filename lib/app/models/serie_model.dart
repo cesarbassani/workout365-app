@@ -9,14 +9,15 @@ class SerieModel {
   int repeticoes;
   int carga;
   String tempoPausa;
+  int sequencia_sub_serie;
 
-  SerieModel({
-    this.id,
-    this.exercicio_treino_id,
-    this.repeticoes,
-    this.carga,
-    this.tempoPausa,
-  });
+  SerieModel(
+      {this.id,
+      this.exercicio_treino_id,
+      this.repeticoes,
+      this.carga,
+      this.tempoPausa,
+      this.sequencia_sub_serie});
 
   factory SerieModel.fromJson(Map<String, dynamic> json) =>
       _$SerieModelFromJson(json);

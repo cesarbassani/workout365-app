@@ -19,13 +19,13 @@ class CabecalhoCard extends StatelessWidget {
 
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height / 6,
+      height: MediaQuery.of(context).size.height / 5,
       child: Stack(
         children: <Widget>[
           Container(
             padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height / 6,
+            height: MediaQuery.of(context).size.height / 5,
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     begin: Alignment.topCenter,

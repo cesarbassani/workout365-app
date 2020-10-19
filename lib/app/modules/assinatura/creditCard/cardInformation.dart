@@ -60,7 +60,7 @@ class _CardInformationState extends State<CardInformation> {
                     ),
                     Container(
                       padding: EdgeInsets.only(bottom: 16, top: 30),
-                      child: Text("Preecha as informações para se registrar"),
+                      child: Text("Preencha as informações para se registrar"),
                     ),
                     CreditCardWidget(
                       cardNumber: cardNumber,

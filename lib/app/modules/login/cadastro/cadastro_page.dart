@@ -83,7 +83,7 @@ class _CadastroPageState
               children: <Widget>[
                 Container(
                   padding: EdgeInsets.only(bottom: 16),
-                  child: Text("Preecha as informações para se registrar"),
+                  child: Text("Preencha as informações para se registrar"),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,

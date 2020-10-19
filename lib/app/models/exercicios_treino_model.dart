@@ -18,6 +18,8 @@ class ExerciciosTreinoModel {
   int numero_series;
   ExercicioModel exercicio;
   List<SerieModel> series;
+  int ordem;
+  int num_sub_series;
 
   ExerciciosTreinoModel(
       {this.id,
@@ -31,7 +33,9 @@ class ExerciciosTreinoModel {
       this.tempo_total_por_exercicio,
       this.numero_series,
       this.exercicio,
-      this.series});
+      this.series,
+      this.ordem,
+      this.num_sub_series});
 
   factory ExerciciosTreinoModel.fromJson(Map<String, dynamic> json) =>
       _$ExerciciosTreinoModelFromJson(json);
