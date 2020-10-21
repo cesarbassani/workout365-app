@@ -7,6 +7,7 @@ import 'package:workout365app/app/modules/login/cadastro/cadastro_module.dart';
 import 'package:workout365app/app/modules/login/login_controller.dart';
 import 'package:workout365app/app/modules/login/login_module.dart';
 import 'package:workout365app/app/modules/main/main_page.dart';
+import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/repository/usuario_repository.dart';
 import 'package:workout365app/app/services/usuario_services.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
@@ -31,6 +32,7 @@ class AppModule extends MainModule {
         ModularRouter('/home', module: HomeModule()),
         ModularRouter('/login', module: LoginModule()),
         ModularRouter('/cadastro', module: CadastroModule()),
+        ModularRouter('/feedbackPage', child: (_, __) => FeedbackPage()),
       ];
 
   @override

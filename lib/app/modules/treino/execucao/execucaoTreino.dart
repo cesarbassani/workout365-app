@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
-import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_bloc.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_event.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_state.dart';
@@ -23,8 +23,9 @@ class ExecucaoTreino extends StatefulWidget {
 
 class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   _feedbackPage() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => FeedbackPage()));
+    Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => FeedbackPage()));
   }
 
   VideoPlayerController _controller;
@@ -57,6 +58,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     super.dispose();
   }
 
+  var validaUltimoExercicio = false;
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -80,6 +82,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         if (step >= 1) {
           step--;
           _inicializaVideo();
+          validaUltimoExercicio = false;
         }
       });
     }
@@ -88,6 +91,13 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         if (step < (widget.treinoCompleto.exercicios_treino.length - 1)) {
           step++;
           _inicializaVideo();
+          if (step == widget.treinoCompleto.exercicios_treino.length - 1) {
+            validaUltimoExercicio = true;
+          }
+        } else {
+          // if (validaUltimoExercicio) {
+          _finalizarTreino(context);
+          // }
         }
       });
     }
@@ -285,7 +295,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.arrow_back),
             title: Text("Anterior"),
@@ -295,8 +305,12 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             title: Text("Informações"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_forward),
-            title: Text("Próximo"),
+            icon: !validaUltimoExercicio
+                ? Icon(Icons.arrow_forward)
+                : Icon(Icons.assistant_photo_outlined),
+            title: !validaUltimoExercicio
+                ? Text("Próximo")
+                : Text("Finaliza Treino"),
           ),
         ],
         currentIndex: _selectedIndex,
@@ -486,7 +500,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   Widget _finalizarTreino(context) {
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (_) {
         return AlertDialog(
           title: Text("Finalizar Treino"),
           content: Text("Deseja realmente finalizar a execução do treino?"),
