@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -14,27 +16,77 @@ import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart
 
 class ExecucaoTreino extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
+  final bool treinoIniciado;
 
-  const ExecucaoTreino({Key key, this.treinoCompleto}) : super(key: key);
+  const ExecucaoTreino({Key key, this.treinoCompleto, this.treinoIniciado})
+      : super(key: key);
 
   @override
   _ExecucaoTreinoState createState() => _ExecucaoTreinoState();
 }
 
 class _ExecucaoTreinoState extends State<ExecucaoTreino> {
-  _feedbackPage() {
-    Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
-    // Navigator.push(
-    //     context, MaterialPageRoute(builder: (context) => FeedbackPage()));
-  }
-
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
 
   int step = 0;
 
+  bool _isStart = true;
+
+  String _stopwatchText = '00:00:00';
+  final _stopWatch = new Stopwatch();
+  final _timeout = const Duration(seconds: 1);
+
+  void _startTimeout() {
+    new Timer(_timeout, _handleTimeout);
+  }
+
+  void _handleTimeout() {
+    if (_stopWatch.isRunning) {
+      _startTimeout();
+    }
+    setState(() {
+      _setStopwatchText();
+    });
+  }
+
+  void _startStopButtonPressed() {
+    setState(() {
+      if (_stopWatch.isRunning) {
+        _isStart = true;
+        _stopWatch.stop();
+      } else {
+        _isStart = false;
+        _stopWatch.start();
+        _startTimeout();
+      }
+    });
+  }
+
+  void _resetButtonPressed() {
+    if (_stopWatch.isRunning) {
+      _startStopButtonPressed();
+    }
+    setState(() {
+      _stopWatch.reset();
+      _setStopwatchText();
+    });
+  }
+
+  void _setStopwatchText() {
+    _stopwatchText = _stopWatch.elapsed.inHours.toString().padLeft(2, '0') +
+        ':' +
+        (_stopWatch.elapsed.inMinutes % 60).toString().padLeft(2, '0') +
+        ':' +
+        (_stopWatch.elapsed.inSeconds % 60).toString().padLeft(2, '0');
+  }
+
   @override
   void initState() {
+    if (widget.treinoIniciado) {
+      _startStopButtonPressed();
+    }
+
     var exerciciosTreino = ExerciciosTreinoModel();
     widget.treinoCompleto.exercicios_treino.forEach((treino) {
       exerciciosTreino = treino;
@@ -96,7 +148,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
           }
         } else {
           // if (validaUltimoExercicio) {
-          _finalizarTreino(context);
+          // _finalizarTreino(context);
+          _startStopButtonPressed();
           // }
         }
       });
@@ -257,9 +310,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                                                     color: Colors.black),
                                                 SizedBox(width: 10),
                                                 Text(
-                                                  "45:15",
+                                                  _stopwatchText,
                                                   style: TextStyle(
-                                                      fontSize: 14,
+                                                      fontSize: 16,
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       color: Colors.black),
@@ -319,6 +372,12 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         onTap: _onItemTapped,
       ),
     );
+  }
+
+  _feedbackPage() {
+    Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => FeedbackPage()));
   }
 
   Widget _carregaVideo() {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:smooth_star_rating/smooth_star_rating.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
@@ -46,6 +45,7 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
         MaterialPageRoute(
             builder: (context) => ExecucaoTreino(
                   treinoCompleto: treinoCompleto,
+                  treinoIniciado: true,
                 )));
   }
 
