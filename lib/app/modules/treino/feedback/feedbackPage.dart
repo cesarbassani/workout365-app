@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:workout365app/app/models/treino_completo_model.dart';
 
 class FeedbackPage extends StatefulWidget {
+  final TreinoCompletoModel treinoCompleto;
+  final String descricao;
+
+  const FeedbackPage({Key key, this.descricao, this.treinoCompleto})
+      : super(key: key);
+
   @override
   _FeedbackPageState createState() => _FeedbackPageState();
 }
@@ -35,14 +42,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       child: Column(
                         children: [
                           Text(
-                            "Treino 04",
+                            widget.treinoCompleto.nome,
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 30.0,
                             ),
                           ),
                           Text(
-                            "Parabéns, você concluiu mais um treino!",
+                            widget.descricao,
                             style: TextStyle(color: Colors.black38),
                           ),
                           SizedBox(height: 15),

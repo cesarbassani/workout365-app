@@ -39,7 +39,6 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Workout 365"),
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: Color(0xFF414550),

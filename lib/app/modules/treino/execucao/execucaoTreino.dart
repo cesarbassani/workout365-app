@@ -2,23 +2,28 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:intl/intl.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
+import 'package:workout365app/app/models/usuario_treino_model.dart';
+import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_bloc.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_event.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_state.dart';
 import 'package:workout365app/app/modules/video/models/video.dart';
 import 'package:workout365app/app/modules/video/services/video_controller_service.dart';
 import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart';
+import 'package:workout365app/app/services/treino_free_services.dart';
 
 class ExecucaoTreino extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
   final bool treinoIniciado;
+  final UsuarioTreinoModel usuarioTreino;
 
-  const ExecucaoTreino({Key key, this.treinoCompleto, this.treinoIniciado})
+  const ExecucaoTreino(
+      {Key key, this.treinoCompleto, this.treinoIniciado, this.usuarioTreino})
       : super(key: key);
 
   @override
@@ -28,6 +33,7 @@ class ExecucaoTreino extends StatefulWidget {
 class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   VideoPlayerController _controller;
   Future<void> _initializeVideoPlayerFuture;
+  final TreinoFreeServices treinoFreeServices = TreinoFreeServices();
 
   int step = 0;
 
@@ -140,17 +146,15 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     }
     if (index == 2) {
       setState(() {
+        if (step == widget.treinoCompleto.exercicios_treino.length - 1 &&
+            validaUltimoExercicio) {
+          _finalizarTreino(context);
+        }
         if (step < (widget.treinoCompleto.exercicios_treino.length - 1)) {
           step++;
           _inicializaVideo();
-          if (step == widget.treinoCompleto.exercicios_treino.length - 1) {
-            validaUltimoExercicio = true;
-          }
         } else {
-          // if (validaUltimoExercicio) {
-          // _finalizarTreino(context);
-          _startStopButtonPressed();
-          // }
+          validaUltimoExercicio = true;
         }
       });
     }
@@ -374,10 +378,21 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     );
   }
 
-  _feedbackPage() {
-    Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
+  _feedbackPage(String descricao) {
+    // Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => FeedbackPage()));
+    // Modular.to.pushNamed('/feedbackPage', arguments: {
+    //   'treinoCompleto': widget.treinoCompleto,
+    //   'descricao': descricao
+    // });
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return FeedbackPage(
+        treinoCompleto: widget.treinoCompleto,
+        descricao: descricao,
+      );
+    }));
   }
 
   Widget _carregaVideo() {
@@ -571,8 +586,14 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
               child: Text("Não"),
             ),
             FlatButton(
-              onPressed: () {
-                _feedbackPage();
+              onPressed: () async {
+                _startStopButtonPressed();
+                var usuarioTreinoFinal = UsuarioTreinoModel();
+                usuarioTreinoFinal = await feedbackTreino(
+                  widget.treinoCompleto,
+                  _stopWatch.elapsed.inSeconds.toString(),
+                );
+                _feedbackPage(usuarioTreinoFinal.feedback.descricao);
               },
               child: Text("Sim"),
             ),
@@ -633,6 +654,14 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         ),
       ),
     );
+  }
+
+  Future<UsuarioTreinoModel> feedbackTreino(
+      TreinoCompletoModel treinoCompleto, String tempoTotalTreino) async {
+    String datafimTreino =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    return await treinoFreeServices.enviarFimDoTreino(
+        widget.usuarioTreino, datafimTreino, tempoTotalTreino);
   }
 }
 

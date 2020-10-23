@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_screenutil/screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
+import 'package:workout365app/app/models/usuario_treino_model.dart';
 import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
+import 'package:workout365app/app/services/treino_free_services.dart';
 import 'package:workout365app/app/shared/stores/treino_free_store.dart';
 
 import '../capaTreino.dart';
@@ -20,6 +23,7 @@ class InicioTreino extends StatefulWidget {
 
 class _InicioTreinoState extends State<InicioTreino> {
   final TreinoFreeStore treinoFreeStore = TreinoFreeStore();
+  final TreinoFreeServices treinoFreeServices = TreinoFreeServices();
 
   @override
   void initState() {
@@ -33,20 +37,25 @@ class _InicioTreinoState extends State<InicioTreino> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: _body(size, context, treinoFreeStore),
+      body: _body(size, context, treinoFreeStore, treinoFreeServices),
     );
   }
 }
 
-Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
-  executarTreino(TreinoCompletoModel treinoCompleto) {
+Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore,
+    TreinoFreeServices treinoFreeServices) {
+  executarTreino(
+      TreinoCompletoModel treinoCompleto, UsuarioTreinoModel usuarioTreino) {
     Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => ExecucaoTreino(
-                  treinoCompleto: treinoCompleto,
-                  treinoIniciado: true,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => ExecucaoTreino(
+          treinoCompleto: treinoCompleto,
+          treinoIniciado: true,
+          usuarioTreino: usuarioTreino,
+        ),
+      ),
+    );
   }
 
   return SingleChildScrollView(
@@ -151,8 +160,20 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore) {
                                 child: SizedBox(
                                   height: 50.0,
                                   child: RaisedButton(
-                                    onPressed: () {
-                                      executarTreino(treinoCompleto);
+                                    onPressed: () async {
+                                      var usuarioTreino = UsuarioTreinoModel();
+                                      if (treinoCompleto
+                                              .quantidade_exercicios_treino >
+                                          0) {
+                                        String dataInicioTreino =
+                                            DateFormat('yyyy-MM-dd HH:mm:ss')
+                                                .format(DateTime.now());
+                                        usuarioTreino = await treinoFreeServices
+                                            .enviarInicioTreino(treinoCompleto,
+                                                dataInicioTreino);
+                                        executarTreino(
+                                            treinoCompleto, usuarioTreino);
+                                      }
                                     },
                                     color: Color(0xFF04959A),
                                     shape: RoundedRectangleBorder(
