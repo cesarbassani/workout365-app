@@ -5,8 +5,10 @@ import 'package:workout365app/app/models/treino_completo_model.dart';
 class FeedbackPage extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
   final String descricao;
+  final String tempoExecucaoTreino;
 
-  const FeedbackPage({Key key, this.descricao, this.treinoCompleto})
+  const FeedbackPage(
+      {Key key, this.descricao, this.treinoCompleto, this.tempoExecucaoTreino})
       : super(key: key);
 
   @override
@@ -55,7 +57,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
                           SizedBox(height: 15),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0),
-                            child: myTextItems("Estimado", "48.6M", size),
+                            child: myTextItems(
+                                "Estimado",
+                                "48.6M",
+                                size,
+                                widget.treinoCompleto,
+                                widget.tempoExecucaoTreino),
                           ),
                         ],
                       ),
@@ -199,7 +206,8 @@ class _FeedbackPageState extends State<FeedbackPage> {
   }
 }
 
-Container myTextItems(String title, String subtitle, Size size) {
+Container myTextItems(String title, String subtitle, Size size,
+    TreinoCompletoModel treinoCompleto, String tempoExecucaoTreino) {
   return Container(
     padding: EdgeInsets.only(left: 5.0),
     height: 100.0,
@@ -234,7 +242,7 @@ Container myTextItems(String title, String subtitle, Size size) {
                 children: <Widget>[
                   Flexible(
                     child: Text(
-                      "Tempo estimado: 50 min",
+                      "Tempo estimado: ${treinoCompleto.tempo_total_por_treino} min",
                       style: TextStyle(color: Colors.black),
                     ),
                   ),
@@ -246,7 +254,7 @@ Container myTextItems(String title, String subtitle, Size size) {
                   ),
                   SizedBox(height: 10.0),
                   Text(
-                    'Tempo de execução: 42 min',
+                    'Tempo de execução: ${tempoExecucaoTreino} min',
                     style: TextStyle(
                       fontFamily: 'Quicksand',
                     ),

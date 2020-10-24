@@ -378,7 +378,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     );
   }
 
-  _feedbackPage(String descricao) {
+  _feedbackPage(String descricao, String tempoExecucaoTreino) {
     // Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => FeedbackPage()));
@@ -391,6 +391,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       return FeedbackPage(
         treinoCompleto: widget.treinoCompleto,
         descricao: descricao,
+        tempoExecucaoTreino: tempoExecucaoTreino,
       );
     }));
   }
@@ -593,7 +594,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   widget.treinoCompleto,
                   _stopWatch.elapsed.inSeconds.toString(),
                 );
-                _feedbackPage(usuarioTreinoFinal.feedback.descricao);
+                _feedbackPage(usuarioTreinoFinal.feedback.descricao,
+                    _stopWatch.elapsed.inMinutes.toString());
               },
               child: Text("Sim"),
             ),
