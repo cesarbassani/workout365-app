@@ -93,6 +93,31 @@ class TreinoFreeRepository {
     }
   }
 
+  Future<UsuarioTreinoModel> enviarInterromperTreino(
+      UsuarioTreinoModel usuarioTreinoModel,
+      String datafimTreino,
+      String tempoTotalTreino) async {
+    try {
+      return await CustomDio.authInstance
+          .put('/usuariostreinos',
+              data: {
+                "id": usuarioTreinoModel.id,
+                "user_id": Modular.get<AuthStore>().usuarioLogado.id,
+                "treino_id": usuarioTreinoModel.treino_id,
+                "data_fim": datafimTreino,
+                "status_execucao": "interrompido",
+                "tempo_execucao": tempoTotalTreino,
+              },
+              options: Options(headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+              }))
+          .then((res) => UsuarioTreinoModel.fromJson(res.data['data']));
+    } on DioError catch (e) {
+      throw (e.message);
+    }
+  }
+
   Future<AvaliacaoModel> enviarAvaliacao(int userTreinoId, int nota) async {
     try {
       return await CustomDio.authInstance

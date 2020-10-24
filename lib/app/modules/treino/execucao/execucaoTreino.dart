@@ -42,9 +42,10 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   String _stopwatchText = '00:00:00';
   final _stopWatch = new Stopwatch();
   final _timeout = const Duration(seconds: 1);
+  Timer timer;
 
   void _startTimeout() {
-    new Timer(_timeout, _handleTimeout);
+    timer = new Timer(_timeout, _handleTimeout);
   }
 
   void _handleTimeout() {
@@ -113,6 +114,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   @override
   void dispose() {
     _controller.dispose();
+    _stopWatch.stop();
+    timer?.cancel();
+    timer = null;
     super.dispose();
   }
 
@@ -686,6 +690,14 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     String datafimTreino =
         DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     return await treinoFreeServices.enviarFimDoTreino(
+        widget.usuarioTreino, datafimTreino, tempoTotalTreino);
+  }
+
+  Future<UsuarioTreinoModel> interromperTreino(
+      TreinoCompletoModel treinoCompleto, String tempoTotalTreino) async {
+    String datafimTreino =
+        DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
+    return await treinoFreeServices.enviarInterromperTreino(
         widget.usuarioTreino, datafimTreino, tempoTotalTreino);
   }
 }

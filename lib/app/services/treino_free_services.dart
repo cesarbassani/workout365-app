@@ -30,6 +30,14 @@ class TreinoFreeServices {
         usuarioTreinoModel, datafimTreino, tempoTotalTreino);
   }
 
+  Future<UsuarioTreinoModel> enviarInterromperTreino(
+      UsuarioTreinoModel usuarioTreinoModel,
+      String datafimTreino,
+      String tempoTotalTreino) async {
+    return await _repository.enviarFimDoTreino(
+        usuarioTreinoModel, datafimTreino, tempoTotalTreino);
+  }
+
   Future<AvaliacaoModel> enviarAvaliacao(int userTreinoId, int nota) async {
     return await _repository.enviarAvaliacao(userTreinoId, nota);
   }
