@@ -88,8 +88,7 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: treinoCompleto.tempo_total_por_treino
-                                      .toString(),
+                                  text: treinoCompleto.tempo_total_por_treino,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),

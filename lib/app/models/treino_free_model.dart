@@ -13,6 +13,7 @@ class TreinoFreeModel {
   String preco;
   int ativo;
   int disponivel_store;
+  String tempo_treino;
 
   TreinoFreeModel({
     this.id,
@@ -24,6 +25,7 @@ class TreinoFreeModel {
     this.preco,
     this.ativo,
     this.disponivel_store,
+    this.tempo_treino,
   });
 
   factory TreinoFreeModel.fromJson(Map<String, dynamic> json) =>

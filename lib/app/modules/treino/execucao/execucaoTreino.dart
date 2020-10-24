@@ -621,8 +621,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   widget.treinoCompleto,
                   _stopWatch.elapsed.inSeconds.toString(),
                 );
-                _feedbackPage(usuarioTreinoFinal,
-                    _stopWatch.elapsed.inMinutes.toString());
+                _feedbackPage(
+                    usuarioTreinoFinal,
+                    _stopWatch.elapsed.inMinutes.toString() +
+                        ':' +
+                        _stopWatch.elapsed.inSeconds.toString());
               },
               child: Text("Sim"),
             ),

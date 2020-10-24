@@ -208,7 +208,7 @@ class _Inicio_PageState extends State<Inicio_Page> {
                     ),
                     SizedBox(height: 10.0),
                     Text(
-                      '15 min',
+                      treinoFree.tempo_treino + ' min',
                       style: TextStyle(
                         fontFamily: 'Quicksand',
                       ),

@@ -19,7 +19,7 @@ class TreinoCompletoModel {
   List<String> equipamentos;
   List<ExerciciosTreinoModel> exercicios_treino;
   int quantidade_exercicios_treino;
-  int tempo_total_por_treino;
+  String tempo_total_por_treino;
 
   TreinoCompletoModel(
       {this.id,
