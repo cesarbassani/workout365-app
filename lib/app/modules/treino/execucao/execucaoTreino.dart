@@ -367,7 +367,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                 : Icon(Icons.assistant_photo_outlined),
             title: !validaUltimoExercicio
                 ? Text("Próximo")
-                : Text("Finaliza Treino"),
+                : Text("Finalizar Treino"),
           ),
         ],
         currentIndex: _selectedIndex,

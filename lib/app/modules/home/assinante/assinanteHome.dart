@@ -149,7 +149,7 @@ class _AssinanteHome_PageState extends State<AssinanteHome> {
                           return Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              _buildItemTreino2(data[index], index),
+                              _buildItemTreino(data[index], index),
                               SizedBox(
                                 width: 15.0,
                               ),

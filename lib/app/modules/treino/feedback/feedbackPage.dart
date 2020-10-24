@@ -162,7 +162,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                               sliderValue <= 5.0) {
                                             myFeedback = FontAwesomeIcons.laugh;
                                             myFeedbackColor = Color(0xffff520d);
-                                            myFeedbackText = "Excelent";
+                                            myFeedbackText = "Excelente";
                                           }
                                         });
                                       },
