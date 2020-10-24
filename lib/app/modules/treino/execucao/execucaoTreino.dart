@@ -152,9 +152,10 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         }
         if (step < (widget.treinoCompleto.exercicios_treino.length - 1)) {
           step++;
+          if (step == widget.treinoCompleto.exercicios_treino.length - 1) {
+            validaUltimoExercicio = true;
+          }
           _inicializaVideo();
-        } else {
-          validaUltimoExercicio = true;
         }
       });
     }
@@ -329,9 +330,19 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                                       _IngredientProgress(
                                         ingredient: "Progresso",
                                         nomeTreino: widget.treinoCompleto.nome,
-                                        progress: 0.5,
+                                        progress: (((step + 1) * 100.0) /
+                                                    widget
+                                                        .treinoCompleto
+                                                        .exercicios_treino
+                                                        .length)
+                                                .toInt()
+                                                .toDouble() /
+                                            100,
                                         progressColor: Color(0xFF04959A),
-                                        leftAmount: 50,
+                                        leftAmount: (((step + 1) * 100.0) /
+                                                widget.treinoCompleto
+                                                    .exercicios_treino.length)
+                                            .toInt(),
                                         width: screenWidth * 0.28,
                                         screenWidth: screenWidth,
                                       ),
