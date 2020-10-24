@@ -378,22 +378,34 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     );
   }
 
-  _feedbackPage(String descricao, String tempoExecucaoTreino) {
+  _feedbackPage(UsuarioTreinoModel usuarioTreino, String tempoExecucaoTreino) {
     // Modular.to.pushNamedAndRemoveUntil('/feedbackPage', (_) => false);
     // Navigator.push(
     //     context, MaterialPageRoute(builder: (context) => FeedbackPage()));
     // Modular.to.pushNamed('/feedbackPage', arguments: {
     //   'treinoCompleto': widget.treinoCompleto,
-    //   'descricao': descricao
+    //   'usuarioTreino': usuarioTreino,
+    //   'tempoExecucaoTreino': tempoExecucaoTreino,
     // });
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) {
-      return FeedbackPage(
-        treinoCompleto: widget.treinoCompleto,
-        descricao: descricao,
-        tempoExecucaoTreino: tempoExecucaoTreino,
-      );
-    }));
+    // Navigator.push(context, MaterialPageRoute(builder: (context) {
+    //   return FeedbackPage(
+    //     treinoCompleto: widget.treinoCompleto,
+    //     usuarioTreino: usuarioTreino,
+    //     tempoExecucaoTreino: tempoExecucaoTreino,
+    //   );
+    // }));
+
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FeedbackPage(
+            treinoCompleto: widget.treinoCompleto,
+            usuarioTreino: usuarioTreino,
+            tempoExecucaoTreino: tempoExecucaoTreino,
+          ),
+        ),
+        (route) => false);
   }
 
   Widget _carregaVideo() {
@@ -594,7 +606,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   widget.treinoCompleto,
                   _stopWatch.elapsed.inSeconds.toString(),
                 );
-                _feedbackPage(usuarioTreinoFinal.feedback.descricao,
+                _feedbackPage(usuarioTreinoFinal,
                     _stopWatch.elapsed.inMinutes.toString());
               },
               child: Text("Sim"),

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:workout365app/app/models/avaliacao_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
+import 'package:workout365app/app/models/usuario_treino_model.dart';
+import 'package:workout365app/app/services/treino_free_services.dart';
 
 class FeedbackPage extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
-  final String descricao;
+  final UsuarioTreinoModel usuarioTreino;
   final String tempoExecucaoTreino;
 
   const FeedbackPage(
-      {Key key, this.descricao, this.treinoCompleto, this.tempoExecucaoTreino})
+      {Key key,
+      this.usuarioTreino,
+      this.treinoCompleto,
+      this.tempoExecucaoTreino})
       : super(key: key);
 
   @override
@@ -16,6 +23,8 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
+  final TreinoFreeServices treinoFreeServices = TreinoFreeServices();
+
   var myFeedbackText = "Bom";
   var sliderValue = 4.0;
   IconData myFeedback = FontAwesomeIcons.smile;
@@ -51,7 +60,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                             ),
                           ),
                           Text(
-                            widget.descricao,
+                            widget.usuarioTreino.feedback.descricao,
                             style: TextStyle(color: Colors.black38),
                           ),
                           SizedBox(height: 15),
@@ -187,7 +196,16 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                           color: Color(0xffffffff),
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        var avaliacao = AvaliacaoModel();
+                                        avaliacao = await treinoFreeServices
+                                            .enviarAvaliacao(
+                                                widget.usuarioTreino.id,
+                                                sliderValue.toInt());
+                                        if (avaliacao != null) {
+                                          _successAvalicao(context);
+                                        }
+                                      },
                                     ),
                                   )),
                                 ),
@@ -202,6 +220,27 @@ class _FeedbackPageState extends State<FeedbackPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _successAvalicao(context) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("Obrigado!"),
+          content: Text("Seu feedback foi registrado com sucesso!"),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                // Navigator.of(context).pop();
+                Modular.to.pushNamedAndRemoveUntil('/home', (_) => false);
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

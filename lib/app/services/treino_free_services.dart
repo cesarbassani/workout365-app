@@ -1,3 +1,4 @@
+import 'package:workout365app/app/models/avaliacao_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
 import 'package:workout365app/app/models/usuario_treino_model.dart';
@@ -27,5 +28,9 @@ class TreinoFreeServices {
       String tempoTotalTreino) async {
     return await _repository.enviarFimDoTreino(
         usuarioTreinoModel, datafimTreino, tempoTotalTreino);
+  }
+
+  Future<AvaliacaoModel> enviarAvaliacao(int userTreinoId, int nota) async {
+    return await _repository.enviarAvaliacao(userTreinoId, nota);
   }
 }

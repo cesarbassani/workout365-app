@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workout365app/app/core/dio/custom_dio.dart';
+import 'package:workout365app/app/models/avaliacao_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
 import 'package:workout365app/app/models/usuario_treino_model.dart';
@@ -87,6 +88,24 @@ class TreinoFreeRepository {
                 "Accept": "application/json",
               }))
           .then((res) => UsuarioTreinoModel.fromJson(res.data['data']));
+    } on DioError catch (e) {
+      throw (e.message);
+    }
+  }
+
+  Future<AvaliacaoModel> enviarAvaliacao(int userTreinoId, int nota) async {
+    try {
+      return await CustomDio.authInstance
+          .post('/avaliacoes',
+              data: {
+                "user_treino_id": userTreinoId,
+                "nota": nota,
+              },
+              options: Options(headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+              }))
+          .then((res) => AvaliacaoModel.fromJson(res.data['data']));
     } on DioError catch (e) {
       throw (e.message);
     }
