@@ -213,7 +213,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
               ),
             ),
             Positioned(
-              top: (screenHeight * 0.33) - 8,
+              top: (screenHeight * 0.36) - 8,
               child: Container(
                 padding: EdgeInsets.only(left: 20.0),
                 height: screenHeight / 2 + 60,
@@ -745,7 +745,7 @@ class _IngredientProgress extends StatelessWidget {
               children: <Widget>[
                 Container(
                   height: 10,
-                  width: screenWidth * 0.92 - 80,
+                  width: screenWidth * 0.92 - 85,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     color: Colors.grey,
@@ -753,7 +753,7 @@ class _IngredientProgress extends StatelessWidget {
                 ),
                 Container(
                   height: 10,
-                  width: (screenWidth * 0.92 - 80) * progress,
+                  width: (screenWidth * 0.92 - 85) * progress,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(5)),
                     color: progressColor,

@@ -49,7 +49,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                 children: <Widget>[
                   Container(
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(15.0),
                       child: Column(
                         children: [
                           Text(
@@ -59,13 +59,24 @@ class _FeedbackPageState extends State<FeedbackPage> {
                               fontSize: 30.0,
                             ),
                           ),
-                          Text(
-                            widget.usuarioTreino.feedback.descricao,
-                            style: TextStyle(color: Colors.black38),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  widget.usuarioTreino.feedback.descricao,
+                                  style: TextStyle(color: Colors.black38),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
                           ),
                           SizedBox(height: 15),
                           Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
+                            padding: const EdgeInsets.only(right: 1.0),
                             child: myTextItems(
                                 "Estimado",
                                 "48.6M",
@@ -82,7 +93,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     "Feedback",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 30.0,
+                      fontSize: 24.0,
                     ),
                   ),
                   Container(
@@ -99,13 +110,14 @@ class _FeedbackPageState extends State<FeedbackPage> {
                             child: Column(
                               children: <Widget>[
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.only(
+                                      top: 16.0, bottom: 8.0),
                                   child: Container(
                                     child: Text(
                                       myFeedbackText,
                                       style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 22.0,
+                                        fontSize: 18.0,
                                       ),
                                     ),
                                   ),
@@ -116,7 +128,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                       child: Icon(
                                     myFeedback,
                                     color: myFeedbackColor,
-                                    size: 100.0,
+                                    size: 90.0,
                                   )),
                                 ),
                                 Padding(
@@ -170,13 +182,13 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.all(16.0),
+                                  padding: const EdgeInsets.all(8.0),
                                   child: Container(
                                       child: Text(
                                     "Sua nota: $sliderValue",
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 22.0,
+                                        fontSize: 18.0,
                                         fontWeight: FontWeight.bold),
                                   )),
                                 ),
@@ -248,7 +260,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 Container myTextItems(String title, String subtitle, Size size,
     TreinoCompletoModel treinoCompleto, String tempoExecucaoTreino) {
   return Container(
-    padding: EdgeInsets.only(left: 5.0),
+    padding: EdgeInsets.only(left: 5.0, right: 5.0),
     height: 100.0,
     width: size.width,
     child: Material(
@@ -288,7 +300,7 @@ Container myTextItems(String title, String subtitle, Size size,
                   SizedBox(height: 10.0),
                   Container(
                     height: 2.0,
-                    width: 200.0,
+                    width: double.infinity,
                     color: Color(0xFF04959A),
                   ),
                   SizedBox(height: 10.0),

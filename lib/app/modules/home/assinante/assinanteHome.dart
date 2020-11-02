@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workout365app/app/models/treino_free_model.dart';
 import 'package:workout365app/app/modules/home/assinante/cardProximoTreino.dart';
-import 'package:workout365app/app/modules/home/inicio/cabecalho.dart';
 import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
-import 'package:workout365app/app/shared/auth_store.dart';
 import 'package:workout365app/app/shared/stores/treino_free_store.dart';
 
 import 'cabecalhoAssinante.dart';
@@ -87,18 +84,11 @@ class _AssinanteHome_PageState extends State<AssinanteHome> {
                                 ),
                               ),
                             ),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 32,
-                                    ),
-                                    _bodyTreinos(),
-                                  ],
-                                ),
-                              ),
+                            Container(
+                              height: (120),
+                              width: double.infinity,
+                              padding: EdgeInsets.only(left: 15, right: 15),
+                              child: _bodyTreinos(),
                             ),
                             SizedBox(
                               height: 20,

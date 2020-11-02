@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
-import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
-import 'package:workout365app/app/shared/auth_store.dart';
 import 'package:vector_math/vector_math.dart' as math;
+import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
 
 class CabecalhoAssinante extends StatelessWidget {
   const CabecalhoAssinante({
@@ -23,7 +21,7 @@ class CabecalhoAssinante extends StatelessWidget {
     final today = DateTime.now();
     return Container(
       margin: EdgeInsets.only(bottom: 20),
-      height: size.height * 0.4 - 10,
+      height: size.height * 0.5 - 20,
       child: Stack(
         children: <Widget>[
           Container(
