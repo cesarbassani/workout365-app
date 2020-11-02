@@ -181,10 +181,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         backgroundColor: Color(0xFF414550),
       ),
       body: SingleChildScrollView(
+        padding: EdgeInsets.only(bottom: 5),
         child: Stack(
           children: <Widget>[
             Container(
-              height: screenHeight * 0.87,
+              height: screenHeight,
               width: screenWidth,
               color: Colors.white,
             ),
@@ -215,7 +216,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             Positioned(
               top: (screenHeight * 0.36) - 8,
               child: Container(
-                padding: EdgeInsets.only(left: 20.0),
+                padding: EdgeInsets.only(left: 20.0, top: 10),
                 height: screenHeight / 2 + 60,
                 width: screenWidth,
                 child: Column(
@@ -241,7 +242,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                       "Método: " +
                           widget.treinoCompleto.exercicios_treino[step]
                               .metodo_treino +
-                          "\nSéries: " +
+                          " | Séries: " +
                           widget.treinoCompleto.exercicios_treino[step]
                               .numero_series
                               .toString(),
@@ -252,7 +253,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                       ),
                     ),
                     Container(
-                      height: 110.0,
+                      height: 100.0,
                       width: screenWidth,
                       child: ListView.builder(
                           shrinkWrap: true,
@@ -270,7 +271,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 5, top: 5, right: 5),
-                      height: 150.0,
+                      height: 153.0,
                       width: screenWidth * 0.92,
                       child: Material(
                         color: Colors.white,
@@ -280,7 +281,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                         child: Container(
                           margin: EdgeInsets.only(
                               left: 10, top: 10, right: 10, bottom: 20),
-                          height: 150.0,
+                          height: 160.0,
                           width: 100.0,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -292,8 +293,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "Evolução do Treino - " +
-                                            widget.treinoCompleto.nome,
+                                        widget.treinoCompleto.nome,
                                         style: TextStyle(
                                             fontFamily: 'Quicksand',
                                             fontWeight: FontWeight.bold),
@@ -638,8 +638,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   Widget _series(TreinoCompletoModel treinoCompleto, int index) {
     return Container(
       padding: EdgeInsets.only(left: 5, top: 15, right: 5),
-      height: 100.0,
-      width: 150,
+      height: 90.0,
+      width: 120,
       child: Material(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.0),
@@ -647,7 +647,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         elevation: 2.0,
         child: Container(
           margin: EdgeInsets.only(left: 10, top: 10, right: 10),
-          height: 115.0,
+          height: 110.0,
           width: 75.0,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

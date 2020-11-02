@@ -59,6 +59,7 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore,
   }
 
   return SingleChildScrollView(
+    padding: EdgeInsets.only(bottom: 20),
     child: Observer(builder: (_) {
       return FutureBuilder<List<TreinoCompletoModel>>(
         future: treinoFreeStore.treinoFutureSelecionado,
