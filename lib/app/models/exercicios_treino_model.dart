@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:workout365app/app/models/exercicio_model.dart';
+import 'package:workout365app/app/models/forma_execucao_model.dart';
 import 'package:workout365app/app/models/serie_model.dart';
 
 part 'exercicios_treino_model.g.dart';
@@ -9,7 +10,7 @@ class ExerciciosTreinoModel {
   int id;
   int exercicio_id;
   int treino_id;
-  int forma_execucao_id;
+  FormaExecucaoModel forma_execucao;
   String metodo_treino;
   int tempo_execucao_por_serie;
   int tempo_descando_entre_series;
@@ -25,7 +26,7 @@ class ExerciciosTreinoModel {
       {this.id,
       this.exercicio_id,
       this.treino_id,
-      this.forma_execucao_id,
+      this.forma_execucao,
       this.metodo_treino,
       this.tempo_execucao_por_serie,
       this.tempo_descando_entre_series,
