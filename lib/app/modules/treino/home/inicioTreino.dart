@@ -240,35 +240,25 @@ Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size) {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      treinoCompleto.exercicios_treino[index].exercicio.nome,
-                      style: TextStyle(
-                          fontFamily: 'Quicksand', fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 2.0,
-                      width: 150,
-                      color: Color(0xFF04959A),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      treinoCompleto.exercicios_treino[index].exercicio
-                          .categoria_exercicio.descricao,
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
-                        color: Color(0xFF04959A),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+            Text(
+              treinoCompleto.exercicios_treino[index].exercicio.nome,
+              style: TextStyle(
+                  fontFamily: 'Quicksand', fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              height: 2.0,
+              width: 150,
+              color: Color(0xFF04959A),
+            ),
+            SizedBox(height: 5),
+            Text(
+              treinoCompleto.exercicios_treino[index].exercicio
+                  .categoria_exercicio.descricao,
+              style: TextStyle(
+                fontFamily: 'Quicksand',
+                color: Color(0xFF04959A),
+              ),
             ),
           ],
         ),

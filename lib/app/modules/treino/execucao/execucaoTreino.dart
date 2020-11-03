@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
+import 'package:workout365app/app/models/serie_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/usuario_treino_model.dart';
 import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
@@ -216,7 +217,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
             Positioned(
               top: (screenHeight * 0.36) - 8,
               child: Container(
-                padding: EdgeInsets.only(left: 20.0, top: 10),
+                padding: EdgeInsets.only(left: 20.0, top: 5),
                 height: screenHeight / 2 + 60,
                 width: screenWidth,
                 child: Column(
@@ -264,7 +265,10 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _series(widget.treinoCompleto, index),
+                                _series(
+                                    widget.treinoCompleto
+                                        .exercicios_treino[step].series,
+                                    index),
                               ],
                             );
                           }),
@@ -635,7 +639,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     );
   }
 
-  Widget _series(TreinoCompletoModel treinoCompleto, int index) {
+  Widget _series(List<SerieModel> series, int index) {
     return Container(
       padding: EdgeInsets.only(left: 5, top: 15, right: 5),
       height: 90.0,
@@ -658,7 +662,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "10 Rep.",
+                        series[index].repeticoes.toString() + ' Rep',
                         style: TextStyle(
                             fontFamily: 'Quicksand',
                             fontWeight: FontWeight.bold),
@@ -671,7 +675,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                       ),
                       SizedBox(height: 5),
                       Text(
-                        "Carga: 100%",
+                        series[index].carga > 0
+                            ? "Carga: ${series[index].carga}%"
+                            : "Carga: 0",
                         style: TextStyle(
                           fontFamily: 'Quicksand',
                           color: Color(0xFF04959A),
