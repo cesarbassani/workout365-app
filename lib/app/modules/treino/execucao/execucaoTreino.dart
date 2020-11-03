@@ -665,7 +665,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                             ? exercicioTreino.series[index].repeticoes
                                     .toString() +
                                 ' Rep'
-                            : '${exercicioTreino.tempo_execucao_por_serie.toString()} min',
+                            : '${exercicioTreino.tempo_execucao_por_serie} min',
                         style: TextStyle(
                             fontFamily: 'Quicksand',
                             fontWeight: FontWeight.bold),

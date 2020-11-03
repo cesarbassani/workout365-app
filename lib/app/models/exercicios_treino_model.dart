@@ -12,9 +12,9 @@ class ExerciciosTreinoModel {
   int treino_id;
   FormaExecucaoModel forma_execucao;
   String metodo_treino;
-  int tempo_execucao_por_serie;
-  int tempo_descando_entre_series;
-  int tempo_descando_proximo_exercicio;
+  String tempo_execucao_por_serie;
+  String tempo_descando_entre_series;
+  String tempo_descando_proximo_exercicio;
   int tempo_total_por_exercicio;
   int numero_series;
   ExercicioModel exercicio;

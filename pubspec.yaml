@@ -28,6 +28,7 @@ scripts:
 
 
 dependencies:
+  timer_builder: ^1.3.0
   analyzer: ^0.40.4
   pedantic: ^1.8.0+1
   flutter_cache_manager: ^1.4.2
