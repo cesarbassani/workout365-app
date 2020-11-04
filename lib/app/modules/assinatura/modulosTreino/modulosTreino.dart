@@ -12,7 +12,7 @@ class ModulosTreino extends StatefulWidget {
 class _ModulosTreinoState extends State<ModulosTreino> {
   _paginaInicial() {
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => AssinanteHome()));
   }
 
   @override
@@ -43,7 +43,7 @@ class _ModulosTreinoState extends State<ModulosTreino> {
             ),
             Center(
               child: Container(
-                height: size.height / 2,
+                height: size.height / 2 + 20,
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: <Widget>[

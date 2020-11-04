@@ -79,23 +79,23 @@ class _CardInformationState extends State<CardInformation> {
                         ),
                       ),
                     ),
-                    Container(
-                      height: 40.0,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Color(0xFF04959A),
-                            style: BorderStyle.solid,
-                            width: 1.0),
-                        color: Colors.transparent,
-                        borderRadius: BorderRadius.circular(
-                          20.0,
+                    GestureDetector(
+                      onTap: () {
+                        _confirmarPagamento();
+                      },
+                      child: Container(
+                        height: 40.0,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color(0xFF04959A),
+                              style: BorderStyle.solid,
+                              width: 1.0),
+                          color: Colors.transparent,
+                          borderRadius: BorderRadius.circular(
+                            20.0,
+                          ),
                         ),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          _confirmarPagamento();
-                        },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[

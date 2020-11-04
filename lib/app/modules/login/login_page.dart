@@ -149,20 +149,20 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                           SizedBox(
                             height: 20,
                           ),
-                          Container(
-                            width: MediaQuery.of(context).size.width / 1.2,
-                            height: 45,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: [
-                                Color(0xFF414550),
-                                Color(0xFF18191E),
-                              ]),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                controller.login();
-                              },
+                          GestureDetector(
+                            onTap: () {
+                              controller.login();
+                            },
+                            child: Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              height: 45,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(colors: [
+                                  Color(0xFF414550),
+                                  Color(0xFF18191E),
+                                ]),
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                               child: Center(
                                 child: Text(
                                   'Login',
@@ -174,11 +174,15 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                             ),
                           ),
                           SizedBox(height: 10.0),
-                          Container(
-                            width: MediaQuery.of(context).size.width / 1.2,
-                            height: 40.0,
-                            color: Colors.transparent,
+                          GestureDetector(
+                            onTap: () {
+                              Modular.to.pushNamed('/cadastro');
+                            },
                             child: Container(
+                              width: MediaQuery.of(context).size.width / 1.2,
+                              height: 40.0,
+                              color: Colors.transparent,
+                              child: Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                         color: Color(0xFF04959A),
@@ -186,25 +190,22 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                         width: 1.0),
                                     color: Colors.transparent,
                                     borderRadius: BorderRadius.circular(20.0)),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Modular.to.pushNamed('/cadastro');
-                                  },
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      SizedBox(width: 10.0),
-                                      Center(
-                                        child: Text('Cadastre-se',
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'Montserrat')),
-                                      )
-                                    ],
-                                  ),
-                                )),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(width: 10.0),
+                                    Center(
+                                      child: Text('Cadastre-se',
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Montserrat')),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
                           )
                         ],
                       ),

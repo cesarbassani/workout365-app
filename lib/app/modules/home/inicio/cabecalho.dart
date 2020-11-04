@@ -80,11 +80,15 @@ class Cabecalho extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-                padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20.0),
-                    Container(
+              padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 20.0),
+                  GestureDetector(
+                    onTap: () {
+                      _pricePage();
+                    },
+                    child: Container(
                       height: 40.0,
                       width: 300,
                       child: Material(
@@ -92,26 +96,23 @@ class Cabecalho extends StatelessWidget {
                         shadowColor: Color(0xFF04959A),
                         color: Color(0xFF04959A),
                         elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            _pricePage();
-                          },
-                          child: Center(
-                            child: Text(
-                              'Seja PRO',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
-                            ),
+                        child: Center(
+                          child: Text(
+                            'Seja PRO',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat'),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.0),
-                  ],
-                )),
-          )
+                  ),
+                  SizedBox(height: 10.0),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

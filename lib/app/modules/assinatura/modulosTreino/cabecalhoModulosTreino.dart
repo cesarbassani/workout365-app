@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/modules/home/assinante/assinanteHome.dart';
 import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 
@@ -17,7 +18,7 @@ class CabecalhoModulosTreino extends StatelessWidget {
   Widget build(BuildContext context) {
     _iniciarTreino() {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => InicioTreino()));
+          context, MaterialPageRoute(builder: (context) => AssinanteHome()));
     }
 
     return Container(
