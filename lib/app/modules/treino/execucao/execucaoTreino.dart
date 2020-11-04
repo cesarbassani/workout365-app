@@ -485,7 +485,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       height: containerHeight,
       color: Colors.black,
       child: Center(
-        child: Text('Initialising video...'),
+        child: Text('Carregando vídeo...'),
       ),
     );
   }
@@ -499,8 +499,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       });
     });
     _controller.setLooping(true);
-//    _controller.seekTo(Duration(seconds: 1));
     _controller.play();
+//    _controller.seekTo(Duration(seconds: 1));
   }
 
   void _mostrarModal(context, TreinoCompletoModel treinoCompleto) {
