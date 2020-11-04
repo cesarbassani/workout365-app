@@ -42,7 +42,7 @@ class Cabecalho extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  Modular.get<AuthStore>().usuarioLogado.nome,
+                  Modular.get<AuthStore>().usuarioLogado.nome.split(' ')[0],
                   style: TextStyle(
                       fontFamily: 'Timesroman',
                       fontWeight: FontWeight.bold,

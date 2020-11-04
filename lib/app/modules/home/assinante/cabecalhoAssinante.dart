@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:intl/intl.dart';
 import 'package:vector_math/vector_math.dart' as math;
 import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
+import 'package:workout365app/app/shared/auth_store.dart';
 
 class CabecalhoAssinante extends StatelessWidget {
   const CabecalhoAssinante({
@@ -50,7 +52,7 @@ class CabecalhoAssinante extends StatelessWidget {
                         color: Colors.white),
                   ),
                   subtitle: Text(
-                    "Olá Rafael",
+                    Modular.get<AuthStore>().usuarioLogado.nome.split(' ')[0],
                     style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 26,

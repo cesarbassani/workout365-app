@@ -41,7 +41,10 @@ class _Inicio_PageState extends State<Inicio_Page> {
                     ),
                     CartaoAssinatura(
                       imagemFundo: "lib/assets/images/halteres.jpg",
-                      nome: Modular.get<AuthStore>().usuarioLogado.nome,
+                      nome: Modular.get<AuthStore>()
+                          .usuarioLogado
+                          .nome
+                          .split(' ')[0],
                       moduloAssinatura: "Nível Iniciante - Módulo 01",
                     ),
                     Padding(
