@@ -98,7 +98,11 @@ class _ConfirmacaoAssinaturaState extends State<ConfirmacaoAssinatura> {
                       width: MediaQuery.of(context).size.width / 1.2,
                       height: 40.0,
                       color: Colors.transparent,
-                      child: Container(
+                      child: GestureDetector(
+                        onTap: () {
+                          _procederParaPagamento();
+                        },
+                        child: Container(
                           decoration: BoxDecoration(
                               border: Border.all(
                                   color: Color(0xFF04959A),
@@ -106,25 +110,22 @@ class _ConfirmacaoAssinaturaState extends State<ConfirmacaoAssinatura> {
                                   width: 1.0),
                               color: Colors.transparent,
                               borderRadius: BorderRadius.circular(20.0)),
-                          child: GestureDetector(
-                            onTap: () {
-                              _procederParaPagamento();
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(width: 10.0),
-                                Center(
-                                  child: Text('Confirmar',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'Montserrat')),
-                                )
-                              ],
-                            ),
-                          )),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              SizedBox(width: 10.0),
+                              Center(
+                                child: Text('Confirmar',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Montserrat')),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
                     )
                   ],
                 )
