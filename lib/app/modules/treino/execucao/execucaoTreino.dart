@@ -432,7 +432,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           return _buildVideoPlayer(
-              "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+              "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
         } else {
           return Center(
             child: CircularProgressIndicator(),
@@ -492,7 +492,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
 
   _inicializaVideo() {
     _controller = VideoPlayerController.network(
-        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+        "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
     _initializeVideoPlayerFuture = _controller.initialize();
     _controller.setLooping(true);
 //    _controller.seekTo(Duration(seconds: 1));
@@ -542,8 +542,19 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                               ),
                               SizedBox(height: 5.0),
                               Text(
-                                widget.treinoCompleto.exercicios_treino[step]
-                                    .exercicio.descricao,
+                                widget.treinoCompleto?.exercicios_treino[step]
+                                            .exercicio?.descricao !=
+                                        null
+                                    ? widget
+                                        .treinoCompleto
+                                        ?.exercicios_treino[step]
+                                        .exercicio
+                                        ?.descricao
+                                    : widget
+                                        .treinoCompleto
+                                        ?.exercicios_treino[step]
+                                        .exercicio
+                                        ?.nome,
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w400,
