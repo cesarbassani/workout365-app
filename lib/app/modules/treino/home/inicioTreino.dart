@@ -226,7 +226,7 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore,
 Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size) {
   return Container(
     padding: EdgeInsets.only(left: 5, top: 15, right: 5),
-    height: 100.0,
+    height: 115.0,
     width: 300,
     child: Material(
       color: Colors.white,

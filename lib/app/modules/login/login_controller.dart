@@ -14,10 +14,8 @@ abstract class _LoginControllerBase with Store {
   final UsuarioService _service;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  TextEditingController emailController =
-      TextEditingController(text: 'user@workout365.com');
-  TextEditingController passwordController =
-      TextEditingController(text: 'password');
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @observable
   bool obscureText = true;

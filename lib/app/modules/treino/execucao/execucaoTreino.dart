@@ -223,7 +223,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     SizedBox(
-                      height: 25.0,
+                      height: 20.0,
                     ),
                     Text(
                       widget.treinoCompleto.exercicios_treino[step].exercicio

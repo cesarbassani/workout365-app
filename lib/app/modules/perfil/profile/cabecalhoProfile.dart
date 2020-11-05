@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/shared/auth_store.dart';
 
 class CabecalhoProfile extends StatelessWidget {
   const CabecalhoProfile({
@@ -60,7 +62,10 @@ class CabecalhoProfile extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Rafael Leite",
+                          Modular.get<AuthStore>()
+                              .usuarioLogado
+                              .nome
+                              .split(' ')[0],
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 20,
@@ -69,7 +74,7 @@ class CabecalhoProfile extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         Text(
-                          "rafaelbarrosleite@gmail.com",
+                          Modular.get<AuthStore>().usuarioLogado.email,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -78,7 +83,7 @@ class CabecalhoProfile extends StatelessWidget {
                         ),
                         SizedBox(height: 5),
                         Text(
-                          "(67) 99257-0444",
+                          Modular.get<AuthStore>().usuarioLogado.telefone,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 12,
