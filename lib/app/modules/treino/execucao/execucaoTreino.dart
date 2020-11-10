@@ -30,9 +30,12 @@ class ExecucaoTreino extends StatefulWidget {
   _ExecucaoTreinoState createState() => _ExecucaoTreinoState();
 }
 
-class _ExecucaoTreinoState extends State<ExecucaoTreino> {
+class _ExecucaoTreinoState extends State<ExecucaoTreino>
+    with WidgetsBindingObserver {
   VideoPlayerController _controller;
+  VideoPlayerController _toBeDisposed;
   Future<void> _initializeVideoPlayerFuture;
+  var isloaded = false;
   final TreinoFreeServices treinoFreeServices = TreinoFreeServices();
 
   int step = 0;
@@ -89,6 +92,19 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    // These are the callbacks
+    if (state == AppLifecycleState.inactive ||
+        state == AppLifecycleState.paused ||
+        state == AppLifecycleState.detached) {
+      setState(() {
+        _controller.pause();
+      });
+    }
+  }
+
+  @override
   void initState() {
     if (widget.treinoIniciado) {
       // _startStopButtonPressed();
@@ -113,6 +129,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
 
   @override
   void dispose() {
+    _disposeVideoController();
     _controller.dispose();
     _stopWatch.stop();
     timer?.cancel();
@@ -143,6 +160,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       setState(() {
         if (step >= 1) {
           step--;
+          if (_controller.value.isPlaying) _controller.pause();
+          isloaded = false;
+          // _controller.dispose();
           _inicializaVideo();
           validaUltimoExercicio = false;
         }
@@ -159,6 +179,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
           if (step == widget.treinoCompleto.exercicios_treino.length - 1) {
             validaUltimoExercicio = true;
           }
+          if (_controller.value.isPlaying) _controller.pause();
+          isloaded = false;
+          // _controller.dispose();
           _inicializaVideo();
         }
       });
@@ -195,6 +218,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                   if (step <
                       (widget.treinoCompleto.exercicios_treino.length - 1)) {
                     step++;
+                    if (_controller.value.isPlaying) _controller.pause();
+                    isloaded = false;
+                    // _controller.dispose();
                     _inicializaVideo();
                   }
                 });
@@ -203,18 +229,21 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
                 setState(() {
                   if (step >= 1) {
                     step--;
+                    if (_controller.value.isPlaying) _controller.pause();
+                    // _controller.dispose();
+                    isloaded = false;
                     _inicializaVideo();
                   }
                 });
               },
               child: Container(
-                height: (screenHeight / 2) - 30,
+                height: (screenHeight / 2) - 65,
                 width: screenWidth,
                 child: _carregaVideo(),
               ),
             ),
             Positioned(
-              top: (screenHeight * 0.36) - 8,
+              top: (screenHeight * 0.36) + 35,
               child: Container(
                 padding: EdgeInsets.only(left: 20.0, top: 5),
                 height: screenHeight / 2 + 60,
@@ -431,8 +460,19 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          return _buildVideoPlayer(
-              "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+          // return _buildVideoPlayer(
+          //     "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+          return AspectRatio(
+            aspectRatio: isloaded ? _controller.value.aspectRatio : 16 / 9,
+            // Use the VideoPlayer widget to display the video.
+            child: Stack(children: [
+              isloaded
+                  ? VideoPlayer(_controller)
+                  : Center(
+                      child: Image.asset('lib/assets/images/logoNovaPreto.png'),
+                    ),
+            ]),
+          );
         } else {
           return Center(
             child: CircularProgressIndicator(),
@@ -490,17 +530,32 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
     );
   }
 
-  _inicializaVideo() {
+  Future<void> _inicializaVideo() async {
+    if (mounted) {
+      await _disposeVideoController();
+    }
     _controller = VideoPlayerController.network(
         "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
-    _initializeVideoPlayerFuture = _controller.initialize().then((_) {
-      setState(() {
-        if (step == 0) _startStopButtonPressed();
-      });
+    print(_controller.dataSource.toString());
+    _controller.addListener(() {
+      print('Listener');
+      if (!_controller.value.isPlaying && !_controller.value.isBuffering) {
+        setState(() {
+          isloaded = false;
+        });
+      }
     });
     _controller.setLooping(true);
-    _controller.play();
-//    _controller.seekTo(Duration(seconds: 1));
+    _initializeVideoPlayerFuture = _controller.initialize().then((_) {
+      setState(() {
+        if (step == 0 && !_stopWatch.isRunning) _startStopButtonPressed();
+        isloaded = true;
+      });
+    });
+    Timer(Duration(seconds: 2), () {
+      _controller.play();
+    });
+    // _controller.seekTo(Duration(seconds: 1));
   }
 
   void _mostrarModal(context, TreinoCompletoModel treinoCompleto) {
@@ -726,6 +781,14 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino> {
         DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now());
     return await treinoFreeServices.enviarInterromperTreino(
         widget.usuarioTreino, datafimTreino, tempoTotalTreino);
+  }
+
+  Future<void> _disposeVideoController() async {
+    if (_toBeDisposed != null) {
+      await _toBeDisposed.dispose();
+    }
+    _toBeDisposed = _controller;
+    _controller = null;
   }
 }
 
