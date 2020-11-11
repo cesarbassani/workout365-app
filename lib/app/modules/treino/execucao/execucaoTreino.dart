@@ -129,7 +129,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
 
   @override
   void dispose() {
-    _disposeVideoController();
     _controller.dispose();
     _stopWatch.stop();
     timer?.cancel();
@@ -463,7 +462,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           // return _buildVideoPlayer(
           //     "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
           return AspectRatio(
-            aspectRatio: isloaded ? _controller.value.aspectRatio : 16 / 9,
+            aspectRatio: isloaded ? _controller?.value?.aspectRatio : 16 / 9,
             // Use the VideoPlayer widget to display the video.
             child: Stack(children: [
               isloaded
