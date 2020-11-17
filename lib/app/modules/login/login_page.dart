@@ -64,7 +64,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                         children: <Widget>[
                           Container(
                             width: MediaQuery.of(context).size.width / 1.2,
-                            height: 45,
+                            height: 50,
                             padding: EdgeInsets.only(
                                 top: 4, left: 16, right: 16, bottom: 4),
                             decoration: BoxDecoration(
@@ -89,7 +89,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                           ),
                           Container(
                             width: MediaQuery.of(context).size.width / 1.2,
-                            height: 45,
+                            height: 50,
                             margin: EdgeInsets.only(top: 32),
                             padding: EdgeInsets.only(
                                 top: 4, left: 16, right: 16, bottom: 4),

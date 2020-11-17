@@ -72,22 +72,19 @@ class _CadastroPageState
       key: controller.formKey,
       child: Column(
         children: <Widget>[
-          SizedBox(
-            height: 10,
-          ),
           Container(
-            height: MediaQuery.of(context).size.height / 0.95,
+            height: MediaQuery.of(context).size.height / 0.85,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(top: 30),
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(bottom: 16),
+                  padding: EdgeInsets.only(bottom: 24),
                   child: Text("Preencha as informações para se registrar"),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
+                  height: 50,
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -125,8 +122,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -166,8 +163,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -220,7 +217,7 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
+                  height: 85,
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -228,36 +225,46 @@ class _CadastroPageState
                   ),
                   child: Observer(
                     builder: (_) {
-                      return Row(
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Radio(
-                            value: "feminino",
-                            groupValue: controller.genero,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (String value) {
-                              controller.genero = value;
-                            },
-                          ),
-                          Text(
-                            "Feminino",
-                            style: TextStyle(color: Colors.grey[800]),
+                          Row(
+                            children: [
+                              Radio(
+                                value: "feminino",
+                                groupValue: controller.genero,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                onChanged: (String value) {
+                                  controller.genero = value;
+                                },
+                              ),
+                              Text(
+                                "Feminino",
+                                style: TextStyle(color: Colors.grey[800]),
+                              ),
+                            ],
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
-                          Radio(
-                            value: "masculino",
-                            groupValue: controller.genero,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (String value) {
-                              controller.genero = value;
-                            },
-                          ),
-                          Text(
-                            "Masculino",
-                            style: TextStyle(color: Colors.grey[800]),
+                          Row(
+                            children: [
+                              Radio(
+                                value: "masculino",
+                                groupValue: controller.genero,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                onChanged: (String value) {
+                                  controller.genero = value;
+                                },
+                              ),
+                              Text(
+                                "Masculino",
+                                style: TextStyle(color: Colors.grey[800]),
+                              ),
+                            ],
                           ),
                         ],
                       );
@@ -266,8 +273,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 24),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 16),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -305,8 +312,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -363,8 +370,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,

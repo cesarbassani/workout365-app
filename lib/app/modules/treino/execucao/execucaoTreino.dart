@@ -138,6 +138,28 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
 
   var validaUltimoExercicio = false;
   int _selectedIndex = 0;
+  int _selectedIndexSerie = 0;
+  bool _isSelectedSerie = false;
+  var seriesCompletas = [];
+  bool exercicioCompleto = false;
+
+  _isSelected(int index) {
+    setState(() {
+      _selectedIndexSerie = index;
+      seriesCompletas.add(index);
+      _isSelectedSerie = true;
+    });
+  }
+
+  _isNotSelected() {
+    setState(() {
+      _selectedIndexSerie = 0;
+      _isSelectedSerie = false;
+      seriesCompletas = [];
+      exercicioCompleto = false;
+    });
+  }
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -164,10 +186,19 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           // _controller.dispose();
           _inicializaVideo();
           validaUltimoExercicio = false;
+          _isNotSelected();
+          _isSelectedSerie = true;
+          exercicioCompleto = true;
+          var countSerie = 0;
+          widget.treinoCompleto.exercicios_treino[step].series
+              .forEach((element) {
+            seriesCompletas.add(countSerie);
+            countSerie++;
+          });
         }
       });
     }
-    if (index == 2) {
+    if (index == 2 && exercicioCompleto) {
       setState(() {
         if (step == widget.treinoCompleto.exercicios_treino.length - 1 &&
             validaUltimoExercicio) {
@@ -182,8 +213,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           isloaded = false;
           // _controller.dispose();
           _inicializaVideo();
+          _isNotSelected();
         }
       });
+    } else if (index == 2 && !exercicioCompleto) {
+      _validaTreinoFinalizado(context, validaUltimoExercicio);
     }
     if (index == 1) {
       _mostrarModal(context, widget.treinoCompleto);
@@ -292,10 +326,25 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _series(
-                                    widget
-                                        .treinoCompleto.exercicios_treino[step],
-                                    index),
+                                GestureDetector(
+                                  onTap: () {
+                                    _isSelected(index);
+                                    setState(() {
+                                      if (widget
+                                              .treinoCompleto
+                                              .exercicios_treino[step]
+                                              .series
+                                              .length ==
+                                          index + 1) {
+                                        exercicioCompleto = true;
+                                      }
+                                    });
+                                  },
+                                  child: _series(
+                                      widget.treinoCompleto
+                                          .exercicios_treino[step],
+                                      index),
+                                ),
                               ],
                             );
                           }),
@@ -707,13 +756,39 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     );
   }
 
+  Widget _validaTreinoFinalizado(context, bool validaUltimoExercicio) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: Text("Próximo Exercício"),
+          content: Text(!validaUltimoExercicio
+              ? "Para avançar para o próximo exercício você precisa finalizar todas as repetições!"
+              : "Para finalizar o treino você precisa realizar todas as repetições!"),
+          actions: [
+            FlatButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Ok"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _series(ExerciciosTreinoModel exercicioTreino, int index) {
     return Container(
       padding: EdgeInsets.only(left: 5, top: 15, right: 5),
       height: 90.0,
       width: 120,
       child: Material(
-        color: Colors.white,
+        color: _selectedIndexSerie != null &&
+                seriesCompletas.contains(index) &&
+                _isSelectedSerie
+            ? Colors.orangeAccent
+            : Colors.white,
         borderRadius: BorderRadius.circular(12.0),
         shadowColor: Colors.black,
         elevation: 2.0,
@@ -729,15 +804,33 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        exercicioTreino.forma_execucao.descricao == 'Repetição'
-                            ? exercicioTreino.series[index].repeticoes
-                                    .toString() +
-                                ' Rep'
-                            : '${exercicioTreino.tempo_execucao_por_serie} min',
-                        style: TextStyle(
-                            fontFamily: 'Quicksand',
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            exercicioTreino.forma_execucao.descricao ==
+                                    'Repetição'
+                                ? exercicioTreino.series[index].repeticoes
+                                        .toString() +
+                                    ' Rep'
+                                : '${exercicioTreino.tempo_execucao_por_serie} min',
+                            style: TextStyle(
+                                fontFamily: 'Quicksand',
+                                fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(
+                            width: 20,
+                          ),
+                          _selectedIndexSerie != null &&
+                                  seriesCompletas.contains(index) &&
+                                  _isSelectedSerie
+                              ? Icon(
+                                  Icons.verified_user,
+                                  size: 20,
+                                  color: Colors.lightGreenAccent,
+                                )
+                              : Container(),
+                        ],
                       ),
                       SizedBox(height: 10.0),
                       Container(
