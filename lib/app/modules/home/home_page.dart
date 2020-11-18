@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workout365app/app/modules/assinatura/sobre/sobre.dart';
+import 'package:workout365app/app/modules/loja/loja_page.dart';
 import 'package:workout365app/app/modules/perfil/profile/profile.dart';
 import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/repository/shared_prefs_repository.dart';
 
+import 'assinante/assinanteHome.dart';
 import 'home_controller.dart';
 import 'inicio/inicio_page.dart';
 
@@ -29,10 +31,10 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   Widget build(BuildContext context) {
     List<Widget> telas = [
       Inicio_Page(),
-      Inicio_Page(),
-      Inicio_Page(),
-      // AssinanteHome(),
-      // Loja_Page(),
+      // Inicio_Page(),
+      // Inicio_Page(),
+      AssinanteHome(),
+      Loja_Page(),
       Sobre(),
       Profile(),
     ];

@@ -10,9 +10,9 @@ class TreinoFreeModel {
   String categoria;
   String tipo;
   String sexo;
-  String preco;
-  int ativo;
-  int disponivel_store;
+  double preco;
+  bool ativo;
+  bool disponivel_store;
   String tempo_treino;
 
   TreinoFreeModel({
