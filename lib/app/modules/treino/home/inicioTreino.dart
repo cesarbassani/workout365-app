@@ -101,7 +101,7 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore,
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        "Equipamentos necessários: ${treinoCompleto.equipamentos.map((value) => value)}",
+                        "Equipamentos necessários: ${treinoCompleto.equipamentos.toSet().toList().toString().replaceAll(new RegExp(r'[\]\[]'), '')}",
                         style: TextStyle(color: Colors.black38),
                       ),
                     ),

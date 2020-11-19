@@ -11,14 +11,17 @@ class ExercicioModel {
   String nome;
   String descricao;
   String video;
+  List<String> grupos_musculares;
 
-  ExercicioModel(
-      {this.id,
-      this.categoria_exercicio_id,
-      this.categoria_exercicio,
-      this.nome,
-      this.descricao,
-      this.video});
+  ExercicioModel({
+    this.id,
+    this.categoria_exercicio_id,
+    this.categoria_exercicio,
+    this.nome,
+    this.descricao,
+    this.video,
+    this.grupos_musculares,
+  });
 
   factory ExercicioModel.fromJson(Map<String, dynamic> json) =>
       _$ExercicioModelFromJson(json);

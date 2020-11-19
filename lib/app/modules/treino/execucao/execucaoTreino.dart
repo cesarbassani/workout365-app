@@ -680,7 +680,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                               ),
                               SizedBox(height: 15.0),
                               Text(
-                                "Grupo Muscular: ${treinoCompleto.grupos_muculares.map((grupo) => grupo)}",
+                                "Grupo Muscular: ${treinoCompleto.exercicios_treino[step].exercicio.grupos_musculares.map((grupo) => grupo)}",
                                 style: TextStyle(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.w400,
@@ -819,7 +819,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                                 fontWeight: FontWeight.bold),
                           ),
                           SizedBox(
-                            width: 20,
+                            width: 5,
                           ),
                           _selectedIndexSerie != null &&
                                   seriesCompletas.contains(index) &&
@@ -840,7 +840,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                       ),
                       SizedBox(height: 5),
                       Text(
-                        exercicioTreino.series[index].carga > 0
+                        exercicioTreino.series[index].carga != null &&
+                                exercicioTreino.series[index].carga > 0
                             ? "Carga: ${exercicioTreino.series[index].carga}%"
                             : "Carga: 0",
                         style: TextStyle(
