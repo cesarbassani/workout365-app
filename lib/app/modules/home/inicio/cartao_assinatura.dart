@@ -73,7 +73,7 @@ class CartaoAssinatura extends StatelessWidget {
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                'lib/assets/images/logoNova.png',
+                                'lib/assets/images/logoGrandeBranca.png',
                               ),
                             ),
                           ),

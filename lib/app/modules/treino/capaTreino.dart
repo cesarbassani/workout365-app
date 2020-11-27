@@ -1,14 +1,15 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:workout365app/app/models/treino_completo_model.dart';
 
 class CapaTreino extends StatelessWidget {
   const CapaTreino({
     Key key,
     @required this.size,
+    @required this.treinoCompleto,
   }) : super(key: key);
 
   final Size size;
+  final TreinoCompletoModel treinoCompleto;
 
   @override
   Widget build(BuildContext context) {
@@ -29,22 +30,23 @@ class CapaTreino extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.only(left: 15.0, top: 50.0),
                 child: Container(
-                    height: 40.0,
-                    width: 40.0,
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: Center(
-                        child: Icon(
-                          Icons.arrow_back,
-                          size: 20.0,
-                          color: Colors.white,
-                        ),
+                  height: 40.0,
+                  width: 40.0,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Center(
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 20.0,
+                        color: Colors.white,
                       ),
-                    )),
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
@@ -86,7 +88,7 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: "50min",
+                                  text: treinoCompleto.tempo_total_por_treino,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),
@@ -110,7 +112,8 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: "Musculação",
+                                  text: treinoCompleto.equipamentos.length
+                                      .toString(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),
@@ -134,7 +137,7 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: "Repetição",
+                                  text: treinoCompleto.tipo,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600)),
@@ -145,10 +148,18 @@ class CapaTreino extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        Icons.filter_8,
-                        size: 28,
-                        color: Colors.black38,
+                      RichText(
+                        text: TextSpan(
+                            style: TextStyle(color: Colors.black38),
+                            children: [
+                              TextSpan(
+                                text: treinoCompleto
+                                    .quantidade_exercicios_treino
+                                    .toString(),
+                                style: TextStyle(
+                                    fontSize: 24, fontWeight: FontWeight.w600),
+                              ),
+                            ]),
                       ),
                       SizedBox(
                         height: 5,
@@ -158,12 +169,12 @@ class CapaTreino extends StatelessWidget {
                             style: TextStyle(color: Colors.black38),
                             children: [
                               TextSpan(
-                                  text: "Exercícios",
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600)),
+                                text: "Exercícios",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w600),
+                              ),
                             ]),
-                      )
+                      ),
                     ],
                   ),
                 ],

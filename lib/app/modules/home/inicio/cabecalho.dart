@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
+import 'package:workout365app/app/modules/assinatura/pricePage/priceInformation.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 
 class Cabecalho extends StatelessWidget {
@@ -15,9 +15,9 @@ class Cabecalho extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _iniciarTreino() {
+    _pricePage() {
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => InicioTreino()));
+          context, MaterialPageRoute(builder: (context) => PriceInformation()));
     }
 
     return Container(
@@ -42,7 +42,7 @@ class Cabecalho extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 Text(
-                  Modular.get<AuthStore>().usuarioLogado.nome,
+                  Modular.get<AuthStore>().usuarioLogado.nome.split(' ')[0],
                   style: TextStyle(
                       fontFamily: 'Timesroman',
                       fontWeight: FontWeight.bold,
@@ -57,7 +57,7 @@ class Cabecalho extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        'lib/assets/images/logoNova.png',
+                        'lib/assets/images/logoGrandeBranca.png',
                       ),
                     ),
                   ),
@@ -80,11 +80,15 @@ class Cabecalho extends StatelessWidget {
             left: 0,
             right: 0,
             child: Container(
-                padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20.0),
-                    Container(
+              padding: EdgeInsets.only(top: 0.0, left: 10.0, right: 10.0),
+              child: Column(
+                children: <Widget>[
+                  SizedBox(height: 20.0),
+                  GestureDetector(
+                    onTap: () {
+                      _pricePage();
+                    },
+                    child: Container(
                       height: 40.0,
                       width: 300,
                       child: Material(
@@ -92,26 +96,23 @@ class Cabecalho extends StatelessWidget {
                         shadowColor: Color(0xFF04959A),
                         color: Color(0xFF04959A),
                         elevation: 7.0,
-                        child: GestureDetector(
-                          onTap: () {
-                            _iniciarTreino();
-                          },
-                          child: Center(
-                            child: Text(
-                              'Vamos Treinar!',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily: 'Montserrat'),
-                            ),
+                        child: Center(
+                          child: Text(
+                            'Seja PRO',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Montserrat'),
                           ),
                         ),
                       ),
                     ),
-                    SizedBox(height: 10.0),
-                  ],
-                )),
-          )
+                  ),
+                  SizedBox(height: 10.0),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );

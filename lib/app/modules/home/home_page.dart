@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:workout365app/app/modules/assinatura/sobre/sobre.dart';
 import 'package:workout365app/app/modules/loja/loja_page.dart';
-import 'package:workout365app/app/modules/treino/execucao/execucaoTreino.dart';
+import 'package:workout365app/app/modules/perfil/profile/profile.dart';
+import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
 import 'package:workout365app/app/repository/shared_prefs_repository.dart';
 
+import 'assinante/assinanteHome.dart';
 import 'home_controller.dart';
 import 'inicio/inicio_page.dart';
 
@@ -19,19 +21,26 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
   int _indiceAtual = 0;
-  String _resultado = "";
+
+  _procederParaPagamento() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => FeedbackPage()));
+  }
 
   @override
   Widget build(BuildContext context) {
     List<Widget> telas = [
       Inicio_Page(),
+      // Inicio_Page(),
+      // Inicio_Page(),
+      AssinanteHome(),
       Loja_Page(),
       Sobre(),
+      Profile(),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Workout 365"),
         elevation: 0.0,
         centerTitle: true,
         backgroundColor: Color(0xFF414550),
@@ -41,27 +50,24 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           children: <Widget>[
             DrawerHeader(
               child: Stack(
-                children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.fromLTRB(10.0, 20.0, 0.0, 0.0),
-                    child: Text('Work',
-                        style: TextStyle(
-                            fontSize: 40.0, fontWeight: FontWeight.bold)),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.only(top: 20),
+                        height: 100,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(
+                              'lib/assets/images/logoGrande.png',
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(16.0, 60.0, 0.0, 0.0),
-                    child: Text('Out',
-                        style: TextStyle(
-                            fontSize: 40.0, fontWeight: FontWeight.bold)),
-                  ),
-                  Container(
-                    padding: EdgeInsets.fromLTRB(84.0, 75.0, 0.0, 0.0),
-                    child: Text('365',
-                        style: TextStyle(
-                            fontSize: 25.0,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xFF04959A))),
-                  )
                 ],
               ),
             ),
@@ -80,7 +86,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               subtitle: Text("Meu Treino"),
               isThreeLine: true,
               onTap: () {
-                //_meuTreino();
+                _procederParaPagamento();
               },
             ),
             ListTile(
@@ -113,11 +119,17 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               title: Text("Inicio"),
               icon: Icon(Icons.home, color: Colors.black)),
           BottomNavigationBarItem(
+              title: Text("Assinante"),
+              icon: Icon(Icons.home, color: Colors.black)),
+          BottomNavigationBarItem(
               title: Text("Treinos"),
               icon: Icon(Icons.store, color: Colors.black)),
           BottomNavigationBarItem(
-              title: Text("Pro"),
+              title: Text("Sobre"),
               icon: Icon(Icons.credit_card, color: Colors.black)),
+          BottomNavigationBarItem(
+              title: Text("Perfil"),
+              icon: Icon(Icons.person, color: Colors.black)),
         ],
       ),
     );

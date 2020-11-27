@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/shared/auth_store.dart';
 
-class CabecalhoVisitante extends StatelessWidget {
-  const CabecalhoVisitante({
+class CabecalhoPosPagamento extends StatelessWidget {
+  const CabecalhoPosPagamento({
     Key key,
     @required this.size,
     this.mensagemAssinatura,
@@ -14,6 +15,11 @@ class CabecalhoVisitante extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _iniciarTreino() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => InicioTreino()));
+    }
+
     return Container(
       margin: EdgeInsets.only(bottom: 20),
       height: size.height * 0.2,
@@ -51,7 +57,7 @@ class CabecalhoVisitante extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        'lib/assets/images/logoNova.png',
+                        'lib/assets/images/logoGrandeBranca.png',
                       ),
                     ),
                   ),
@@ -64,7 +70,7 @@ class CabecalhoVisitante extends StatelessWidget {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(left: 20.0, bottom: 10),
             child: Text(
-              mensagemAssinatura,
+              "K365 PRO",
               style: TextStyle(
                   fontFamily: 'Quicksand', color: Colors.white, fontSize: 14.0),
             ),
@@ -87,10 +93,12 @@ class CabecalhoVisitante extends StatelessWidget {
                         color: Color(0xFF04959A),
                         elevation: 7.0,
                         child: GestureDetector(
-                          onTap: () {},
+                          onTap: () {
+                            _iniciarTreino();
+                          },
                           child: Center(
                             child: Text(
-                              'Obter plano PRO',
+                              'Personalização de Módulo',
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

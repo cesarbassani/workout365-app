@@ -19,9 +19,6 @@ class _CadastroPageState
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color(0xFF414550),
-//        leading: Icon(
-//          Icons.arrow_back,
-//        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -31,7 +28,7 @@ class _CadastroPageState
                 children: <Widget>[
                   Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height / 6,
+                    height: MediaQuery.of(context).size.height / 5,
                     decoration: BoxDecoration(
                         gradient: LinearGradient(
                             begin: Alignment.topCenter,
@@ -52,11 +49,11 @@ class _CadastroPageState
                           decoration: BoxDecoration(
                             image: DecorationImage(
                               image: AssetImage(
-                                'lib/assets/images/logoNova.png',
+                                'lib/assets/images/logoGrandeBranca.png',
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
@@ -75,22 +72,19 @@ class _CadastroPageState
       key: controller.formKey,
       child: Column(
         children: <Widget>[
-          SizedBox(
-            height: 20,
-          ),
           Container(
-            height: MediaQuery.of(context).size.height / 1,
+            height: MediaQuery.of(context).size.height / 0.85,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.only(top: 30),
             child: Column(
               children: <Widget>[
                 Container(
-                  padding: EdgeInsets.only(bottom: 16),
-                  child: Text("Preecha as informações para se registrar"),
+                  padding: EdgeInsets.only(bottom: 24),
+                  child: Text("Preencha as informações para se registrar"),
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
+                  height: 50,
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -128,8 +122,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -169,8 +163,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -223,7 +217,7 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
+                  height: 85,
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -231,36 +225,46 @@ class _CadastroPageState
                   ),
                   child: Observer(
                     builder: (_) {
-                      return Row(
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Radio(
-                            value: "feminino",
-                            groupValue: controller.genero,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (String value) {
-                              controller.genero = value;
-                            },
-                          ),
-                          Text(
-                            "Feminino",
-                            style: TextStyle(color: Colors.grey[800]),
+                          Row(
+                            children: [
+                              Radio(
+                                value: "feminino",
+                                groupValue: controller.genero,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                onChanged: (String value) {
+                                  controller.genero = value;
+                                },
+                              ),
+                              Text(
+                                "Feminino",
+                                style: TextStyle(color: Colors.grey[800]),
+                              ),
+                            ],
                           ),
                           SizedBox(
-                            width: 10,
+                            width: 5,
                           ),
-                          Radio(
-                            value: "masculino",
-                            groupValue: controller.genero,
-                            materialTapTargetSize:
-                                MaterialTapTargetSize.shrinkWrap,
-                            onChanged: (String value) {
-                              controller.genero = value;
-                            },
-                          ),
-                          Text(
-                            "Masculino",
-                            style: TextStyle(color: Colors.grey[800]),
+                          Row(
+                            children: [
+                              Radio(
+                                value: "masculino",
+                                groupValue: controller.genero,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                onChanged: (String value) {
+                                  controller.genero = value;
+                                },
+                              ),
+                              Text(
+                                "Masculino",
+                                style: TextStyle(color: Colors.grey[800]),
+                              ),
+                            ],
                           ),
                         ],
                       );
@@ -269,8 +273,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 24),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 16),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -308,8 +312,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -366,8 +370,8 @@ class _CadastroPageState
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
-                  height: 45,
-                  margin: EdgeInsets.only(top: 32),
+                  height: 50,
+                  margin: EdgeInsets.only(top: 24),
                   padding: EdgeInsets.only(
                     top: 4,
                     left: 16,
@@ -421,7 +425,7 @@ class _CadastroPageState
                   ),
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 25,
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width / 1.2,
