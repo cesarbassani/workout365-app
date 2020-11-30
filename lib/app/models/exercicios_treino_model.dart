@@ -22,23 +22,26 @@ class ExerciciosTreinoModel {
   int ordem;
   int num_sub_series;
   int tempo_entre_conjugados;
+  int tempo_entre_series_conjugados;
 
-  ExerciciosTreinoModel(
-      {this.id,
-      this.exercicio_id,
-      this.treino_id,
-      this.forma_execucao,
-      this.metodo_treino,
-      this.tempo_execucao_por_serie,
-      this.tempo_descando_entre_series,
-      this.tempo_descando_proximo_exercicio,
-      this.tempo_total_por_exercicio,
-      this.numero_series,
-      this.exercicio,
-      this.series,
-      this.ordem,
-      this.num_sub_series,
-      this.tempo_entre_conjugados});
+  ExerciciosTreinoModel({
+    this.id,
+    this.exercicio_id,
+    this.treino_id,
+    this.forma_execucao,
+    this.metodo_treino,
+    this.tempo_execucao_por_serie,
+    this.tempo_descando_entre_series,
+    this.tempo_descando_proximo_exercicio,
+    this.tempo_total_por_exercicio,
+    this.numero_series,
+    this.exercicio,
+    this.series,
+    this.ordem,
+    this.num_sub_series,
+    this.tempo_entre_conjugados,
+    this.tempo_entre_series_conjugados,
+  });
 
   factory ExerciciosTreinoModel.fromJson(Map<String, dynamic> json) =>
       _$ExerciciosTreinoModelFromJson(json);
