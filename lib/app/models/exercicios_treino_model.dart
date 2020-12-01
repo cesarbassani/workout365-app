@@ -23,6 +23,7 @@ class ExerciciosTreinoModel {
   int num_sub_series;
   int tempo_entre_conjugados;
   int tempo_entre_series_conjugados;
+  int tempo_execucao_por_serie_segundos;
 
   ExerciciosTreinoModel({
     this.id,
@@ -41,6 +42,7 @@ class ExerciciosTreinoModel {
     this.num_sub_series,
     this.tempo_entre_conjugados,
     this.tempo_entre_series_conjugados,
+    this.tempo_execucao_por_serie_segundos,
   });
 
   factory ExerciciosTreinoModel.fromJson(Map<String, dynamic> json) =>

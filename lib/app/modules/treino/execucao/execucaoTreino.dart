@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,10 +8,12 @@ import 'package:intl/intl.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:video_player/video_player.dart';
 import 'package:workout365app/app/core/theme_workout365.dart';
+import 'package:workout365app/app/core/viewmodels/rest_viewmodel.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/usuario_treino_model.dart';
 import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
+import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_bloc.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_event.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_state.dart';
@@ -49,6 +52,10 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   final _stopWatch = new Stopwatch();
   final _timeout = const Duration(seconds: 1);
   Timer timer;
+
+  int currentValue = 0;
+  Timer timerExercicio;
+  bool isStarted = false;
 
   void _startTimeout() {
     timer = new Timer(_timeout, _handleTimeout);
@@ -107,8 +114,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     }
   }
 
-  PageController _pageController;
-
   AnimationController rippleController;
   AnimationController scaleController;
 
@@ -117,8 +122,6 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
 
   @override
   void initState() {
-    _pageController = PageController(initialPage: 0);
-
     rippleController =
         AnimationController(vsync: this, duration: Duration(seconds: 1));
 
@@ -169,9 +172,14 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   @override
   void dispose() {
     _controller.dispose();
+    rippleController.notifyStatusListeners(AnimationStatus.dismissed);
+    rippleController.dispose();
+    scaleController.notifyStatusListeners(AnimationStatus.dismissed);
+    scaleController.dispose();
     _stopWatch.stop();
     timer?.cancel();
     timer = null;
+    resetTimer();
     super.dispose();
   }
 
@@ -238,6 +246,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
       });
     }
     if (index == 2 && exercicioCompleto) {
+      resetTimer();
       setState(() {
         if (step == widget.treinoCompleto.exercicios_treino.length - 1 &&
             validaUltimoExercicio) {
@@ -265,16 +274,17 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
 
   @override
   Widget build(BuildContext context) {
+    var statusBarHeight = MediaQuery.of(context).padding.top;
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(widget.treinoCompleto.nome),
-        elevation: 0.0,
-        centerTitle: true,
-        backgroundColor: Color(0xFF414550),
-      ),
+      // appBar: AppBar(
+      //   title: Text(widget.treinoCompleto.nome),
+      //   elevation: 0.0,
+      //   centerTitle: true,
+      //   backgroundColor: Color(0xFF414550),
+      // ),
       body: SingleChildScrollView(
         padding: EdgeInsets.only(bottom: 5),
         child: Stack(
@@ -308,15 +318,23 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                   }
                 });
               },
-              child: Container(
-                height: (screenHeight / 2) - 65,
-                width: screenWidth,
-                child: _carregaVideo(),
+              child: Column(
+                children: [
+                  Container(
+                    height: statusBarHeight,
+                    width: screenWidth,
+                    color: Color(0xFF04959A),
+                  ),
+                  Container(
+                    height: (screenHeight / 2) - 65,
+                    width: screenWidth,
+                    child: _carregaVideo(),
+                  ),
+                ],
               ),
             ),
             Positioned(
-              top: (screenHeight * 0.36) - 75,
-              right: (screenHeight * 0.1) - 190,
+              top: (screenHeight * 0.36) - 240,
               child: Container(
                 height: screenHeight / 2 + 60,
                 width: screenWidth,
@@ -324,41 +342,23 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Align(
-                      alignment: Alignment.bottomCenter,
-                      child: AnimatedBuilder(
-                        animation: rippleAnimation,
-                        builder: (context, child) => Container(
-                          width: rippleAnimation.value,
-                          height: rippleAnimation.value,
-                          child: Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFF04959A).withOpacity(.4)),
-                            child: InkWell(
-                              onTap: () {
-                                _iniciaTimerExercicio(context);
-                              },
-                              child: AnimatedBuilder(
-                                animation: scaleAnimation,
-                                builder: (context, child) => Transform.scale(
-                                  scale: scaleAnimation.value,
-                                  child: Container(
-                                    margin: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Color(0xFF04959A),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        "START",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 15.0, top: 50.0),
+                        child: Container(
+                          height: 40.0,
+                          width: 40.0,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Color(0XFFA4B2AE)),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Center(
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 20.0,
+                                color: Colors.white,
                               ),
                             ),
                           ),
@@ -369,8 +369,67 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                 ),
               ),
             ),
+            isloaded && !isStarted
+                ? Positioned(
+                    top: (screenHeight * 0.36) - 75 + statusBarHeight,
+                    right: (screenHeight * 0.1) - 190,
+                    child: Container(
+                      height: screenHeight / 2 + 60,
+                      width: screenWidth,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: AnimatedBuilder(
+                              animation: rippleAnimation,
+                              builder: (context, child) => Container(
+                                width: rippleAnimation.value,
+                                height: rippleAnimation.value,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFF04959A).withOpacity(.4)),
+                                  child: InkWell(
+                                    onTap: () {
+                                      _iniciaTimerExercicio(context);
+                                      // _startTimer();
+                                    },
+                                    child: AnimatedBuilder(
+                                      animation: scaleAnimation,
+                                      builder: (context, child) =>
+                                          Transform.scale(
+                                        scale: scaleAnimation.value,
+                                        child: Container(
+                                          margin: EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Color(0xFF04959A),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "START",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : Container(),
             Positioned(
-              top: (screenHeight * 0.36) + 20,
+              top: (screenHeight * 0.36) + 25 + statusBarHeight,
               child: Container(
                 height: screenHeight / 2 + 60,
                 width: screenWidth,
@@ -381,11 +440,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                       alignment: Alignment.center,
                       children: <Widget>[
                         FAProgressBar(
-                          currentValue: widget
+                          currentValue: currentValue,
+                          maxValue: widget
                               .treinoCompleto
                               .exercicios_treino[step]
-                              .tempo_entre_series_conjugados,
-                          maxValue: 30,
+                              .tempo_execucao_por_serie_segundos,
                           borderRadius: 1,
                           size: 85,
                           progressColor: Color(0xff6A994E),
@@ -394,15 +453,13 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            (30 -
-                                        widget
-                                            .treinoCompleto
-                                            .exercicios_treino[step]
-                                            .tempo_entre_series_conjugados)
+                            (widget.treinoCompleto.exercicios_treino[step]
+                                            .tempo_execucao_por_serie_segundos -
+                                        currentValue)
                                     .toString() +
                                 's',
                             style: TextStyle(
-                              fontSize: 80,
+                              fontSize: 70,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
                             ),
@@ -415,7 +472,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
               ),
             ),
             Positioned(
-              top: (screenHeight * 0.36) + 100,
+              top: (screenHeight * 0.36) + 100 + statusBarHeight,
               child: Container(
                 padding: EdgeInsets.only(left: 20.0, top: 5),
                 height: screenHeight / 2 + 100,
@@ -926,22 +983,33 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           // Aligns the container to center
           child: Container(
             // A simplified version of dialog.
-            width: 100.0,
-            height: 100.0,
+            width: 200.0,
+            height: 200.0,
             color: Colors.transparent,
-            child: Text(
-              (30 -
-                          widget.treinoCompleto.exercicios_treino[step]
-                              .tempo_entre_series_conjugados)
-                      .toString() +
-                  's',
-              style: TextStyle(
-                fontSize: 100,
-                fontWeight: FontWeight.bold,
-                color: Colors.yellowAccent,
-              ),
-              textAlign: TextAlign.center,
-            ),
+            // child: Text(
+            //   (30 - 27).toString() + 's',
+            //   style: TextStyle(
+            //     fontSize: 100,
+            //     fontWeight: FontWeight.bold,
+            //     color: Colors.yellowAccent,
+            //   ),
+            //   textAlign: TextAlign.center,
+            // ),
+            child: FadeAnimatedTextKit(
+                totalRepeatCount: 1,
+                pause: Duration(milliseconds: 100),
+                text: RestViewModel.countDownTexts,
+                textAlign: TextAlign.center,
+                onFinished: () {
+                  Navigator.pop(context);
+                  _startTimer();
+                },
+                textStyle: TextStyle(
+                    fontSize: 150,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellowAccent),
+                displayFullTextOnTap: true,
+                stopPauseOnTap: true),
           ),
         ),
       ),
@@ -1052,6 +1120,38 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     }
     _toBeDisposed = _controller;
     _controller = null;
+  }
+
+  void _startTimer() {
+    isStarted = true;
+
+    timerExercicio = new Timer.periodic(new Duration(seconds: 1), (time) {
+      setState(() {
+        currentValue++;
+      });
+      // notifyListeners();
+
+      if (currentValue ==
+          widget.treinoCompleto.exercicios_treino[step]
+              .tempo_entre_series_conjugados) {
+        setState(() {
+          currentValue = 0;
+        });
+        print("Exercies Ended!");
+        timerExercicio.cancel();
+      }
+    });
+  }
+
+  resetTimer() {
+    currentValue = 0;
+    // notifyListeners();
+
+    if (timerExercicio != null) {
+      timerExercicio.cancel();
+      timerExercicio = null;
+    }
+    // _startTimer();
   }
 }
 
