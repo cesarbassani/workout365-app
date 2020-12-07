@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:workout365app/app/models/exercicio_conjugado_model.dart';
 import 'package:workout365app/app/models/exercicio_model.dart';
 import 'package:workout365app/app/models/forma_execucao_model.dart';
 import 'package:workout365app/app/models/serie_model.dart';
@@ -24,6 +25,7 @@ class ExerciciosTreinoModel {
   int tempo_entre_conjugados;
   int tempo_entre_series_conjugados;
   int tempo_execucao_por_serie_segundos;
+  List<ExercicioConjugadoModel> exercicios_treinos_conjugados;
 
   ExerciciosTreinoModel({
     this.id,

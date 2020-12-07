@@ -56,6 +56,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   int currentValue = 0;
   Timer timerExercicio;
   bool isStarted = false;
+  bool validaExercicioPorTempo = false;
 
   void _startTimeout() {
     timer = new Timer(_timeout, _handleTimeout);
@@ -369,7 +370,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                 ),
               ),
             ),
-            isloaded && !isStarted
+            isloaded
                 ? Positioned(
                     top: (screenHeight * 0.36) - 75 + statusBarHeight,
                     right: (screenHeight * 0.1) - 190,
@@ -407,13 +408,20 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                                             color: Color(0xFF04959A),
                                           ),
                                           child: Center(
-                                            child: Text(
-                                              "START",
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                            ),
+                                            child: !isStarted
+                                                ? Text(
+                                                    "START",
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  )
+                                                : Icon(
+                                                    Icons.pause,
+                                                    size: 35,
+                                                    color: Colors.white,
+                                                  ),
                                           ),
                                         ),
                                       ),
@@ -428,49 +436,54 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                     ),
                   )
                 : Container(),
-            Positioned(
-              top: (screenHeight * 0.36) + 25 + statusBarHeight,
-              child: Container(
-                height: screenHeight / 2 + 60,
-                width: screenWidth,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Stack(
-                      alignment: Alignment.center,
-                      children: <Widget>[
-                        FAProgressBar(
-                          currentValue: currentValue,
-                          maxValue: widget
-                              .treinoCompleto
-                              .exercicios_treino[step]
-                              .tempo_execucao_por_serie_segundos,
-                          borderRadius: 1,
-                          size: 85,
-                          progressColor: Color(0xff6A994E),
-                          backgroundColor: Color(0xff6A994E).withOpacity(0.4),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            (widget.treinoCompleto.exercicios_treino[step]
-                                            .tempo_execucao_por_serie_segundos -
-                                        currentValue)
-                                    .toString() +
-                                's',
-                            style: TextStyle(
-                              fontSize: 70,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+            widget.treinoCompleto.exercicios_treino[step].forma_execucao
+                        .descricao ==
+                    "Tempo"
+                ? Positioned(
+                    top: (screenHeight * 0.36) + 25 + statusBarHeight,
+                    child: Container(
+                      height: screenHeight / 2 + 60,
+                      width: screenWidth,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
+                              FAProgressBar(
+                                currentValue: currentValue,
+                                maxValue: widget
+                                    .treinoCompleto
+                                    .exercicios_treino[step]
+                                    .tempo_execucao_por_serie_segundos,
+                                borderRadius: 1,
+                                size: 85,
+                                progressColor: Color(0xff6A994E),
+                                backgroundColor:
+                                    Color(0xff6A994E).withOpacity(0.4),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  (widget.treinoCompleto.exercicios_treino[step]
+                                                  .tempo_execucao_por_serie_segundos -
+                                              currentValue)
+                                          .toString() +
+                                      's',
+                                  style: TextStyle(
+                                    fontSize: 70,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-              ),
-            ),
+                  )
+                : null,
             Positioned(
               top: (screenHeight * 0.36) + 100 + statusBarHeight,
               child: Container(
@@ -779,7 +792,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
       await _disposeVideoController();
     }
     _controller = VideoPlayerController.network(
-        "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
     print(_controller.dataSource.toString());
     _controller.addListener(() {
       print('Listener');
@@ -983,8 +996,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           // Aligns the container to center
           child: Container(
             // A simplified version of dialog.
-            width: 200.0,
-            height: 200.0,
+            width: double.infinity,
+            height: 300,
             color: Colors.transparent,
             // child: Text(
             //   (30 - 27).toString() + 's',
@@ -996,8 +1009,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
             //   textAlign: TextAlign.center,
             // ),
             child: FadeAnimatedTextKit(
+                duration: Duration(milliseconds: 1000),
                 totalRepeatCount: 1,
-                pause: Duration(milliseconds: 100),
                 text: RestViewModel.countDownTexts,
                 textAlign: TextAlign.center,
                 onFinished: () {
@@ -1133,7 +1146,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
 
       if (currentValue ==
           widget.treinoCompleto.exercicios_treino[step]
-              .tempo_entre_series_conjugados) {
+              .tempo_execucao_por_serie_segundos) {
         setState(() {
           currentValue = 0;
         });
