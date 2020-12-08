@@ -23,6 +23,8 @@ import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart
 import 'package:workout365app/app/services/treino_free_services.dart';
 import 'package:workout365app/app/shared/theme_utils.dart';
 
+import 'exibirInformacaoConjugado.dart';
+
 class ExecucaoTreino extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
   final bool treinoIniciado;
@@ -510,6 +512,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                         color: Color(0XFF04959A),
                       ),
                     ),
+                    ExibirInformacaoConjugado(),
                     Container(
                       height: 100.0,
                       width: screenWidth,
