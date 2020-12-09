@@ -56,6 +56,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   int currentValue = 0;
   Timer timerExercicio;
   bool isStarted = false;
+  bool isPaused = false;
   bool validaExercicioPorTempo = false;
 
   void _startTimeout() {
@@ -393,7 +394,13 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                                       color: Color(0xFF04959A).withOpacity(.4)),
                                   child: InkWell(
                                     onTap: () {
-                                      _iniciaTimerExercicio(context);
+                                      if (!isStarted && !isPaused) {
+                                        _iniciaTimerExercicio(context);
+                                      } else if (isStarted) {
+                                        pauseTimer();
+                                      } else if (!isStarted && isPaused) {
+                                        unpauseTimer();
+                                      }
                                       // _startTimer();
                                     },
                                     child: AnimatedBuilder(
@@ -1149,6 +1156,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
               .tempo_execucao_por_serie_segundos) {
         setState(() {
           currentValue = 0;
+          isStarted = false;
         });
         print("Exercies Ended!");
         timerExercicio.cancel();
@@ -1166,6 +1174,15 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     }
     // _startTimer();
   }
+
+  void pauseTimer() {
+    if (timerExercicio != null) timerExercicio.cancel();
+
+    isStarted = false;
+    isPaused = true;
+  }
+
+  void unpauseTimer() => _startTimer();
 }
 
 class _IngredientProgress extends StatelessWidget {
