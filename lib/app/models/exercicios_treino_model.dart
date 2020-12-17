@@ -25,6 +25,7 @@ class ExerciciosTreinoModel {
   int tempo_entre_conjugados;
   int tempo_entre_series_conjugados;
   int tempo_execucao_por_serie_segundos;
+  int tempo_descando_entre_series_segundos;
   List<ExercicioConjugadoModel> exercicios_treinos_conjugados;
 
   ExerciciosTreinoModel({
@@ -44,6 +45,7 @@ class ExerciciosTreinoModel {
     this.num_sub_series,
     this.tempo_entre_conjugados,
     this.tempo_entre_series_conjugados,
+    this.tempo_descando_entre_series_segundos,
     this.tempo_execucao_por_serie_segundos,
   });
 

@@ -58,6 +58,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   bool isStarted = false;
   bool isPaused = false;
   bool validaExercicioPorTempo = false;
+  bool validaSerieFinalizada = false;
 
   void _startTimeout() {
     timer = new Timer(_timeout, _handleTimeout);
@@ -447,7 +448,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                         .descricao ==
                     "Tempo"
                 ? Positioned(
-                    top: (screenHeight * 0.36) + 25 + statusBarHeight,
+                    top: (screenHeight * 0.36) + 24 + statusBarHeight,
                     child: Container(
                       height: screenHeight / 2 + 60,
                       width: screenWidth,
@@ -555,6 +556,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                                         exercicioCompleto = true;
                                       }
                                     });
+                                    if (validaSerieFinalizada)
+                                      _iniciaTimerDescansoEntreSeries(context);
                                   },
                                   child: _series(
                                       widget.treinoCompleto
@@ -1036,6 +1039,78 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     );
   }
 
+  Widget _iniciaTimerDescansoEntreSeries(context) {
+    var count = 0;
+    var descanso = widget.treinoCompleto.exercicios_treino[step]
+        .tempo_descando_entre_series_segundos;
+    var tempo = List<String>();
+    while (count <= descanso) {
+      if ((descanso - count) != 0) {
+        tempo.add((descanso - count).toString());
+      } else {
+        tempo.add("GO");
+      }
+      count++;
+    }
+    print(tempo);
+    showDialog(
+      context: context,
+      builder: (_) => Material(
+        type: MaterialType.transparency,
+        child: Center(
+          // Aligns the container to center
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: double.infinity,
+                child: Text(
+                  "Descanse",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.yellowAccent,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                // A simplified version of dialog.
+                width: double.infinity,
+                height: 300,
+                color: Colors.transparent,
+                // child: Text(
+                //   (30 - 27).toString() + 's',
+                //   style: TextStyle(
+                //     fontSize: 100,
+                //     fontWeight: FontWeight.bold,
+                //     color: Colors.yellowAccent,
+                //   ),
+                //   textAlign: TextAlign.center,
+                // ),
+                child: FadeAnimatedTextKit(
+                    duration: Duration(milliseconds: 1000),
+                    totalRepeatCount: 1,
+                    text: tempo,
+                    textAlign: TextAlign.center,
+                    onFinished: () {
+                      Navigator.pop(context);
+                    },
+                    textStyle: TextStyle(
+                        fontSize: 150,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.yellowAccent),
+                    displayFullTextOnTap: true,
+                    stopPauseOnTap: true),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _series(ExerciciosTreinoModel exercicioTreino, int index) {
     return Container(
       padding: EdgeInsets.only(left: 5, top: 15, right: 5),
@@ -1157,6 +1232,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
         setState(() {
           currentValue = 0;
           isStarted = false;
+          validaSerieFinalizada = true;
         });
         print("Exercies Ended!");
         timerExercicio.cancel();
