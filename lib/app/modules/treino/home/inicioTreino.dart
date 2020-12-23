@@ -25,6 +25,8 @@ class _InicioTreinoState extends State<InicioTreino> {
   final TreinoFreeStore treinoFreeStore = TreinoFreeStore();
   final TreinoFreeServices treinoFreeServices = TreinoFreeServices();
 
+  int step = 0;
+
   @override
   void initState() {
     super.initState();
@@ -142,7 +144,7 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore,
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _card(treinoCompleto, index, size),
+                                _card(treinoCompleto, index, size, context),
                               ],
                             );
                           }),
@@ -223,46 +225,159 @@ Widget _body(Size size, BuildContext context, TreinoFreeStore treinoFreeStore,
   );
 }
 
-Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size) {
-  return Container(
-    padding: EdgeInsets.only(left: 5, top: 15, right: 5),
-    height: 115.0,
-    width: 300,
-    child: Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(12.0),
-      shadowColor: Colors.black,
-      elevation: 2.0,
-      child: Container(
-        margin: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
-        height: 115.0,
-        width: 100.0,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              treinoCompleto.exercicios_treino[index].exercicio.nome,
-              style: TextStyle(
-                  fontFamily: 'Quicksand', fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10.0),
-            Container(
-              height: 2.0,
-              width: 150,
-              color: Color(0xFF04959A),
-            ),
-            SizedBox(height: 5),
-            Text(
-              treinoCompleto.exercicios_treino[index].exercicio
-                  .categoria_exercicio.descricao,
-              style: TextStyle(
-                fontFamily: 'Quicksand',
+Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size,
+    BuildContext context) {
+  return GestureDetector(
+    onTap: () {
+      _mostrarModal(context, treinoCompleto, index);
+    },
+    child: Container(
+      padding: EdgeInsets.only(left: 5, top: 15, right: 5),
+      height: 115.0,
+      width: 300,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        shadowColor: Colors.black,
+        elevation: 2.0,
+        child: Container(
+          margin: EdgeInsets.only(left: 10, top: 10, bottom: 10, right: 10),
+          height: 115.0,
+          width: 100.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                treinoCompleto.exercicios_treino[index].exercicio.nome,
+                style: TextStyle(
+                    fontFamily: 'Quicksand', fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10.0),
+              Container(
+                height: 2.0,
+                width: 150,
                 color: Color(0xFF04959A),
               ),
-            ),
-          ],
+              SizedBox(height: 5),
+              Text(
+                treinoCompleto.exercicios_treino[index].exercicio
+                    .categoria_exercicio.descricao,
+                style: TextStyle(
+                  fontFamily: 'Quicksand',
+                  color: Color(0xFF04959A),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ),
   );
+}
+
+void _mostrarModal(context, TreinoCompletoModel treinoCompleto, int index) {
+  showModalBottomSheet(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext bc) {
+        return Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(left: 0, right: 0),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.5,
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25.0),
+                    color: Colors.white),
+                child: Container(
+                  padding: EdgeInsets.only(top: 12.0, right: 12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        padding: EdgeInsets.only(left: 12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 15.0,
+                            ),
+                            Text(
+                              treinoCompleto
+                                  .exercicios_treino[index].exercicio.nome,
+                              style: TextStyle(
+                                  fontSize: 25.0, fontWeight: FontWeight.w500),
+                            ),
+                            SizedBox(height: 5.0),
+                            Container(
+                              height: 3.0,
+                              width: 100.0,
+                              color: Color(0xFF04959A),
+                            ),
+                            SizedBox(height: 5.0),
+                            Text(
+                              treinoCompleto?.exercicios_treino[index].exercicio
+                                          ?.descricao !=
+                                      null
+                                  ? treinoCompleto?.exercicios_treino[index]
+                                      .exercicio?.descricao
+                                  : treinoCompleto?.exercicios_treino[index]
+                                      .exercicio?.nome,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Color(0XFF04959A),
+                              ),
+                            ),
+                            SizedBox(height: 15.0),
+                            Text(
+                              treinoCompleto.exercicios_treino[index].exercicio
+                                  .categoria_exercicio.descricao,
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black38,
+                              ),
+                            ),
+                            SizedBox(height: 10.0),
+                            Text(
+                              "Grupo Muscular: ${treinoCompleto.exercicios_treino[index].exercicio.grupos_musculares.map((grupo) => grupo)}",
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black38,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 399,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: <Widget>[
+                            Container(
+                              margin: EdgeInsets.only(top: 40),
+                              height: 50,
+                              width: 100,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'lib/assets/images/logoGrande.png',
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      });
 }

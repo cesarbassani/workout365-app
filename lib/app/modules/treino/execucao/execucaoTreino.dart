@@ -21,6 +21,7 @@ import 'package:workout365app/app/modules/video/models/video.dart';
 import 'package:workout365app/app/modules/video/services/video_controller_service.dart';
 import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart';
 import 'package:workout365app/app/services/treino_free_services.dart';
+import 'package:workout365app/app/shared/components/next_step.dart';
 import 'package:workout365app/app/shared/theme_utils.dart';
 
 class ExecucaoTreino extends StatefulWidget {
@@ -280,6 +281,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     var statusBarHeight = MediaQuery.of(context).padding.top;
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
+
+    var size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.white,
       // appBar: AppBar(
@@ -495,78 +498,48 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
             Positioned(
               top: (screenHeight * 0.36) + 100 + statusBarHeight,
               child: Container(
-                padding: EdgeInsets.only(left: 20.0, top: 5),
+                padding: EdgeInsets.only(left: 16, top: 10, right: 8),
                 height: screenHeight / 2 + 100,
                 width: screenWidth,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    SizedBox(
-                      height: 20.0,
-                    ),
-                    Text(
-                      widget.treinoCompleto.exercicios_treino[step].exercicio
-                          .nome,
-                      style: TextStyle(
-                          fontSize: 25.0, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(height: 5.0),
-                    Container(
-                      height: 3.0,
-                      width: 100.0,
-                      color: Color(0xFF04959A),
-                    ),
-                    SizedBox(height: 15),
-                    Text(
-                      "Método: " +
-                          widget.treinoCompleto.exercicios_treino[step]
-                              .metodo_treino +
-                          " | Séries: " +
-                          widget.treinoCompleto.exercicios_treino[step]
-                              .numero_series
-                              .toString(),
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0XFF04959A),
+                    Expanded(
+                      child: Container(
+                        child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount:
+                                widget.treinoCompleto.exercicios_treino.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  index == 0
+                                      ? Row(
+                                          children: [
+                                            Text(
+                                              "1 de 3",
+                                              style: TextStyle(
+                                                color: Colors.grey,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 16.0,
+                                            ),
+                                          ],
+                                        )
+                                      : Container(),
+                                  _card(widget.treinoCompleto, index, size,
+                                      screenWidth, screenHeight),
+                                  Divider(
+                                    thickness: 1,
+                                  ),
+                                ],
+                              );
+                            }),
                       ),
-                    ),
-                    Container(
-                      height: 100.0,
-                      width: screenWidth,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: widget.treinoCompleto
-                              .exercicios_treino[step].numero_series,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    _isSelected(index);
-                                    setState(() {
-                                      if (widget
-                                              .treinoCompleto
-                                              .exercicios_treino[step]
-                                              .series
-                                              .length ==
-                                          index + 1) {
-                                        exercicioCompleto = true;
-                                      }
-                                    });
-                                    if (validaSerieFinalizada)
-                                      _iniciaTimerDescansoEntreSeries(context);
-                                  },
-                                  child: _series(
-                                      widget.treinoCompleto
-                                          .exercicios_treino[step],
-                                      index),
-                                ),
-                              ],
-                            );
-                          }),
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 5, top: 5, right: 5),
@@ -665,29 +638,87 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           ],
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.arrow_back),
-            title: Text("Anterior"),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info_outline),
-            title: Text("Informações"),
-          ),
-          BottomNavigationBarItem(
-            icon: !validaUltimoExercicio
-                ? Icon(Icons.arrow_forward)
-                : Icon(Icons.assistant_photo_outlined),
-            title: !validaUltimoExercicio
-                ? Text("Próximo")
-                : Text("Finalizar Treino"),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.arrow_back),
+      //       title: Text("Anterior"),
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.info_outline),
+      //       title: Text("Informações"),
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: !validaUltimoExercicio
+      //           ? Icon(Icons.arrow_forward)
+      //           : Icon(Icons.assistant_photo_outlined),
+      //       title: !validaUltimoExercicio
+      //           ? Text("Próximo")
+      //           : Text("Finalizar Treino"),
+      //     ),
+      //   ],
+      //   currentIndex: _selectedIndex,
+      //   selectedItemColor: Colors.black,
+      //   unselectedItemColor: Colors.black,
+      //   onTap: _onItemTapped,
+      // ),
+    );
+  }
+
+  Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size,
+      double screenWidth, double screenHeight) {
+    return Container(
+      height: 60.0,
+      width: double.infinity,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Stack(
+            alignment: Alignment.centerLeft,
+            children: <Widget>[
+              FAProgressBar(
+                currentValue: currentValue,
+                maxValue: widget.treinoCompleto.exercicios_treino[step]
+                    .tempo_execucao_por_serie_segundos,
+                borderRadius: 1,
+                size: 60,
+                progressColor: Color(0xff6A994E).withOpacity(0.1),
+                backgroundColor: Colors.transparent,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 100.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text(
+                        treinoCompleto.exercicios_treino[index].exercicio.nome,
+                        style: TextStyle(
+                            fontFamily: 'Quicksand',
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(height: 10.0),
+                    Container(
+                      height: 2.0,
+                      width: 150,
+                      color: Color(0xFF04959A),
+                    ),
+                    SizedBox(height: 5),
+                    Text(
+                      treinoCompleto
+                          .exercicios_treino[index].tempo_execucao_por_serie,
+                      style: TextStyle(
+                        fontFamily: 'Quicksand',
+                        color: Color(0xFF04959A),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Colors.black,
-        onTap: _onItemTapped,
       ),
     );
   }
