@@ -276,6 +276,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
     }
   }
 
+  var countItemList = 0;
+
   @override
   Widget build(BuildContext context) {
     var statusBarHeight = MediaQuery.of(context).padding.top;
@@ -676,15 +678,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           Stack(
             alignment: Alignment.centerLeft,
             children: <Widget>[
-              FAProgressBar(
-                currentValue: currentValue,
-                maxValue: widget.treinoCompleto.exercicios_treino[step]
-                    .tempo_execucao_por_serie_segundos,
-                borderRadius: 1,
-                size: 60,
-                progressColor: Color(0xff6A994E).withOpacity(0.1),
-                backgroundColor: Colors.transparent,
-              ),
+              countItemList == index ? _carregaProgressBar() : Container(),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 100.0),
                 child: Column(
@@ -706,8 +700,13 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                     ),
                     SizedBox(height: 5),
                     Text(
-                      treinoCompleto
-                          .exercicios_treino[index].tempo_execucao_por_serie,
+                      countItemList == index
+                          ? (widget.treinoCompleto.exercicios_treino[step]
+                                      .tempo_execucao_por_serie_segundos -
+                                  currentValue)
+                              .toString()
+                          : widget.treinoCompleto.exercicios_treino[step]
+                              .tempo_execucao_por_serie,
                       style: TextStyle(
                         fontFamily: 'Quicksand',
                         color: Color(0xFF04959A),
@@ -720,6 +719,18 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           ),
         ],
       ),
+    );
+  }
+
+  Widget _carregaProgressBar() {
+    return FAProgressBar(
+      currentValue: currentValue,
+      maxValue: widget.treinoCompleto.exercicios_treino[step]
+          .tempo_execucao_por_serie_segundos,
+      borderRadius: 1,
+      size: 60,
+      progressColor: Color(0xff6A994E).withOpacity(0.1),
+      backgroundColor: Colors.transparent,
     );
   }
 
@@ -1262,11 +1273,15 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
               .tempo_execucao_por_serie_segundos) {
         setState(() {
           currentValue = 0;
-          isStarted = false;
+          if (countItemList == widget.treinoCompleto.exercicios_treino.length) {
+            isStarted = false;
+          }
           validaSerieFinalizada = true;
+          countItemList++;
         });
         print("Exercies Ended!");
         timerExercicio.cancel();
+        _startTimer();
       }
     });
   }
