@@ -670,54 +670,58 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size,
       double screenWidth, double screenHeight) {
     return Container(
-      height: 60.0,
+      padding: EdgeInsets.only(top: 8),
+      height: 75.0,
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.centerLeft,
-            children: <Widget>[
-              countItemList == index ? _carregaProgressBar() : Container(),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 100.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Text(
-                        treinoCompleto.exercicios_treino[index].exercicio.nome,
-                        style: TextStyle(
-                            fontFamily: 'Quicksand',
-                            fontWeight: FontWeight.bold),
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Stack(
+              alignment: Alignment.centerLeft,
+              children: <Widget>[
+                countItemList == index ? _carregaProgressBar() : Container(),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 100.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          treinoCompleto
+                              .exercicios_treino[index].exercicio.nome,
+                          style: TextStyle(
+                              fontFamily: 'Quicksand',
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      height: 2.0,
-                      width: 150,
-                      color: Color(0xFF04959A),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      countItemList == index
-                          ? (widget.treinoCompleto.exercicios_treino[step]
-                                      .tempo_execucao_por_serie_segundos -
-                                  currentValue)
-                              .toString()
-                          : widget.treinoCompleto.exercicios_treino[step]
-                              .tempo_execucao_por_serie,
-                      style: TextStyle(
-                        fontFamily: 'Quicksand',
+                      SizedBox(height: 10.0),
+                      Container(
+                        height: 2.0,
+                        width: 150,
                         color: Color(0xFF04959A),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 5),
+                      Text(
+                        countItemList == index
+                            ? (widget.treinoCompleto.exercicios_treino[step]
+                                        .tempo_execucao_por_serie_segundos -
+                                    currentValue)
+                                .toString()
+                            : widget.treinoCompleto.exercicios_treino[step]
+                                .tempo_execucao_por_serie,
+                        style: TextStyle(
+                          fontFamily: 'Quicksand',
+                          color: Color(0xFF04959A),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -1138,6 +1142,8 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                     textAlign: TextAlign.center,
                     onFinished: () {
                       Navigator.pop(context);
+                      _onItemTapped(2);
+                      _startTimer();
                     },
                     textStyle: TextStyle(
                         fontSize: 150,
@@ -1278,10 +1284,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           }
           validaSerieFinalizada = true;
           countItemList++;
+          exercicioCompleto = true;
         });
         print("Exercies Ended!");
         timerExercicio.cancel();
-        _startTimer();
+        _iniciaTimerDescansoEntreSeries(context);
       }
     });
   }
