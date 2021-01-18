@@ -377,7 +377,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                 ),
               ),
             ),
-            isloaded
+            isloaded || !isloaded
                 ? Positioned(
                     top: (screenHeight * 0.36) - 75 + statusBarHeight,
                     right: (screenHeight * 0.1) - 190,
@@ -496,7 +496,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                       ),
                     ),
                   )
-                : null,
+                : Container(),
             Positioned(
               top: (screenHeight * 0.36) + 100 + statusBarHeight,
               child: Container(
@@ -514,6 +514,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                             itemCount:
                                 widget.treinoCompleto.exercicios_treino.length,
                             itemBuilder: (context, index) {
+                              var count = 0;
                               return Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -521,7 +522,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                                       ? Row(
                                           children: [
                                             Text(
-                                              "1 de 3",
+                                              "${index + 1} de ${widget.treinoCompleto.exercicios_treino[step].exercicios_treinos_conjugados.length}",
                                               style: TextStyle(
                                                 color: Colors.grey,
                                                 fontWeight: FontWeight.bold,
@@ -533,6 +534,9 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                                           ],
                                         )
                                       : Container(),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   _card(widget.treinoCompleto, index, size,
                                       screenWidth, screenHeight),
                                   Divider(
@@ -669,60 +673,103 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
 
   Widget _card(TreinoCompletoModel treinoCompleto, int index, Size size,
       double screenWidth, double screenHeight) {
-    return Container(
-      padding: EdgeInsets.only(top: 8),
-      height: 75.0,
-      width: double.infinity,
-      child: Center(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Stack(
-              alignment: Alignment.centerLeft,
-              children: <Widget>[
-                countItemList == index ? _carregaProgressBar() : Container(),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 100.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        child: Text(
-                          treinoCompleto
-                              .exercicios_treino[index].exercicio.nome,
-                          style: TextStyle(
-                              fontFamily: 'Quicksand',
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Container(
-                        height: 2.0,
-                        width: 150,
-                        color: Color(0xFF04959A),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        countItemList == index
-                            ? (widget.treinoCompleto.exercicios_treino[step]
-                                        .tempo_execucao_por_serie_segundos -
-                                    currentValue)
-                                .toString()
-                            : widget.treinoCompleto.exercicios_treino[step]
-                                .tempo_execucao_por_serie,
-                        style: TextStyle(
-                          fontFamily: 'Quicksand',
-                          color: Color(0xFF04959A),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
+    // return Container(
+    //   padding: EdgeInsets.only(top: 8),
+    //   height: 75.0,
+    //   width: double.infinity,
+    //   child: Center(
+    //     child: Column(
+    //       crossAxisAlignment: CrossAxisAlignment.start,
+    //       children: <Widget>[
+    //         Stack(
+    //           alignment: Alignment.centerLeft,
+    //           children: <Widget>[
+    //             countItemList == index ? _carregaProgressBar() : Container(),
+    //             Padding(
+    //               padding: const EdgeInsets.only(left: 16.0, right: 100.0),
+    //               child: Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   Container(
+    //                     child: Text(
+    //                       treinoCompleto
+    //                           .exercicios_treino[index].exercicio.nome,
+    //                       style: TextStyle(
+    //                           fontFamily: 'Quicksand',
+    //                           fontWeight: FontWeight.bold),
+    //                     ),
+    //                   ),
+    //                   SizedBox(height: 10.0),
+    //                   Container(
+    //                     height: 2.0,
+    //                     width: 150,
+    //                     color: Color(0xFF04959A),
+    //                   ),
+    //                   SizedBox(height: 5),
+    //                   Text(
+    //                     countItemList == index
+    //                         ? (widget.treinoCompleto.exercicios_treino[step]
+    //                                     .tempo_execucao_por_serie_segundos -
+    //                                 currentValue)
+    //                             .toString()
+    //                         : widget.treinoCompleto.exercicios_treino[step]
+    //                             .tempo_execucao_por_serie,
+    //                     style: TextStyle(
+    //                       fontFamily: 'Quicksand',
+    //                       color: Color(0xFF04959A),
+    //                     ),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    return Row(
+      children: <Widget>[
+        Container(
+          height: 60.0,
+          width: 60.0,
+          margin: EdgeInsets.only(
+            right: 20.0,
+            bottom: 20.0,
+          ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(
+                'lib/assets/images/image008.jpg',
+              ),
+              fit: BoxFit.cover,
             ),
-          ],
+            borderRadius: BorderRadius.circular(15.0),
+          ),
         ),
-      ),
+        Container(
+          height: 65.0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                treinoCompleto.exercicios_treino[index].exercicio.nome,
+                style: TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black87,
+                ),
+              ),
+              Text(
+                "${widget.treinoCompleto.exercicios_treino[index].tempo_execucao_por_serie} sec",
+                style: TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.blueGrey[200],
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -848,7 +895,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
       await _disposeVideoController();
     }
     _controller = VideoPlayerController.network(
-        "https://homapi.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
+        "https://api.workout365.com.br/public/api/exercicios/videos/streaming/${widget.treinoCompleto.exercicios_treino[step].exercicio_id}");
     print(_controller.dataSource.toString());
     _controller.addListener(() {
       print('Listener');
