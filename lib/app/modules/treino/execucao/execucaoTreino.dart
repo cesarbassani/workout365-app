@@ -7,13 +7,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:swipedetector/swipedetector.dart';
 import 'package:video_player/video_player.dart';
-import 'package:workout365app/app/core/theme_workout365.dart';
 import 'package:workout365app/app/core/viewmodels/rest_viewmodel.dart';
 import 'package:workout365app/app/models/exercicios_treino_model.dart';
 import 'package:workout365app/app/models/treino_completo_model.dart';
 import 'package:workout365app/app/models/usuario_treino_model.dart';
 import 'package:workout365app/app/modules/treino/feedback/feedbackPage.dart';
-import 'package:workout365app/app/modules/treino/home/inicioTreino.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_bloc.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_event.dart';
 import 'package:workout365app/app/modules/video/blocs/video_player/video_player_state.dart';
@@ -21,8 +19,6 @@ import 'package:workout365app/app/modules/video/models/video.dart';
 import 'package:workout365app/app/modules/video/services/video_controller_service.dart';
 import 'package:workout365app/app/modules/video/widgets/video_player_widget.dart';
 import 'package:workout365app/app/services/treino_free_services.dart';
-import 'package:workout365app/app/shared/components/next_step.dart';
-import 'package:workout365app/app/shared/theme_utils.dart';
 
 class ExecucaoTreino extends StatefulWidget {
   final TreinoCompletoModel treinoCompleto;
@@ -734,7 +730,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           height: 60.0,
           width: 60.0,
           margin: EdgeInsets.only(
-            right: 20.0,
+            right: 10.0,
             bottom: 20.0,
           ),
           decoration: BoxDecoration(
@@ -747,26 +743,31 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
             borderRadius: BorderRadius.circular(15.0),
           ),
         ),
-        Container(
-          height: 65.0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                treinoCompleto.exercicios_treino[index].exercicio.nome,
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black87,
+        Expanded(
+          child: Container(
+            height: 65.0,
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                    treinoCompleto.exercicios_treino[index].exercicio.nome,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black87,
+                    ),
+                  ),
                 ),
-              ),
-              Text(
-                "${widget.treinoCompleto.exercicios_treino[index].tempo_execucao_por_serie} sec",
-                style: TextStyle(
-                  fontSize: 14.0,
-                  color: Colors.blueGrey[200],
-                ),
-              )
-            ],
+                Text(
+                  "${widget.treinoCompleto.exercicios_treino[index].tempo_execucao_por_serie} sec",
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.blueGrey[200],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ],
