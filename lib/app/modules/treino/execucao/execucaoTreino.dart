@@ -730,15 +730,20 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
           height: 60.0,
           width: 60.0,
           margin: EdgeInsets.only(
-            right: 10.0,
+            right: 20.0,
             bottom: 20.0,
           ),
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage(
-                'lib/assets/images/image008.jpg',
-              ),
-              fit: BoxFit.cover,
+              image: treinoCompleto
+                          .exercicios_treino[index].exercicio_imagens.length >
+                      0
+                  ? NetworkImage(
+                      'https://api.workout365.com.br/public/api/exercicios/imagens/miniatura/streaming/${treinoCompleto.exercicios_treino[index].exercicio_imagens[0].id}')
+                  : AssetImage(
+                      'lib/assets/images/k365.png',
+                    ),
+              fit: BoxFit.scaleDown,
             ),
             borderRadius: BorderRadius.circular(15.0),
           ),
@@ -772,6 +777,17 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
         ),
       ],
     );
+  }
+
+  NetworkImage _loadImagemMiniatura() {
+    NetworkImage imagemMiniatura;
+    try {
+      imagemMiniatura = NetworkImage(
+          'https://api.workout365.com.br/public/api/exercicios/imagens/miniatura/streaming/21');
+      return imagemMiniatura;
+    } catch (e) {
+      imagemMiniatura = null;
+    }
   }
 
   Widget _carregaProgressBar() {
@@ -817,6 +833,7 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
   }
 
   Widget _carregaVideo() {
+    int count = 0;
     return FutureBuilder(
       future: _initializeVideoPlayerFuture,
       builder: (context, snapshot) {
@@ -830,10 +847,20 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
               isloaded
                   ? VideoPlayer(_controller)
                   : Center(
-                      child: Image.asset('lib/assets/images/logoNovaPreto.png'),
-                    ),
+                      child: widget.treinoCompleto.exercicios_treino[count]
+                                  .exercicio_imagens.length >
+                              0
+                          ? NetworkImage(
+                              'https://api.workout365.com.br/public/api/exercicios/imagens/miniatura/streaming/${widget.treinoCompleto.exercicios_treino[count].exercicio_imagens[0].id}')
+                          : Image.asset(
+                              'lib/assets/images/logoNovaPreto.png',
+                            ),
+                    )
+              //   Image.asset('lib/assets/images/logoNovaPreto.png'),
+              // ),
             ]),
           );
+          count++;
         } else {
           return Center(
             child: CircularProgressIndicator(),

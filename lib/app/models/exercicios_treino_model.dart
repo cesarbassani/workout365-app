@@ -4,6 +4,8 @@ import 'package:workout365app/app/models/exercicio_model.dart';
 import 'package:workout365app/app/models/forma_execucao_model.dart';
 import 'package:workout365app/app/models/serie_model.dart';
 
+import 'imagem_exercicio_model.dart';
+
 part 'exercicios_treino_model.g.dart';
 
 @JsonSerializable()
@@ -27,6 +29,7 @@ class ExerciciosTreinoModel {
   int tempo_execucao_por_serie_segundos;
   int tempo_descando_entre_series_segundos;
   List<ExercicioConjugadoModel> exercicios_treinos_conjugados;
+  List<ImagemExercicioModel> exercicio_imagens;
 
   ExerciciosTreinoModel({
     this.id,
@@ -47,6 +50,7 @@ class ExerciciosTreinoModel {
     this.tempo_entre_series_conjugados,
     this.tempo_descando_entre_series_segundos,
     this.tempo_execucao_por_serie_segundos,
+    this.exercicio_imagens,
   });
 
   factory ExerciciosTreinoModel.fromJson(Map<String, dynamic> json) =>
