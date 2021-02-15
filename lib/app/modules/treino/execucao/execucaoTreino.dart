@@ -765,7 +765,11 @@ class _ExecucaoTreinoState extends State<ExecucaoTreino>
                   ),
                 ),
                 Text(
-                  "${widget.treinoCompleto.exercicios_treino[index].tempo_execucao_por_serie} sec",
+                  widget.treinoCompleto.exercicios_treino[index].forma_execucao
+                              .descricao ==
+                          'Repetição'
+                      ? "${widget.treinoCompleto.exercicios_treino[index].numero_series} reps"
+                      : "${widget.treinoCompleto.exercicios_treino[index].tempo_execucao_por_serie} min",
                   style: TextStyle(
                     fontSize: 14.0,
                     color: Colors.blueGrey[200],
